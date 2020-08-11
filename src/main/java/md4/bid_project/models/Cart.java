@@ -1,9 +1,15 @@
 package md4.bid_project.models;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "carts")
+@Data
+@NoArgsConstructor
 public class Cart {
 
     @Id
@@ -11,8 +17,9 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "cart_user_id")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "cart_user_id")
+    private User user;
 
     @Column(name = "cart_total_price")
     private Double totalPrice;
@@ -20,38 +27,6 @@ public class Cart {
     @Column(name = "cart_status")
     private Boolean status;
 
-    public Cart() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
+    @OneToMany(mappedBy = "cart")
+    private List<CartDetail> cartDetails;
 }
