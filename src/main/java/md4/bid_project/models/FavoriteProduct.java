@@ -5,18 +5,21 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "favorite products")
+@Table(name = "favorite_products")
 @Data
 public class FavoriteProduct {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "favorite product id")
-    private Long FavoriteProductId;
+    @Column(name = "favortite_product_id")
+    private Long id;
 
-    @Column(name = "user id")
-    private Integer UserId;
-    @Column(name = "product id")
-    private Integer ProductId;
-    @Column(name = "favorite product status")
-    private String FavoriteProductStatus;
+    @Column(name = "user_id")
+    private Long userId;
+
+    @Column(name = "product_id")
+    private Long productId;
+
+    @Column(name = "favorite_product_status")
+    private Boolean status;
 }
