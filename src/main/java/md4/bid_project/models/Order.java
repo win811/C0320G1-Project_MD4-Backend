@@ -34,13 +34,13 @@ public class Order {
     private boolean paymentStatus;
 
 
-    @Column(name = "order_buyer_id")
-    private User user;
-
-
-    @Column(name = "order_delivery_address_id")
-    private DeliveryAddresses deliveryAddresses;
-
-    @Column(name = "order_cart_id")
-    private Carts carts;
+//    @Column(name = "order_buyer_id")
+//    private User user;
+//
+//
+//    @Column(name = "order_delivery_address_id")
+//    private DeliveryAddresses deliveryAddresses;
+//
+//    @Column(name = "order_cart_id")
+//    private Carts carts;
 }
