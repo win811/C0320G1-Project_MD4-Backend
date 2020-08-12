@@ -5,4 +5,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
+    public void doSomething1(){
+        System.out.println("a");
+    }
+
 }
