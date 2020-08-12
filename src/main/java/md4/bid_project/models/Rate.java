@@ -6,7 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "rates")
-public class Rates {
+public class Rate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rate_id")
@@ -18,10 +18,10 @@ public class Rates {
 //    @OneToMany(mappedBy = "rates")
 //    private Set<Member> members;
 
-    public Rates() {
+    public Rate() {
     }
 
-    public Rates(Long id, String name) {
+    public Rate(Long id, String name) {
         this.id = id;
         this.name = name;
     }

@@ -1,7 +1,7 @@
 package md4.bid_project.repositories;
 
-import md4.bid_project.models.Rates;
+import md4.bid_project.models.Rate;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ratesRepository extends JpaRepository<Rates,Long> {
+public interface rateRepository extends JpaRepository<Rate,Long> {
 }

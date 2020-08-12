@@ -2,12 +2,12 @@ package md4.bid_project.services.Impl;
 
 import md4.bid_project.models.Rate;
 import md4.bid_project.repositories.rateRepository;
-import md4.bid_project.services.ratesService;
+import md4.bid_project.services.rateService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class ratesServiceImpl implements ratesService {
+public class rateServiceImpl implements rateService {
 
     @Autowired
     private rateRepository rateRepository;
