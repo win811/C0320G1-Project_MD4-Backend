@@ -11,7 +11,7 @@ public class ApprovementStatus {
     private Long id;
 
     @Column(name = "approvement_status_name")
-    private boolean status;
+    private String status;
 
     public ApprovementStatus() {
     }
@@ -24,11 +24,11 @@ public class ApprovementStatus {
         this.id = id;
     }
 
-    public boolean isStatus() {
+    public String isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }
