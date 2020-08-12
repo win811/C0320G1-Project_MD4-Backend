@@ -11,11 +11,11 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id")
-    private Long id;
+    private long id;
     @Column(name = "cart_total_price")
-    private Double totalPrice;
+    private double totalPrice;
     @Column(name = "cart_status")
-    private Boolean status;
+    private boolean status;
 //    @ManyToOne
 //    @JoinColumn(name = "cart_user_id",nullable = false)
 //    private User user;
