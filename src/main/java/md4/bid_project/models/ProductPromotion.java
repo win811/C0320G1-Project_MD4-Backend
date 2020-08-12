@@ -10,6 +10,7 @@ public class ProductPromotion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long discount_id;
 
+    // tham chiếu đén bảng product
     private Integer product_id;
     private String image;
     private String content;
