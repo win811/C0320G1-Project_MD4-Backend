@@ -21,12 +21,12 @@ public class AuctionRecord {
     @Column (name = "record_id")
     private Long id;
 
-    @JoinColumn(name = "record_auction_id")
-    @ManyToOne
+    @Column(name = "record_auction_id")
+//    @ManyToOne
     private Auction auction;
 
-    @JoinColumn (name = "record_bidder_id")
-    @ManyToOne
+    @Column (name = "record_bidder_id")
+//    @ManyToOne
     private User bidder;
 
     @Column (name = "record_bid_time")
