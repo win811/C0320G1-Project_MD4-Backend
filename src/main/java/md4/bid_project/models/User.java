@@ -1,19 +1,22 @@
 package md4.bid_project.models;
 
+import lombok.Data;
+
 import javax.annotation.Generated;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 @Table(name = "users")
+@Data
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private long id;
-    //    @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL)
-    //    private Long user_id_;
 
     @Column(name = "user_first_name")
     private String firstName;
@@ -36,118 +39,17 @@ public class User {
     @Column(name = "user_gender")
     private String gender;
 
-
-    //    @ManyToOne(targetEntity = Rates.class)
-//    @JoinColumn(name = "user_rate_id")
-//    private Rates rates
-    @Column(name = "user_rate_id")
-    private Long rateId;
+    @ManyToOne
+    @JoinColumn(name = "user_rate_id")
+    private Rate rate;
 
     @Column(name = "user_point")
     private Long point;
 
     @Column(name = "user_last_login")
-    private LocalDate lastLogin;
+    private LocalDateTime lastLogin;
 
     @Column(name = "user_status")
-    private byte status;
+    private Boolean status;
 
-    public User() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public LocalDate getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getIdCard() {
-        return idCard;
-    }
-
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public Long getRateId() {
-        return rateId;
-    }
-
-    public void setRateId(Long rateId) {
-        this.rateId = rateId;
-    }
-
-    public Long getPoint() {
-        return point;
-    }
-
-    public void setPoint(Long point) {
-        this.point = point;
-    }
-
-    public LocalDate getLastLogin() {
-        return lastLogin;
-    }
-
-    public void setLastLogin(LocalDate lastLogin) {
-        this.lastLogin = lastLogin;
-    }
-
-    public byte getStatus() {
-        return status;
-    }
-
-    public void setStatus(byte status) {
-        this.status = status;
-    }
 }

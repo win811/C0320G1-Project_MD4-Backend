@@ -1,20 +1,20 @@
 package md4.bid_project.models;
 
-
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "categories")
 @Data
-public class Role {
+public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
+    @Column(name = "product_id")
     private Long id;
 
-    @Column(name = "role_name")
-    private Long name;
+    @Column(name = "category_name")
+    private String name;
 
 }

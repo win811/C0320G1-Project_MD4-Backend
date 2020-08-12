@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuctionStatusImpl implements AuctionStatusService {
-
     @Autowired
     AuctionStatusRepository auctionStatusRepository;
 }
