@@ -1,150 +1,153 @@
 package md4.bid_project.models;
 
+import javax.annotation.Generated;
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 @Table(name = "users")
 public class User {
     @Id
-//    @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL)
-//    private Long user_id_;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long user_id_;
+    private long id;
+    //    @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL)
+    //    private Long user_id_;
 
     @Column(name = "user_first_name")
-    private String user_first_name;
+    private String firstName;
 
     @Column(name = "user_last_name")
-    private String user_last_name;
+    private String lastName;
 
     @Column(name = "user_email")
-    private String user_email;
+    private String email;
 
     @Column(name = "user_phone_number")
-    private String user_phone_number;
+    private String phoneNumber;
 
     @Column(name = "user_birthday")
-    private Date user_birthday;
+    private LocalDate birthday;
 
     @Column(name = "user_id_card")
-    private String user_id_card;
+    private String idCard;
 
     @Column(name = "user_gender")
-    private String user_gender;
+    private String gender;
 
 
-//    @ManyToOne(targetEntity = Rates.class)
+    //    @ManyToOne(targetEntity = Rates.class)
 //    @JoinColumn(name = "user_rate_id")
 //    private Rates rates
     @Column(name = "user_rate_id")
-    private Long user_rate_id;
+    private Long rateId;
 
     @Column(name = "user_point")
-    private Long user_point;
+    private Long point;
 
     @Column(name = "user_last_login")
-    private Date user_last_login;
+    private LocalDate lastLogin;
 
     @Column(name = "user_status")
-    private byte user_status;
+    private byte status;
 
     public User() {
     }
 
-    public Long getUser_id_() {
-        return user_id_;
+    public long getId() {
+        return id;
     }
 
-    public void setUser_id_(Long user_id_) {
-        this.user_id_ = user_id_;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getUser_first_name() {
-        return user_first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUser_first_name(String user_first_name) {
-        this.user_first_name = user_first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getUser_last_name() {
-        return user_last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setUser_last_name(String user_last_name) {
-        this.user_last_name = user_last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getUser_email() {
-        return user_email;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUser_email(String user_email) {
-        this.user_email = user_email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getUser_phone_number() {
-        return user_phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setUser_phone_number(String user_phone_number) {
-        this.user_phone_number = user_phone_number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public Date getUser_birthday() {
-        return user_birthday;
+    public LocalDate getBirthday() {
+        return birthday;
     }
 
-    public void setUser_birthday(Date user_birthday) {
-        this.user_birthday = user_birthday;
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 
-    public String getUser_id_card() {
-        return user_id_card;
+    public String getIdCard() {
+        return idCard;
     }
 
-    public void setUser_id_card(String user_id_card) {
-        this.user_id_card = user_id_card;
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 
-    public String getUser_gender() {
-        return user_gender;
+    public String getGender() {
+        return gender;
     }
 
-    public void setUser_gender(String user_gender) {
-        this.user_gender = user_gender;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-    public Long getUser_rate_id() {
-        return user_rate_id;
+    public Long getRateId() {
+        return rateId;
     }
 
-    public void setUser_rate_id(Long user_rate_id) {
-        this.user_rate_id = user_rate_id;
+    public void setRateId(Long rateId) {
+        this.rateId = rateId;
     }
 
-    public Long getUser_point() {
-        return user_point;
+    public Long getPoint() {
+        return point;
     }
 
-    public void setUser_point(Long user_point) {
-        this.user_point = user_point;
+    public void setPoint(Long point) {
+        this.point = point;
     }
 
-    public Date getUser_last_login() {
-        return user_last_login;
+    public LocalDate getLastLogin() {
+        return lastLogin;
     }
 
-    public void setUser_last_login(Date user_last_login) {
-        this.user_last_login = user_last_login;
+    public void setLastLogin(LocalDate lastLogin) {
+        this.lastLogin = lastLogin;
     }
 
-    public byte getUser_status() {
-        return user_status;
+    public byte getStatus() {
+        return status;
     }
 
-    public void setUser_status(byte user_status) {
-        this.user_status = user_status;
+    public void setStatus(byte status) {
+        this.status = status;
     }
 }
