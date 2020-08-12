@@ -3,6 +3,7 @@ package md4.bid_project.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -19,28 +20,29 @@ public class Order {
     private String code;
 
     @Column(name = "order_status")
-    private boolean status;
+    private Boolean status;
 
     @Column(name = "order_payment_method")
     private String paymentMethod;
 
     @Column(name = "order_deadline_delivery")
-    private Date deadlineDelivery;
+    private LocalDateTime deadlineDelivery;
 
     @Column(name = "order_delivery_method")
     private String deliveryMethod;
 
     @Column(name = "order_payment_status")
-    private boolean paymentStatus;
+    private String paymentStatus;
 
+    @ManyToOne
+    @JoinColumn(name = "order_buyer_id")
+    private User buyer;
 
-//    @Column(name = "order_buyer_id")
-//    private User user;
-//
-//
-//    @Column(name = "order_delivery_address_id")
-//    private DeliveryAddresses deliveryAddresses;
-//
-//    @Column(name = "order_cart_id")
-//    private Cart cart;
+    @ManyToOne
+    @JoinColumn(name = "order_delivery_address_id")
+    private DeliveryAddress deliveryAddress;
+
+    @OneToOne
+    @JoinColumn(name = "order_cart_id")
+    private Cart cart;
 }

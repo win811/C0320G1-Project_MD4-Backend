@@ -1,34 +1,26 @@
 package md4.bid_project.models;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
+@Table(name = "password_reset_code")
+@Data
 public class PasswordResetCode {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "reset_code")
     private String code;
-    @OneToOne(targetEntity = Account.class)
-    @JoinColumn(nullable = false, name = "account_id")
+
+    @OneToOne
+    @JoinColumn(name = "account_id")
     private Account account;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(name = "reset_status")
+    private Boolean status;
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 }

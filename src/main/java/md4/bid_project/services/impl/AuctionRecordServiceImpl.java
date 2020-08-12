@@ -1,9 +1,8 @@
-package md4.bid_project.services.Impl;
+package md4.bid_project.services.impl;
 
 
 import md4.bid_project.models.AuctionRecord;
 import md4.bid_project.repositories.AuctionRecordRepository;
-import md4.bid_project.repositories.AuctionRepository;
 import md4.bid_project.services.AuctionRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

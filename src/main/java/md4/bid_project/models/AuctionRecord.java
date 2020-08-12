@@ -21,23 +21,21 @@ public class AuctionRecord {
     @Column (name = "record_id")
     private Long id;
 
-    @Column(name = "record_auction_id")
-//    @ManyToOne
+    @ManyToOne
+    @JoinColumn(name = "record_auction_id")
     private Auction auction;
 
-    @Column (name = "record_bidder_id")
-//    @ManyToOne
+    @ManyToOne
+    @JoinColumn(name = "record_bidder_id")
     private User bidder;
 
     @Column (name = "record_bid_time")
-    private Date bidTime;
+    private LocalDateTime bidTime;
 
     @Column (name = "record_bid_price")
     private Double bidPrice;
 
     @Column (name = "record_bid_is_winner")
     private Boolean isWinner;
-
-
 
 }

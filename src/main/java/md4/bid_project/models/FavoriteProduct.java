@@ -14,11 +14,13 @@ public class FavoriteProduct {
     @Column(name = "favortite_product_id")
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(name = "product_id")
-    private Long productId;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @Column(name = "favorite_product_status")
     private Boolean status;

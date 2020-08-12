@@ -8,15 +8,19 @@ import javax.persistence.*;
 @Table(name = "carts")
 @Data
 public class Cart {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id")
-    private long id;
+    private Long id;
+
     @Column(name = "cart_total_price")
-    private double totalPrice;
+    private Double totalPrice;
+
     @Column(name = "cart_status")
-    private boolean status;
-//    @ManyToOne
-//    @JoinColumn(name = "cart_user_id",nullable = false)
-//    private User user;
+    private Boolean status;
+
+    @ManyToOne
+    @JoinColumn(name = "cart_user_id")
+    private User user;
 }

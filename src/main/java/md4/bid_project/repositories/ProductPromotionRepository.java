@@ -1,9 +1,9 @@
 package md4.bid_project.repositories;
 
-import md4.bid_project.models.FavoriteProduct;
+import md4.bid_project.models.ProductPromotion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FavoriteProductRepository extends JpaRepository<FavoriteProduct, Long> {
+public interface ProductPromotionRepository extends JpaRepository<ProductPromotion,Long> {
 }

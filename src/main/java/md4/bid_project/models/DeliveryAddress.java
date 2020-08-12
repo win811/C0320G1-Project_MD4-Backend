@@ -12,7 +12,7 @@ public class DeliveryAddress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "delivery_id")
-    private long id;
+    private Long id;
 
     @Column(name = "delivery_nation")
     private String nation;
@@ -33,9 +33,9 @@ public class DeliveryAddress {
     private String phoneNumber;
 
     @Column(name = "delivery_default")
-    private boolean isDefault;
+    private Boolean isDefault;
 
-//    @ManyToOne
-//    @JoinColumn(name = "delivery_user_id")
-//    private User user;
+    @ManyToOne
+    @JoinColumn(name = "delivery_user_id")
+    private User user;
 }
