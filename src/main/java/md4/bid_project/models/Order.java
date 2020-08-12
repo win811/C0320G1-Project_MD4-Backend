@@ -42,5 +42,5 @@ public class Order {
 //    private DeliveryAddresses deliveryAddresses;
 //
 //    @Column(name = "order_cart_id")
-//    private Carts carts;
+//    private Cart cart;
 }
