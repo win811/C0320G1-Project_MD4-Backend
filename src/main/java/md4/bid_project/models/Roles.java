@@ -1,9 +1,12 @@
 package md4.bid_project.models;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "roles")
+@Data
 public class Roles {
 
     @Id
@@ -14,22 +17,4 @@ public class Roles {
     @Column(name = "role_name")
     private String roleName ;
 
-    public Roles() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
 }
