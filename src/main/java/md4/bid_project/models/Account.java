@@ -22,9 +22,17 @@ public class Account {
     @Column(name = "account_answer")
     private String answer ;
 
-    @Column(name = "reason_ban")
+    @OneToOne
+    @JoinColumn(name = "account_user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "account_role_id")
+    private Role role;
+
+    @Column(name = "account_reason_ban")
     private String reasonBan ;
 
     @Column(name = "account_status")
-    private Boolean isAccountLocked ;
+    private Boolean isLocked;
 }
