@@ -1,22 +1,21 @@
 package md4.bid_project.models;
 
+
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Set;
 
-
 @Entity
-@Table(name = "auction_statuses")
+@Table(name = "rates")
 @Data
-public class AuctionStatus {
-
+public class Rate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="auction_status_id")
-    private long id;
+    @Column(name = "rate_id")
+    private Long id;
 
-    @Column(name = "auction_status_name")
+    @Column(name = "rate_name")
     private String name;
 
 }
