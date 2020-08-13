@@ -2,6 +2,7 @@ package md4.bid_project.models;
 
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,10 +23,12 @@ public class AuctionRecord {
     private Long id;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "record_auction_id")
     private Auction auction;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "record_bidder_id")
     private User bidder;
 
