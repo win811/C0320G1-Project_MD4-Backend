@@ -13,7 +13,7 @@ public class AuctionStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="auction_status_id")
-    private Long id;
+    private long id;
 
     @Column(name = "auction_status_name")
     private String name;
