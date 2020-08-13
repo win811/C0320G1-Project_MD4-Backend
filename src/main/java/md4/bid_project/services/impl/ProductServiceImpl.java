@@ -13,7 +13,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     ProductRepository productRepository;
-    
+
     @Override
     public List<Product> findProductByOwnerId(Long ownerId) {
         return productRepository.findByOwner_Id(ownerId);
