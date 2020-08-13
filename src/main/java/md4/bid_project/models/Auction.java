@@ -1,13 +1,14 @@
 package md4.bid_project.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
+
+
 
 @Entity
 @Table(name="auctions")
@@ -23,7 +24,10 @@ public class Auction {
     private Product product;
 
     @ManyToOne
-    @JsonBackReference
+//    @JsonBackReference
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @JoinColumn(name="auction_status_id")
     private AuctionStatus auctionStatus;
 
@@ -33,8 +37,10 @@ public class Auction {
 
     @OneToMany(mappedBy = "auction")
     @JsonManagedReference
-    private Set<AuctionRecord> records;
-
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+//            property = "id")
+//    @JsonIdentityReference(alwaysAsId = true)
+    private List<AuctionRecord> records;
 
 
 
