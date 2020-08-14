@@ -35,4 +35,6 @@ public class Account {
 
     @Column(name = "account_status")
     private Boolean isLocked;
+
+
 }
