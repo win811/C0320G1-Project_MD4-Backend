@@ -25,9 +25,9 @@ public class Auction {
 
     @ManyToOne
 //    @JsonBackReference
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+//            property = "id")
+//    @JsonIdentityReference(alwaysAsId = true)
     @JoinColumn(name="auction_status_id")
     private AuctionStatus auctionStatus;
 
@@ -36,10 +36,11 @@ public class Auction {
 
 
     @OneToMany(mappedBy = "auction")
-    @JsonManagedReference
+//    @JsonManagedReference
 //    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
 //            property = "id")
 //    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIgnoreProperties("auction")
     private List<AuctionRecord> records;
 
 

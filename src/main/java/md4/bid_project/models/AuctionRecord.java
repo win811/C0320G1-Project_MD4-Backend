@@ -3,10 +3,7 @@ package md4.bid_project.models;
 
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -25,17 +22,19 @@ public class AuctionRecord {
 
     @ManyToOne
 //    @JsonBackReference
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+//            property = "id")
+//    @JsonIdentityReference(alwaysAsId = true)
     @JoinColumn(name = "record_auction_id")
+    @JsonIgnoreProperties("records")
     private Auction auction;
 
     @ManyToOne
 //    @JsonBackReference
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+//            property = "id")
+//    @JsonIdentityReference(alwaysAsId = true)
+
     @JoinColumn(name = "record_bidder_id")
     private User bidder;
 

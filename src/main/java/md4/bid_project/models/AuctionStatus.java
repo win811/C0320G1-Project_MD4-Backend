@@ -21,11 +21,12 @@ public class AuctionStatus {
     @Column(name = "auction_status_name")
     private String name;
 
-    @OneToMany(mappedBy = "auctionStatus")
-    @JsonManagedReference
+//    @OneToMany(mappedBy = "auctionStatus")
+//    @JsonManagedReference
 //    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
 //            property = "id")
 //    @JsonIdentityReference(alwaysAsId = true)
-    private List<Auction> auctions;
+//    @JsonIgnoreProperties("auctionStatus")
+//    private List<Auction> auctions;
 
 }
