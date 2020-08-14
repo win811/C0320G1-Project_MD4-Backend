@@ -1,5 +1,6 @@
 package md4.bid_project.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -24,5 +25,9 @@ public class Cart {
     @ManyToOne
     @JoinColumn(name = "cart_user_id")
     private User user;
+
+    @OneToMany(mappedBy = "cart")
+    @JsonIgnoreProperties(value = "cart")
+    private List<CartDetail> cartDetails;
 
 }

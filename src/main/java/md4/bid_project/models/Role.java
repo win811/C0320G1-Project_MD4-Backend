@@ -15,6 +15,6 @@ public class Role {
     private Long id;
 
     @Column(name = "role_name")
-    private Long name;
+    private String name;
 
 }

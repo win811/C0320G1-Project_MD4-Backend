@@ -19,6 +19,10 @@ public class Order {
     @Column(name = "order_code")
     private String code;
 
+    @ManyToOne
+    @JoinColumn(name = "order_buyer_id")
+    private User buyer;
+
     @Column(name = "order_status")
     private Boolean status;
 
@@ -34,9 +38,7 @@ public class Order {
     @Column(name = "order_payment_status")
     private String paymentStatus;
 
-    @ManyToOne
-    @JoinColumn(name = "order_buyer_id")
-    private User buyer;
+
 
     @ManyToOne
     @JoinColumn(name = "order_delivery_address_id")
