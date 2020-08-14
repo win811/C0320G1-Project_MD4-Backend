@@ -15,6 +15,6 @@ public class ApprovementStatus {
     private Long id;
 
     @Column(name = "approvement_status_name")
-    private String status;
+    private String name;
 
 }
