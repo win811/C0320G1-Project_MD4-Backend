@@ -17,7 +17,7 @@ public class CartDetail {
 
     @ManyToOne
     @JoinColumn(name = "cart_id")
-    @JsonIgnoreProperties("cartDetails")
+    @JsonIgnoreProperties(value = "cartDetails")
     private Cart cart;
 
     @Column(name = "product_win_price")
