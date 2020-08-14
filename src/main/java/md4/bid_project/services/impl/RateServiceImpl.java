@@ -14,7 +14,6 @@ public class RateServiceImpl implements RateService {
     @Autowired
     private RateRepository rateRepository;
 
-
     @Override
     public List<Rate> findAll() {
         return rateRepository.findAll();

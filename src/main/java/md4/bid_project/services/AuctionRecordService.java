@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface AuctionRecordService {
 
-
     List<AuctionRecord> getAllAuctionRecords();
 
     AuctionRecord getAuctionRecordById(Long id);
