@@ -3,6 +3,7 @@ package md4.bid_project.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "carts")
@@ -23,4 +24,5 @@ public class Cart {
     @ManyToOne
     @JoinColumn(name = "cart_user_id")
     private User user;
+
 }
