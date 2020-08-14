@@ -3,6 +3,7 @@ package md4.bid_project.controllers;
 import md4.bid_project.models.Product;
 import md4.bid_project.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +22,16 @@ public class ProductController {
     public ResponseEntity<List<Product>> listProduct(){
         List<Product> pageProduct = productService.findAllProduct();
 
+
         if (pageProduct.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<List<Product>>(pageProduct,HttpStatus.OK);
+
+    @GetMapping("/products/owner/{ownerId}")
+    public ResponseEntity<List<Product>> getProductByOwnerId(@PathVariable(value = "ownerId") Long ownerId) {
+        return ResponseEntity.ok(productService.findProductByOwnerId(ownerId));
+
     }
 
     @PostMapping("/products")
