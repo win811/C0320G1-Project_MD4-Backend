@@ -18,17 +18,17 @@ public class User {
     @Column(name = "user_id")
     private long id;
 
-    @Column(name = "user_first_name")
-    private String firstName;
-
-    @Column(name = "user_last_name")
-    private String lastName;
+    @Column(name = "user_fullname")
+    private String fullname;
 
     @Column(name = "user_email")
     private String email;
 
     @Column(name = "user_phone_number")
     private String phoneNumber;
+
+    @Column(name = "user_address")
+    private String address;
 
     @Column(name = "user_birthday")
     private LocalDate birthday;
