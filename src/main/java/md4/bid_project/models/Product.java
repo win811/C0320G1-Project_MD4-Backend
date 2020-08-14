@@ -47,5 +47,4 @@ public class Product {
     @OneToOne
     @JoinColumn(name = "product_owner_id")
     private User owner;
-
 }
