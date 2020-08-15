@@ -19,19 +19,18 @@ public class ProductController {
     public ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> listProduct(){
+    public ResponseEntity<List<Product>> listProduct() {
         List<Product> pageProduct = productService.findAllProduct();
 
 
-        if (pageProduct.isEmpty()){
+        if (pageProduct.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<Product>>(pageProduct,HttpStatus.OK);
-
+        return new ResponseEntity<List<Product>>(pageProduct, HttpStatus.OK);
+    }
     @GetMapping("/products/owner/{ownerId}")
     public ResponseEntity<List<Product>> getProductByOwnerId(@PathVariable(value = "ownerId") Long ownerId) {
         return ResponseEntity.ok(productService.findProductByOwnerId(ownerId));
-
     }
 
     @PostMapping("/products")
