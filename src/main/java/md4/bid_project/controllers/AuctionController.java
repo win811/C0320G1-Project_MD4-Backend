@@ -5,6 +5,9 @@ import md4.bid_project.models.AuctionRecord;
 import md4.bid_project.services.AuctionRecordService;
 import md4.bid_project.services.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +21,20 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class AuctionController {
 
-
     @Autowired
     AuctionService auctionService;
     @Autowired
     AuctionRecordService auctionRecordService;
+
+    //    Cường
+    @GetMapping("/myAuctionRecords/{bidderId}")
+    public ResponseEntity<Page<AuctionRecord>> findAuctionRecordByBidderId(@PathVariable(value = "bidderId") Long bidderId,
+                                                                           @RequestParam(name = "productName",defaultValue = "") String productName,
+                                                                           @RequestParam(name = "recordStatusName",defaultValue = "") String recordStatusName,
+                                                                           @PageableDefault(value = 1) Pageable pageable) {
+        Page<AuctionRecord> auctionRecordPage = auctionRecordService.findByBidderIdAndProductNameAndRecordStatusName(bidderId,productName,recordStatusName,pageable);
+        return ResponseEntity.ok(auctionRecordPage);
+    }
 
     @GetMapping("/auctions")
     public ResponseEntity<List<Auction>> listAllAuctions(){
@@ -70,8 +82,6 @@ public class AuctionController {
         auctionService.deleteAuction(id);
         return new ResponseEntity<Auction>(HttpStatus.NO_CONTENT);
     }
-
-
 
     @GetMapping(value = "/auctionRecords")
     public ResponseEntity<List<AuctionRecord>> getAllAuctionRecord(){
