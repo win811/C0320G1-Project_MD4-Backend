@@ -34,7 +34,7 @@ public class CartController {
     }
 
     // Cập nhật tổng tiền của một giỏ hàng
-    @PostMapping("/cart")
+    @PutMapping("/cart")
     public ResponseEntity<Double> updateTotalCost(@RequestBody Map<String, Object> requestBody)
             throws ResourceNotFoundException {
         Long cartId = Long.valueOf(requestBody.get("cartId").toString());
@@ -59,7 +59,7 @@ public class CartController {
     }
 
     // Cập nhật 1 sản phẩm trong giỏ hàng (thay đổi số lượng)
-    @PatchMapping("/cart/cart-detail/update")
+    @PutMapping("/cart/cart-detail/update")
     public ResponseEntity<CartDetail> updateCartDetail(@RequestBody Map<String, Object> requestBody)
             throws ResourceNotFoundException {
         Long cartDetailId = Long.valueOf(requestBody.get("cartDetailId").toString());
@@ -73,7 +73,7 @@ public class CartController {
     }
 
     // Xóa 1 sản phẩm khỏi giỏ hàng
-    @PostMapping("/cart/cart-detail/delete")
+    @DeleteMapping("/cart/cart-detail/delete")
     public ResponseEntity<CartDetail> deleteCartDetail(@RequestBody Map<String, Object> requestBody)
             throws ResourceNotFoundException {
         Long cartDetailId = Long.valueOf(requestBody.get("cartDetailId").toString());
