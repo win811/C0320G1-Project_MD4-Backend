@@ -1,9 +1,11 @@
 package md4.bid_project.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -47,5 +49,9 @@ public class Product {
     @OneToOne
     @JoinColumn(name = "product_owner_id")
     private User owner;
+
+    @OneToMany(mappedBy = "product")
+    @JsonIgnoreProperties(value = "product")
+    private List<ProductImage> productImages;
 
 }
