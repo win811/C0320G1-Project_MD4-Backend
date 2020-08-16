@@ -31,7 +31,7 @@ public class AuctionController {
     public ResponseEntity<Page<AuctionRecord>> findAuctionRecordByBidderId(@PathVariable(value = "bidderId") Long bidderId,
                                                                            @RequestParam(name = "productName",defaultValue = "") String productName,
                                                                            @RequestParam(name = "recordStatusName",defaultValue = "") String recordStatusName,
-                                                                           @PageableDefault(value = 1) Pageable pageable) {
+                                                                           @PageableDefault(value = 4) Pageable pageable) {
         Page<AuctionRecord> auctionRecordPage = auctionRecordService.findByBidderIdAndProductNameAndRecordStatusName(bidderId,productName,recordStatusName,pageable);
         return ResponseEntity.ok(auctionRecordPage);
     }

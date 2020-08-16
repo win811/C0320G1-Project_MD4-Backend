@@ -30,7 +30,7 @@ public class ProductController {
     public ResponseEntity<Page<Product>> getProductByOwnerId(@PathVariable(value = "ownerId") Long ownerId,
                                                              @RequestParam(name = "productName",defaultValue = "") String productName,
                                                              @RequestParam(name = "approvementStatusName",defaultValue = "") String approvementStatusName,
-                                                             @PageableDefault(value = 1) Pageable pageable) {
+                                                             @PageableDefault(value = 4) Pageable pageable) {
         Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId,productName,approvementStatusName,pageable);
         return ResponseEntity.ok(productPage);
     }
@@ -41,7 +41,7 @@ public class ProductController {
                                                                          @RequestParam(name = "productName",defaultValue = "") String productName,
                                                                          @RequestParam(name = "approvementStatusName",defaultValue = "") String approvementStatusName,
                                                                          @RequestParam(name = "cancelProductId", defaultValue = "0") Long cancelProductId,
-                                                                         @PageableDefault(value = 1) Pageable pageable) {
+                                                                         @PageableDefault(value = 4) Pageable pageable) {
         if (cancelProductId != 0) {
             Product product = productService.findById(cancelProductId);
             ApprovementStatus approvementStatus = approvementStatusService.findByName("đã hủy");
