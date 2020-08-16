@@ -57,27 +57,26 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonIgnoreProperties(value = "user")
     private List<DeliveryAddress> deliveryAddressList;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "user_role_id")
-//    private Role role;
 
-//    @OneToOne
-//    @JoinColumn(name = "reset_id")
-//    private PasswordResetCode passwordResetCode;
-//
-//    @Column(name = "user_password")
-//    private String password ;
-//
-//    @Column(name = "user_question")
-//    private String question ;
-//
-//    @Column(name = "user_answer")
-//    private String answer;
-//
-//    @Column(name = "user_reason_ban")
-//    private String reasonBan;
-//
-//    @Column(name = "user_lock")
-//    private Boolean isLocked;
+    @ManyToOne
+    @JoinColumn(name = "user_role_id")
+    private Role role;
+
+    @OneToOne(mappedBy = "user")
+    private PasswordResetCode passwordResetCode;
+
+    @Column(name = "user_password")
+    private String password ;
+
+    @Column(name = "user_question")
+    private String question ;
+
+    @Column(name = "user_answer")
+    private String answer;
+
+    @Column(name = "user_reason_ban")
+    private String reasonBan;
+
+    @Column(name = "user_is_locked")
+    private Boolean isLocked;
 }
