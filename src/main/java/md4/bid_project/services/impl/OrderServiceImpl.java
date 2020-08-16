@@ -11,4 +11,9 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepository orderRepository;
+
+    @Override
+    public Order findOrderById(Long id) {
+        return orderRepository.findById(id).orElse(null);
+    }
 }
