@@ -7,6 +7,7 @@ import md4.bid_project.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,7 +18,13 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Optional<Cart> findByUserId(Long userId) {
-        return cartRepository.findByUserIdAndStatusIsTrue(userId);
+        Optional<Cart> optionalCart = cartRepository.findByUserIdAndStatusIsTrue(userId);
+        if (optionalCart.isPresent()) {
+            Cart cart = optionalCart.get();
+            List<CartDetail> cartDetails = cart.getCartDetails();
+            cartDetails.removeIf(cartDetail -> !cartDetail.getStatus().equals(CartDetailServiceImpl.STATUS_WAITING));
+        }
+        return optionalCart;
     }
 
     @Override
