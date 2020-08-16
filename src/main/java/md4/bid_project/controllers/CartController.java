@@ -59,7 +59,7 @@ public class CartController {
     }
 
     // Cập nhật 1 sản phẩm trong giỏ hàng (thay đổi số lượng)
-    @PutMapping("/cart/cart-detail/update")
+    @PutMapping("/cart/cart-detail")
     public ResponseEntity<CartDetail> updateCartDetail(@RequestBody Map<String, Object> requestBody)
             throws ResourceNotFoundException {
         Long cartDetailId = Long.valueOf(requestBody.get("cartDetailId").toString());
