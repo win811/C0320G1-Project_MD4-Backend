@@ -17,11 +17,6 @@ import java.util.Optional;
 @Service
 public class CartDetailServiceImpl implements CartDetailService {
 
-    public static final String STATUS_WAITING = "waiting";
-    public static final String STATUS_REMOVED = "removed";
-    public static final String STATUS_PAID = "paid";
-    public static final int DEFAULT_QUANTITY = 1;
-
     @Autowired
     private CartDetailRepository cartDetailRepository;
 
@@ -64,6 +59,7 @@ public class CartDetailServiceImpl implements CartDetailService {
             CartDetail cartDetail = optional.get();
             cartDetail.setProductQuantity(quantity);
             cartDetail.setCartDetailCost(quantity * cartDetail.getProductWinPrice());
+            cartService.updateTotalCost(cartDetail.getCart().getId());
             return cartDetailRepository.save(cartDetail);
         }
         return null;
@@ -75,6 +71,7 @@ public class CartDetailServiceImpl implements CartDetailService {
         if (optional.isPresent()) {
             CartDetail cartDetail = optional.get();
             cartDetail.setStatus(STATUS_REMOVED);
+            cartService.updateTotalCost(cartDetail.getCart().getId());
             return cartDetailRepository.save(cartDetail);
         }
         return null;
