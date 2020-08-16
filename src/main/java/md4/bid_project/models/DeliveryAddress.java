@@ -36,8 +36,8 @@ public class DeliveryAddress {
     @Column(name = "delivery_street")
     private String street;
 
-    @NotBlank
-    @Column(name = "Vui lòng nhập số điện thoại giao hàng")
+    @NotBlank(message = "Vui lòng nhập số điện thoại giao hàng")
+    @Column(name = "delivery_phone_number")
     @Pattern(regexp = "^0[35789]\\d{8}$", message = "Số điện thoại không hợp lệ")
     private String phoneNumber;
 
