@@ -47,7 +47,7 @@ public class CartController {
     }
 
     // Thêm vào giỏ hàng một sản phẩm
-    @PostMapping("/cart/cart-detail/add")
+    @PostMapping("/cart/cart-detail")
     public ResponseEntity<CartDetail> addToCart(@Validated @RequestBody CartDetailDTO cartDetailDTO)
             throws ResourceNotFoundException {
         CartDetail cartDetail = cartDetailService.create(cartDetailDTO);
@@ -73,10 +73,9 @@ public class CartController {
     }
 
     // Xóa 1 sản phẩm khỏi giỏ hàng
-    @DeleteMapping("/cart/cart-detail/delete")
-    public ResponseEntity<CartDetail> deleteCartDetail(@RequestBody Map<String, Object> requestBody)
+    @DeleteMapping("/cart/cart-detail/{cartDetailId}")
+    public ResponseEntity<CartDetail> deleteCartDetail(@PathVariable(name = "cartDetailId") Long cartDetailId)
             throws ResourceNotFoundException {
-        Long cartDetailId = Long.valueOf(requestBody.get("cartDetailId").toString());
         CartDetail cartDetail = cartDetailService.delete(cartDetailId);
         if (cartDetail != null) {
             return ResponseEntity.ok().body(cartDetail);
