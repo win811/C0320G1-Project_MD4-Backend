@@ -16,10 +16,22 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    // Create: Toàn
+    // Creator : Cường
     @Override
-    public List<Product> findProductByOwnerId(Long ownerId) {
-        return productRepository.findByOwner_Id(ownerId);
+    public Page<Product> findProductByOwnerIdAndNameAndApprovementStatus(Long ownerId, String productName,
+            String approvementStatusName, Pageable pageable) {
+        return productRepository.findByOwner_IdAndNameContainingAndApprovementStatus_NameContaining(ownerId,
+                productName, approvementStatusName, pageable);
+    }
+
+    @Override
+    public Product findById(Long id) {
+        return productRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void save(Product product) {
+        productRepository.save(product);
     }
 
     // Create: Toàn

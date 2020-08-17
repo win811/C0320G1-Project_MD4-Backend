@@ -23,4 +23,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    // Duy
+    @ExceptionHandler(ViolatedException.class)
+    public ResponseEntity<?> handleViolatedException(ViolatedException ex, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), request.getDescription(false));
+        errorDetails.setErrors(ex.getResult().getFieldErrors());
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
 }

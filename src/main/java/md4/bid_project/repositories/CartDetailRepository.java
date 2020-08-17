@@ -4,6 +4,10 @@ import md4.bid_project.models.CartDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public interface CartDetailRepository extends JpaRepository<CartDetail, Long> {
+public interface CartDetailRepository extends JpaRepository<CartDetail,Long> {
+    //Creator: Nguyễn Xuân Hùng
+    List<CartDetail> findAllByCart_Id(Long id);
 }
