@@ -146,10 +146,11 @@ public class UserAPI {
         }
         newPassword = RandomStringUtils.randomAlphanumeric(10);
         passwordEncryption = userService.passwordEncryption(newPassword);
-        System.out.println("checkok");
+        System.out.println("check ok");
         currentUser.setPassword(passwordEncryption);
+        System.out.println("setPass oK");
         userService.save(currentUser);
-        System.out.println("savepassok");
+        System.out.println("savepass ok");
         title = "Yêu Cầu Thay Đổi Mật Khẩu";
         content = "Chào quý khách,\n" +
                 "Mật Khẩu của quý khách đã được thay đổi thành công.\n" +

@@ -30,7 +30,7 @@ public class User implements Validator {
     @Column(name = "user_email")
     private String email;
 
-    @Pattern(regexp = "^((\\(\\+84\\))|0)9[01]\\d{7}$", message = "Phone number is wrong format")
+//    @Pattern(regexp = "^((\\(\\+84\\))|0)9[01]\\d{7}$", message = "Phone number is wrong format")
     @Column(name = "user_phone_number")
     private String phoneNumber;
 
@@ -40,7 +40,7 @@ public class User implements Validator {
     @Column(name = "user_birthday")
     private LocalDate birthday;
 
-    @Pattern(regexp = "^\\d{9}$", message = "ID Card format must be 9 number!")
+//    @Pattern(regexp = "^\\d{9}$", message = "ID Card format must be 9 number!")
     @Column(name = "user_id_card")
     private String idCard;
 
