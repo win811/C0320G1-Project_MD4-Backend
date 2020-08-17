@@ -1,5 +1,6 @@
 package md4.bid_project.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -47,5 +48,6 @@ public class Product {
     @OneToOne
     @JoinColumn(name = "product_owner_id")
     private User owner;
+
 
 }
