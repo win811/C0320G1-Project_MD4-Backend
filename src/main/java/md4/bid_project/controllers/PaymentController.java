@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import md4.bid_project.models.dto.InvoiceDto;
+import md4.bid_project.models.CartDetail;
+import md4.bid_project.models.Order;
+import md4.bid_project.services.CartDetailService;
+import md4.bid_project.services.OrderService;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -27,7 +32,10 @@ public class PaymentController {
 
     @Autowired
     PayPalService payPalService;
-
+    @Autowired
+    OrderService orderService;
+    @Autowired
+    CartDetailService cartDetailService;
     // Khởi tạo 1 đơn hàng từ paypal
     @PostMapping("/payment/create-transaction")
     public ResponseEntity<Transaction> getTransaction(@RequestBody Cart cart) throws IOException {
@@ -60,5 +68,19 @@ public class PaymentController {
         }
         deliveryAddressService.updateDeliveryAddress(deliveryAddress);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //Creator: Nguyễn Xuân Hùng
+    @GetMapping("/payment/invoice/{id}")
+    public ResponseEntity<InvoiceDto> getInvoiceById(@PathVariable Long id){
+        Order order = orderService.findOrderById(id);
+        List<CartDetail> cartDetail = cartDetailService.findCartDetailByCartId(order.getCart().getId());
+        if(cartDetail==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        InvoiceDto invoiceDto = new InvoiceDto();
+        invoiceDto.setOrder(order);
+        invoiceDto.setCartDetail(cartDetail);
+        return new ResponseEntity<>(invoiceDto,HttpStatus.OK);
     }
 }
