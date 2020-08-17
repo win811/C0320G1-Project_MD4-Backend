@@ -11,7 +11,6 @@ public interface ProductService {
     //    Cường
     Page<Product> findProductByOwnerIdAndNameAndApprovementStatus(Long ownerId, String productName, String approvementStatusName, Pageable pageable);
     Product findById (Long id);
-    void save(Product product);
     List<Product> findProductByOwnerId(Long ownerId);
     List<Product> findAllProduct();
 
