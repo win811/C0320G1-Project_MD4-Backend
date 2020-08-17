@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Long> {
 
+    //    Creator : Cường
     Page<Product> findByOwner_IdAndNameContainingAndApprovementStatus_NameContaining(Long ownerId, String productName,
                                                                                      String approvementStatusName, Pageable pageable);
 
