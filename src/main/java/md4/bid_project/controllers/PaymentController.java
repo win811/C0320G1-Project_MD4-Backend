@@ -17,6 +17,11 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
+// Duy
+// Cac file liên quan đến DeliveryAddress (repository, service, entity)
+// /services/restful/paypal
+// /services/restful/rateExchange
+// Exception
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1")
@@ -30,15 +35,15 @@ public class PaymentController {
 
     // Khởi tạo 1 đơn hàng từ paypal
     @PostMapping("/payment/create-transaction")
-    public ResponseEntity<Transaction> getTransaction(@RequestBody Cart cart) throws IOException {
-        Transaction data = payPalService.createTransaction(cart);
+    public ResponseEntity<Transaction> getTransaction(@RequestBody  Long userId) throws IOException {
+        Transaction data = payPalService.createTransaction(userId);
         return ResponseEntity.ok(data);
     }
 
     // xác nhận đơn hàng đã được trả từ người mua
     @PostMapping("/payment/confirm-transaction")
-    public ResponseEntity<Transaction> confirmTransaction(@RequestBody String id) throws IOException {
-         Transaction transaction = payPalService.captureTransaction(id);
+    public ResponseEntity<Transaction> confirmTransaction(@RequestBody String orderId) throws IOException {
+         Transaction transaction = payPalService.captureTransaction(orderId);
         return ResponseEntity.ok(transaction);
     }
 
