@@ -12,6 +12,8 @@ public interface ProductService {
     //    Cường
     Page<Product> findProductByOwnerIdAndNameAndApprovementStatus(Long ownerId, String productName, String approvementStatusName, Pageable pageable);
 
+
+    //Creator: Nguyen Phi Son
     Product findById (Long id);
     void save(Product product);
 

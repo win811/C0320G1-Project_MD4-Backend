@@ -80,13 +80,7 @@ public class ProductController {
     }
 
 
-
-//    @PostMapping("/products")
-//    public ResponseEntity<Void> createProduct(@RequestBody Product product){
-//        System.out.println(product);
-//        productService.saveProduct(product);
-//        return new ResponseEntity<Void>(HttpStatus.CREATED);
-//    }
+    // Creator : Nguyen Phi Son
 
     @PostMapping("/products")
     public ResponseEntity<Product> createProduct(@RequestBody ProductCreateDTO productCreateDTO) {

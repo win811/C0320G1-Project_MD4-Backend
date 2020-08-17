@@ -29,6 +29,8 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     ApprovementStatusRepository approvementStatusRepository;
 
+    // Creator: Nguyen Phi Son
+
     @Override
     public List<Product> findAllProduct() {
         return productRepository.findAll();
@@ -64,10 +66,9 @@ public class ProductServiceImpl implements ProductService {
         return userRepository.findById(id).orElse(null);
     }
 
-    //    Cường
     @Override
-    public Page<Product> findProductByOwnerIdAndNameAndApprovementStatus(Long ownerId, String productName, String approvementStatusName, Pageable pageable) {
-        return productRepository.findByOwner_IdAndNameContainingAndApprovementStatus_NameContaining(ownerId,productName,approvementStatusName,pageable);
+    public List<Product> findProductByOwnerId(Long ownerId) {
+        return null;
     }
 
     @Override
@@ -80,4 +81,9 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
     }
 
+    //    Cường
+    @Override
+    public Page<Product> findProductByOwnerIdAndNameAndApprovementStatus(Long ownerId, String productName, String approvementStatusName, Pageable pageable) {
+        return productRepository.findByOwner_IdAndNameContainingAndApprovementStatus_NameContaining(ownerId,productName,approvementStatusName,pageable);
+    }
 }

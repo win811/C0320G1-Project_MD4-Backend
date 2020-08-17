@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+//creator Nguyen Phi Son
 @Data
 public class ProductCreateDTO {
     private String name;
