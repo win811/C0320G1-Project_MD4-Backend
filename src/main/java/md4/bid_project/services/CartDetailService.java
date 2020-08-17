@@ -3,6 +3,10 @@ package md4.bid_project.services;
 import md4.bid_project.models.CartDetail;
 import md4.bid_project.models.dto.CartDetailDTO;
 
+import md4.bid_project.models.CartDetail;
+
+import java.util.List;
+
 public interface CartDetailService {
 
     String STATUS_WAITING = "waiting";
@@ -16,4 +20,5 @@ public interface CartDetailService {
 
     CartDetail delete(Long cartDetailId);
 
+    List<CartDetail> findCartDetailByCartId(Long id);
 }
