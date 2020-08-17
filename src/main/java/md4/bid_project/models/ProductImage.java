@@ -22,5 +22,4 @@ public class ProductImage {
     @JoinColumn(name = "product_id")
     @JsonIgnoreProperties(value = "productImages")
     private Product product;
-
 }
