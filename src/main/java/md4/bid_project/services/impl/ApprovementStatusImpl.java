@@ -11,6 +11,11 @@ public class ApprovementStatusImpl implements ApprovementStatusService {
     @Autowired private ApprovementStatusRepository approvementStatusRepository;
 
     @Override
+    public ApprovementStatus findByName(String name) {
+        return approvementStatusRepository.findByName(name);
+    }
+
+    @Override
     public ApprovementStatus getApprovementById(Long id) {
         return approvementStatusRepository.findById(id).orElse(null);
     }
