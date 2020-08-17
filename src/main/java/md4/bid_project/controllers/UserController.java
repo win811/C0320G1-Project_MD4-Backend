@@ -17,56 +17,60 @@ import java.util.Map;
 @RequestMapping("/api/v1")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+        @Autowired
+        private UserService userService;
 
-    @GetMapping("/user")
-    public List<User> getAllUser() {
-        return userService.findAll();
-    }
+        @GetMapping("/user")
+        public List<User> getAllUser() {
+            return userService.findAll();
+        }
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long userId)
-            throws ResourceNotFoundException {
-        User user = userService.findById(userId);
-        return ResponseEntity.ok().body(user);
-    }
+        //Tùng
+        @GetMapping("/user/{id}")
+        public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long userId)
+                throws ResourceNotFoundException {
+            User user = userService.findById(userId);
+            return ResponseEntity.ok().body(user);
+        }
 
-    @PostMapping("/user")
-    public User createUser(@Valid @RequestBody User user) {
-        return userService.save(user);
-    }
+        //Tùng
+        @PostMapping("/user")
+        public User createUser(@Valid @RequestBody User user) {
+            return userService.save(user);
+        }
 
-    @PutMapping("/user/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable(value = "id") Long userId,
-                                                   @Valid @RequestBody User userDetails) throws ResourceNotFoundException {
-        User user = userService.findById(userId);
+        //Tùng
+        @PutMapping("/user/{id}")
+        public ResponseEntity<User> updateUser(@PathVariable(value = "id") Long userId,
+                                                       @Valid @RequestBody User userDetails) throws ResourceNotFoundException {
+            User user = userService.findById(userId);
 
-        user.setId(userDetails.getId());
-        user.setFullname(userDetails.getFullname());
-        user.setEmail(userDetails.getEmail());
-        user.setPhoneNumber(userDetails.getPhoneNumber());
-        user.setAddress(userDetails.getAddress());
-        user.setBirthday(userDetails.getBirthday());
-        user.setIdCard(userDetails.getIdCard());
-        user.setGender(userDetails.getGender());
-        user.setRate(userDetails.getRate());
-        user.setPoint(userDetails.getPoint());
-        user.setLastLogin(userDetails.getLastLogin());
-        user.setStatus(userDetails.getStatus());
+            user.setId(userDetails.getId());
+            user.setFullname(userDetails.getFullname());
+            user.setEmail(userDetails.getEmail());
+            user.setPhoneNumber(userDetails.getPhoneNumber());
+            user.setAddress(userDetails.getAddress());
+            user.setBirthday(userDetails.getBirthday());
+            user.setIdCard(userDetails.getIdCard());
+            user.setGender(userDetails.getGender());
+            user.setRate(userDetails.getRate());
+            user.setPoint(userDetails.getPoint());
+            user.setLastLogin(userDetails.getLastLogin());
+            user.setStatus(userDetails.getStatus());
 
-        final User updatedUser = userService.save(user);
-        return ResponseEntity.ok(updatedUser);
-    }
+            final User updatedUser = userService.save(user);
+            return ResponseEntity.ok(updatedUser);
+        }
 
-    @DeleteMapping("/user/{id}")
-    public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long userId)
-            throws ResourceNotFoundException {
-        User user = userService.findById(userId);
+        //Tùng
+        @DeleteMapping("/user/{id}")
+        public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long userId)
+                throws ResourceNotFoundException {
+            User user = userService.findById(userId);
 
-        userService.removeById(userId);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return response;
-    }
+            userService.removeById(userId);
+            Map<String, Boolean> response = new HashMap<>();
+            response.put("deleted", Boolean.TRUE);
+            return response;
+        }
 }

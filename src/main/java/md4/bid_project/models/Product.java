@@ -54,4 +54,7 @@ public class Product {
     @JsonIgnoreProperties(value = "product")
     private List<ProductImage> productImages;
 
+    @Column(name = "product_status")
+    private Boolean status;
+
 }
