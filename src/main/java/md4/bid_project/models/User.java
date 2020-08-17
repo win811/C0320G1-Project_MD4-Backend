@@ -2,9 +2,12 @@ package md4.bid_project.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 import javax.annotation.Generated;
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -13,7 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Data
-public class User {
+public class User implements Validator {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +26,11 @@ public class User {
     @Column(name = "user_fullname")
     private String fullname;
 
+    @Pattern(regexp = "^([-\\w.])+[a-zA-Z\\d]@(\\w+\\.)+(\\w+)$", message = "Email is wrong format")
     @Column(name = "user_email")
     private String email;
 
+    @Pattern(regexp = "^((\\(\\+84\\))|0)9[01]\\d{7}$", message = "Phone number is wrong format")
     @Column(name = "user_phone_number")
     private String phoneNumber;
 
@@ -35,6 +40,7 @@ public class User {
     @Column(name = "user_birthday")
     private LocalDate birthday;
 
+    @Pattern(regexp = "^\\d{9}$", message = "ID Card format must be 9 number!")
     @Column(name = "user_id_card")
     private String idCard;
 
@@ -79,4 +85,14 @@ public class User {
 
     @Column(name = "user_is_locked")
     private Boolean isLocked;
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+
+    }
 }
