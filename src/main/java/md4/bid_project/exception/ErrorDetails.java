@@ -11,6 +11,7 @@ public class ErrorDetails {
 	private Date timestamp;
 	private String message;
 	private String details;
+	// Duy
 	private Map<String, String> errors;
 
 	public ErrorDetails(Date timestamp, String message, String details) {
@@ -20,6 +21,7 @@ public class ErrorDetails {
 		this.details = details;
 	}
 
+	// DUy
 	public ErrorDetails(Date timestamp, String details) {
 		this.timestamp = timestamp;
 		this.details = details;
@@ -41,6 +43,7 @@ public class ErrorDetails {
 		return errors;
 	}
 
+	// Duy
 	public void setErrors(List<FieldError> errorList) {
 		LinkedHashMap<String, String> errorMap = new LinkedHashMap<>();
 		for (FieldError err: errorList) {
