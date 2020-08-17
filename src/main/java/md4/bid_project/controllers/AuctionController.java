@@ -26,13 +26,16 @@ public class AuctionController {
     @Autowired
     AuctionRecordService auctionRecordService;
 
-    //    Cường
+    //    Creator : Cường
     @GetMapping("/myAuctionRecords/{bidderId}")
     public ResponseEntity<Page<AuctionRecord>> findAuctionRecordByBidderId(@PathVariable(value = "bidderId") Long bidderId,
                                                                            @RequestParam(name = "productName",defaultValue = "") String productName,
                                                                            @RequestParam(name = "recordStatusName",defaultValue = "") String recordStatusName,
                                                                            @PageableDefault(value = 4) Pageable pageable) {
         Page<AuctionRecord> auctionRecordPage = auctionRecordService.findByBidderIdAndProductNameAndRecordStatusName(bidderId,productName,recordStatusName,pageable);
+        if (auctionRecordPage.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(auctionRecordPage);
     }
 

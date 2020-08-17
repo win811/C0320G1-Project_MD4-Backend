@@ -17,7 +17,7 @@ public class AuctionRecordServiceImpl implements AuctionRecordService {
     @Autowired
     AuctionRecordRepository auctionRecordRepository;
 
-    //    Cường
+    //    Creator : Cường
     @Override
     public Page<AuctionRecord> findByBidderIdAndProductNameAndRecordStatusName(Long bidderId, String productName, String recordStatusName, Pageable pageable) {
 
