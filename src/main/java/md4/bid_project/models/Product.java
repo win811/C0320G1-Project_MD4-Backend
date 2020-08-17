@@ -57,4 +57,14 @@ public class Product {
     @Column(name = "product_status")
     private Boolean status;
 
+    public Product() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

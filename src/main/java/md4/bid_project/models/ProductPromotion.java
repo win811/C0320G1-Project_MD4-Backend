@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "product_promotions")
@@ -23,10 +24,10 @@ public class ProductPromotion {
     private String content;
 
     @Column(name = "product_promotion_start_date")
-    private LocalDateTime startDate;
+    private Date startDate;
 
     @Column(name = "product_promotion_end_date")
-    private LocalDateTime endDate;
+    private Date endDate;
 
     @Column(name = "product_promotion_percent")
     private Double percent;
@@ -61,19 +62,19 @@ public class ProductPromotion {
         this.content = content;
     }
 
-    public LocalDateTime getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
