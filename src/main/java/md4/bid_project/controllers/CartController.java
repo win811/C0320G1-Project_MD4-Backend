@@ -24,6 +24,7 @@ public class CartController {
     @Autowired
     private CartDetailService cartDetailService;
 
+    // Create: Toàn
     // Lấy giỏ hàng bằng user id
     @GetMapping("/cart")
     public ResponseEntity<Cart> getCartByUserId(@RequestParam(name = "userId") Long userId)
@@ -33,6 +34,7 @@ public class CartController {
         return ResponseEntity.ok(cart);
     }
 
+    // Create: Toàn
     // Cập nhật tổng tiền của một giỏ hàng
     @PutMapping("/cart")
     public ResponseEntity<Double> updateTotalCost(@RequestBody Map<String, Object> requestBody)
@@ -46,6 +48,7 @@ public class CartController {
         }
     }
 
+    // Create: Toàn
     // Thêm vào giỏ hàng một sản phẩm
     @PostMapping("/cart/cart-detail")
     public ResponseEntity<CartDetail> addToCart(@Validated @RequestBody CartDetailDTO cartDetailDTO)
@@ -58,6 +61,7 @@ public class CartController {
         }
     }
 
+    // Create: Toàn
     // Cập nhật 1 sản phẩm trong giỏ hàng (thay đổi số lượng)
     @PutMapping("/cart/cart-detail")
     public ResponseEntity<CartDetail> updateCartDetail(@RequestBody Map<String, Object> requestBody)
@@ -72,6 +76,7 @@ public class CartController {
         }
     }
 
+    // Create: Toàn
     // Xóa 1 sản phẩm khỏi giỏ hàng
     @DeleteMapping("/cart/cart-detail/{cartDetailId}")
     public ResponseEntity<CartDetail> deleteCartDetail(@PathVariable(name = "cartDetailId") Long cartDetailId)

@@ -29,6 +29,7 @@ public class CartDetailServiceImpl implements CartDetailService {
     @Autowired
     private CartService cartService;
 
+    // Create: Toàn
     @Override
     public CartDetail create(CartDetailDTO cartDetailDTO) {
         Optional<Cart> optionalCart = cartRepository.findByUserIdAndStatusIsTrue(cartDetailDTO.getUserId());
@@ -52,6 +53,7 @@ public class CartDetailServiceImpl implements CartDetailService {
         return cartDetail;
     }
 
+    // Create: Toàn
     @Override
     public CartDetail update(Long cartDetailId, Integer quantity) {
         Optional<CartDetail> optional = cartDetailRepository.findById(cartDetailId);
@@ -65,6 +67,7 @@ public class CartDetailServiceImpl implements CartDetailService {
         return null;
     }
 
+    // Create: Toàn
     @Override
     public CartDetail delete(Long cartDetailId) {
         Optional<CartDetail> optional = cartDetailRepository.findById(cartDetailId);
