@@ -28,6 +28,7 @@ public class ProductPromotionServiceImpl implements ProductPromotionService {
         return productPromotionRepository.findById(id).orElse(null);
     }
 
+    //creator: đức thông
     @Override
     public ProductPromotionDto findProductPromotionDto(Long id) {
         ProductPromotion productPromotion=productPromotionRepository.findById(id).orElse(null);
@@ -45,6 +46,7 @@ public class ProductPromotionServiceImpl implements ProductPromotionService {
         return null;
     }
 
+    //creator: đức thông
     @Override
     public ProductPromotion save(ProductPromotionDto productPromotionDto) {
         ProductPromotion productPromotion=new ProductPromotion();
@@ -59,6 +61,7 @@ public class ProductPromotionServiceImpl implements ProductPromotionService {
         return productPromotion;
     }
 
+    //creator: đức thông
     @Override
     public void update(ProductPromotion productPromotion) {
         productPromotionRepository.save(productPromotion);

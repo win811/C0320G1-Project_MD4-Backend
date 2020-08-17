@@ -29,6 +29,7 @@ public class ProductPromotionController {
         return productPromotionService.findAll();
     }
 
+    //creator: đức thông
     @GetMapping("/productPromotions/{id}")
     public ResponseEntity<ProductPromotion> getProductPromotionsById(@PathVariable(value = "id") Long productPromotionId)
             throws ResourceNotFoundException {
@@ -36,6 +37,7 @@ public class ProductPromotionController {
         return ResponseEntity.ok().body(productPromotion);
     }
 
+    //creator: đức thông
     @GetMapping("/productPromotio/{id}")
     public ResponseEntity<ProductPromotionDto> getProductPromotionsByIdaaaa(@PathVariable(value = "id") Long productPromotionId)
             throws ResourceNotFoundException {
@@ -43,6 +45,7 @@ public class ProductPromotionController {
         return ResponseEntity.ok().body(productPromotion);
     }
 
+    //creator: đức thông
     @GetMapping("/productPromotionsDto/{id}")
     public ResponseEntity<ProductPromotionDto> getProductPromotionDtoById(@PathVariable(value = "id") Long productPromotionId)
             throws ResourceNotFoundException {
@@ -50,6 +53,7 @@ public class ProductPromotionController {
         return ResponseEntity.ok().body(productPromotionDto);
     }
 
+    //creator: đức thông
     @GetMapping("/products/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable(value = "id") Long productId)
             throws ResourceNotFoundException {
@@ -57,17 +61,19 @@ public class ProductPromotionController {
         return ResponseEntity.ok().body(product);
     }
 
+    //creator: đức thông
     @GetMapping("/products")
     public List<Product> getAllProduct() {
         return productService.findAll();
     }
 
-
+    //creator: đức thông
     @PostMapping("/productPromotions")
     public ProductPromotion createProductPromotions(@RequestBody ProductPromotionDto productPromotionDto) {
         return productPromotionService.save(productPromotionDto);
     }
 
+    //creator: đức thông
     @PutMapping("/productPromotions/{id}")
     public ResponseEntity<ProductPromotion> updateProductPromotions(@PathVariable(value = "id") Long productPromotionsId,
                                                                     @RequestBody ProductPromotionDto productPromotionsDetail) throws ResourceNotFoundException {

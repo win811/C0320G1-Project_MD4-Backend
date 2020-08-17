@@ -3,6 +3,7 @@ package md4.bid_project.models.dto;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+//creator : đức thoonggit status
 public class ProductPromotionDto {
 
     @NotNull(message = "Không được để trống")
