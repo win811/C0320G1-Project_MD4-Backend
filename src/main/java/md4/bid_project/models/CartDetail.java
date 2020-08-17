@@ -30,7 +30,14 @@ public class CartDetail {
     @JoinColumn(name = "auction_id")
     private Auction auction;
 
-    @Column(name = "delete")
+    @Column(name = "delete_by_admin")
     private Boolean isDelete;
+
+    @Column(name="cart_detail_status")
+    private String status;
+
+    @Column(name = "cart_detail_cost")
+    private Double cartDetailCost;
+
 
 }
