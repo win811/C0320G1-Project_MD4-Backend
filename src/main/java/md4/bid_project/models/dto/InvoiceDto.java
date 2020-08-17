@@ -1,15 +1,12 @@
-package md4.bid_project.dto;
+package md4.bid_project.models.dto;
 
 import lombok.Data;
-import md4.bid_project.models.Cart;
 import md4.bid_project.models.CartDetail;
 import md4.bid_project.models.Order;
-import md4.bid_project.models.User;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
+//Creator: Nguyễn Xuân Hùng
 @Data
 public class InvoiceDto {
     private Order order;

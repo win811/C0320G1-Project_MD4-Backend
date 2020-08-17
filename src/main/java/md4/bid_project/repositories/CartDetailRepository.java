@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface CartDetailRepository extends JpaRepository<CartDetail,Long> {
+    //Creator: Nguyễn Xuân Hùng
     List<CartDetail> findAllByCart_Id(Long id);
 }

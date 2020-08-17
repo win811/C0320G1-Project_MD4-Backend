@@ -77,7 +77,7 @@ public class CartDetailServiceImpl implements CartDetailService {
         }
         return null;
     }
-
+    //Creator: Nguyễn Xuân Hùng
     @Override
     public List<CartDetail> findCartDetailByCartId(Long id) {
         return cartDetailRepository.findAllByCart_Id(id);

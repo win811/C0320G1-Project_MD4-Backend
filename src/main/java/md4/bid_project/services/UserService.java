@@ -1,10 +1,13 @@
 package md4.bid_project.services;
 
-import md4.bid_project.dto.UserDto;
+import md4.bid_project.models.dto.UserUpdateDto;
 import md4.bid_project.models.User;
 
 public interface UserService {
-    UserDto findUserDtoByUserId(Long id);
+    //Creator: Nguyễn Xuân Hùng
+    UserUpdateDto findUserUpdateDtoByUserId(Long id);
+    //Creator: Nguyễn Xuân Hùng
     User findUserById(Long id);
-    void updateUser(UserDto userDto);
+    //Creator: Nguyễn Xuân Hùng
+    void updateUser(UserUpdateDto userDto);
 }

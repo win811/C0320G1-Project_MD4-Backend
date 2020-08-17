@@ -1,13 +1,12 @@
-package md4.bid_project.dto;
+package md4.bid_project.models.dto;
 
 import lombok.Data;
-import md4.bid_project.models.DeliveryAddress;
 
 import java.time.LocalDate;
 import java.util.List;
-
+//Creator: Nguyễn Xuân Hùng
 @Data
-public class UserDto {
+public class UserUpdateDto {
     private Long id;
     private String fullName;
     private String email;

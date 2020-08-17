@@ -1,10 +1,7 @@
 package md4.bid_project.services.Impl;
 
-import md4.bid_project.dto.UserDto;
-import md4.bid_project.models.Account;
-import md4.bid_project.models.DeliveryAddress;
+import md4.bid_project.models.dto.UserUpdateDto;
 import md4.bid_project.models.User;
-import md4.bid_project.repositories.AccountRepository;
 import md4.bid_project.repositories.DeliveryAddressRepository;
 import md4.bid_project.repositories.UserRepository;
 import md4.bid_project.services.UserService;
@@ -22,14 +19,12 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
     @Autowired
     DeliveryAddressRepository deliveryAddressRepository;
-    @Autowired
-    AccountRepository accountRepository;
+    //Creator: Nguyễn Xuân Hùng
     @Override
-    public UserDto findUserDtoByUserId(Long id) {
-        UserDto userDto = new UserDto();
+    public UserUpdateDto findUserUpdateDtoByUserId(Long id) {
+        UserUpdateDto userDto = new UserUpdateDto();
         User user = userRepository.findById(id).orElse(null);
         if(user!=null){
-            Account account = accountRepository.findAccountByUserId(user.getId());
             userDto.setFullName(user.getFullname());
             userDto.setEmail(user.getEmail());
             userDto.setGender(user.getGender());
@@ -41,16 +36,15 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
-
+    //Creator: Nguyễn Xuân Hùng
     @Override
     public User findUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
-
+    //Creator: Nguyễn Xuân Hùng
     @Override
-    public void updateUser(UserDto userDto) {
+    public void updateUser(UserUpdateDto userDto) {
         User user = userRepository.findById(userDto.getId()).orElse(null);
-        Account account = accountRepository.findAccountByUserId(userDto.getId());
         assert user != null;
         user.setFullname(userDto.getFullName().trim());
         user.setAddress(userDto.getAddress().trim());
@@ -69,18 +63,14 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDto.getEmail().trim());
         if(!userDto.getPassword().equals("")){
             if(!userDto.getNewPassword().equals("")){
-                if(BCrypt.checkpw(userDto.getPassword(),account.getPassword())){
+                if(BCrypt.checkpw(userDto.getPassword(),user.getPassword())){
                     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-                    account.setPassword(encoder.encode(userDto.getPassword()));
+                    user.setPassword(encoder.encode(userDto.getNewPassword()));
                 }else {
                     messages.add("Mật khẩu bạn nhập không đúng. Xin vui lòng nhập lại.");
-//                    userDto.setBackendMessage();
-//                    return;
                 }
             }else {
                 messages.add("Vui lòng nhập mật khẩu mới và xác nhận mật khẩu.");
-//                userDto.setBackendMessage();
-//                return;
             }
         }
         userDto.setBackendMessage(messages);
