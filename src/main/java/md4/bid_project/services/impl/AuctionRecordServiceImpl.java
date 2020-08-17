@@ -1,6 +1,6 @@
 package md4.bid_project.services.impl;
 
-
+// creator: Hoai Ngan team C
 import md4.bid_project.models.AuctionRecord;
 import md4.bid_project.repositories.AuctionRecordRepository;
 import md4.bid_project.services.AuctionRecordService;
@@ -40,5 +40,15 @@ public class AuctionRecordServiceImpl implements AuctionRecordService {
     @Override
     public void deleteAuctionRecord(Long id) {
         auctionRecordRepository.deleteById(id);
+    }
+
+    @Override
+    public List<AuctionRecord> getTopAuctionRecords(Long auctionId) {
+        return auctionRecordRepository.getLatestAuctionRecord(auctionId);
+    }
+
+    @Override
+    public AuctionRecord getRecordHavingBestPrice(Long auctionId) {
+        return auctionRecordRepository.getRecordHavingBestPrice(auctionId);
     }
 }
