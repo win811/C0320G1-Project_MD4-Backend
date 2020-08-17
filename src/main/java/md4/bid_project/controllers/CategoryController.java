@@ -6,60 +6,41 @@ import md4.bid_project.models.Category;
 import md4.bid_project.models.Product;
 import md4.bid_project.repositories.CategoryRepository;
 import md4.bid_project.repositories.ProductRepository;
+import md4.bid_project.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1")
 public class CategoryController {
+
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryService categoryService;
 
     @GetMapping("/categories")
     public List<Category> getAllProducts() {
-        return categoryRepository.findAll();
+        return categoryService.findAll();
     }
 
     @GetMapping("/categories/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable(value = "id") Long categoryId)
             throws ResourceNotFoundException {
-        Category category = categoryRepository.findById(categoryId)
+        Category category = categoryService.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found for this id :: " + categoryId));
         return ResponseEntity.ok().body(category);
     }
 
     @PostMapping("/categories")
-    public Category createCategory(@Valid @RequestBody Category category) {
-        return categoryRepository.save(category);
-    }
-
-    @PutMapping("/categories/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable(value = "id") Long categoryId,
-                                                 @Valid @RequestBody Category categoryDetails) throws ResourceNotFoundException {
-        Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new ResourceNotFoundException("Category not found for this id :: " + categoryId));
-
-        category.setName(categoryDetails.getName());
-        final Category updatedCategory = categoryRepository.save(category);
-        return ResponseEntity.ok(updatedCategory);
-    }
-
-    @DeleteMapping("/categories/{id}")
-    public Map<String, Boolean> deleteCategory(@PathVariable(value = "id") Long categoryId)
-            throws ResourceNotFoundException {
-        Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new ResourceNotFoundException("Category not found for this id :: " + categoryId));
-
-        categoryRepository.delete(category);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return response;
+    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+         categoryService.save(category);
+        return ResponseEntity.ok(new Category());
     }
 }

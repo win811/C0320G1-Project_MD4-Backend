@@ -11,6 +11,7 @@ public class PasswordResetCode {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "reset_id")
     private Long id;
 
     @Column(name = "reset_code")
