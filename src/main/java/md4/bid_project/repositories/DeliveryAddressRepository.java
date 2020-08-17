@@ -8,9 +8,10 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 public interface DeliveryAddressRepository extends JpaRepository<DeliveryAddress, Long> {
-//    List<DeliveryAddress> findAllByUser(User user)
+
+    List<DeliveryAddress> findAllByUser_Id(Long id);
 }
