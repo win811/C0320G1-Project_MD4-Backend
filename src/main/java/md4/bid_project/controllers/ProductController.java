@@ -3,6 +3,7 @@ package md4.bid_project.controllers;
 import md4.bid_project.models.Product;
 import md4.bid_project.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import md4.bid_project.models.Product;
@@ -27,8 +28,11 @@ public class ProductController {
     }
 
     @GetMapping("product/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable(value = "id") Long productId) {
-        Product product = productService.getProductById(productId);
-        return ResponseEntity.ok().body(product);
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+        Product product = productService.getProductById(id);
+        if (product == null) {
+            return new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Product>(product, HttpStatus.OK);
     }
 }

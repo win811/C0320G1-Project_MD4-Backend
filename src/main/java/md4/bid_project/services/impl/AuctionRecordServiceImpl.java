@@ -15,7 +15,6 @@ public class AuctionRecordServiceImpl implements AuctionRecordService {
     @Autowired
     AuctionRecordRepository auctionRecordRepository;
 
-
     @Override
     public List<AuctionRecord> getAllAuctionRecords() {
         return auctionRecordRepository.findAll();
@@ -29,7 +28,6 @@ public class AuctionRecordServiceImpl implements AuctionRecordService {
     @Override
     public void createAuctionRecord(AuctionRecord auctionRecord) {
         auctionRecordRepository.save(auctionRecord);
-
     }
 
     @Override
