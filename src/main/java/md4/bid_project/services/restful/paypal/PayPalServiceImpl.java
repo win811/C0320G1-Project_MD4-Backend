@@ -7,6 +7,7 @@ import com.paypal.http.HttpResponse;
 import com.paypal.orders.*;
 import md4.bid_project.models.Cart;
 import md4.bid_project.models.CartDetail;
+import md4.bid_project.services.CartService;
 import md4.bid_project.services.restful.rateExchange.RateExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public class PayPalServiceImpl implements PayPalService{
     @Autowired
     private RateExchangeService rateExchangeService;
 
+    @Autowired
+    private CartService cartService;
+
     // create sandbox environment
     private PayPalEnvironment environment = new PayPalEnvironment.Sandbox(
             "AbCzPUUevBpwehD2HBR8Y0_ic2rt8ldWn-y_nn7SgR04TvK3r9tLU9MZonzGDnXTq5exF5hlhdll6wMp",
@@ -35,12 +39,15 @@ public class PayPalServiceImpl implements PayPalService{
         return this.client;
     }
 
+    private Cart getCart(Long userId) {
+        return cartService.findByUserId(userId).orElse(null);
+    }
 
     @Override
-    public Transaction createTransaction(Cart cart) throws IOException {
+    public Transaction createTransaction(Long userId) throws IOException {
         OrdersCreateRequest request = new OrdersCreateRequest();
         request.prefer("return=minimal");
-        request.requestBody(buildOrderRequest(cart));
+        request.requestBody(buildOrderRequest(getCart(userId)));
         // Call PayPal to set up a transaction
         HttpResponse<Order> response = client().execute(request);
         // set captured order
