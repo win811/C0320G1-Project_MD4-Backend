@@ -1,5 +1,6 @@
 package md4.bid_project.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.annotation.Generated;
@@ -7,7 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -53,6 +54,17 @@ public class User {
     @Column(name = "user_status")
     private Boolean status;
 
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties(value = "user")
+    private List<DeliveryAddress> deliveryAddressList;
+
+    @ManyToOne
+    @JoinColumn(name = "user_role_id")
+    private Role role;
+
+    @OneToOne(mappedBy = "user")
+    private PasswordResetCode passwordResetCode;
+
     @Column(name = "user_password")
     private String password ;
 
@@ -60,19 +72,11 @@ public class User {
     private String question ;
 
     @Column(name = "user_answer")
-    private String answer ;
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles;
+    private String answer;
 
     @Column(name = "user_reason_ban")
-    private String reasonBan ;
+    private String reasonBan;
 
-    @Column(name = "user_lock")
+    @Column(name = "user_is_locked")
     private Boolean isLocked;
 }

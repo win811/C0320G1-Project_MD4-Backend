@@ -31,6 +31,9 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     testImplementation 'org.springframework.security:spring-security-test'
+    compile group: 'com.paypal.sdk', name: 'checkout-sdk', version: '1.0.2'
+    compile group: 'org.json', name: 'json', version: '20180813'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
 }
 
 test {
