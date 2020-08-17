@@ -1,5 +1,6 @@
 package md4.bid_project.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public class CartDetail {
 
     @ManyToOne
     @JoinColumn(name = "cart_id")
+    @JsonIgnoreProperties(value = "cartDetails")
     private Cart cart;
 
     @Column(name = "product_win_price")
@@ -24,14 +26,17 @@ public class CartDetail {
     @Column(name = "product_quantity")
     private Integer productQuantity;
 
-    @Column(name = "cart_detail_status")
-    private String status;
-
     @OneToOne
     @JoinColumn(name = "auction_id")
     private Auction auction;
 
-    @Column(name = "delete")
+    @Column(name = "delete_by_admin")
     private Boolean isDelete;
+
+    @Column(name = "cart_detail_status")
+    private String status;
+
+    @Column(name = "cart_detail_cost")
+    private Double cartDetailCost;
 
 }
