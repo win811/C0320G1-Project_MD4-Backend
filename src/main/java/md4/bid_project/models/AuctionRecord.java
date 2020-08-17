@@ -22,8 +22,7 @@ public class AuctionRecord {
 
     @ManyToOne
 //    @JsonBackReference
-//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-//            property = "id")
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 //    @JsonIdentityReference(alwaysAsId = true)
     @JoinColumn(name = "record_auction_id")
     @JsonIgnoreProperties("records")
@@ -31,10 +30,8 @@ public class AuctionRecord {
 
     @ManyToOne
 //    @JsonBackReference
-//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-//            property = "id")
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 //    @JsonIdentityReference(alwaysAsId = true)
-
     @JoinColumn(name = "record_bidder_id")
     private User bidder;
 
