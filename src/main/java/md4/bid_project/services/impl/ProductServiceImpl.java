@@ -35,4 +35,9 @@ public class ProductServiceImpl implements ProductService {
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public List<Product> findProductByOwnerId(Long ownerId) {
+        return null;
+    }
 }
