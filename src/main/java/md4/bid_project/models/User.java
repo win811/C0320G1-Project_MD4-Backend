@@ -16,7 +16,6 @@ import java.util.List;
 public class User {
 
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -56,7 +55,6 @@ public class User {
     @Column(name = "user_status")
     private Boolean status;
 
-<<<<<<< HEAD
     public User() {
     }
 
@@ -170,7 +168,7 @@ public class User {
     public void setStatus(Boolean status) {
         this.status = status;
     }
-=======
+
     @OneToMany(mappedBy = "user")
     @JsonIgnoreProperties(value = "user")
     private List<DeliveryAddress> deliveryAddressList;
@@ -183,10 +181,10 @@ public class User {
     private PasswordResetCode passwordResetCode;
 
     @Column(name = "user_password")
-    private String password ;
+    private String password;
 
     @Column(name = "user_question")
-    private String question ;
+    private String question;
 
     @Column(name = "user_answer")
     private String answer;
@@ -196,5 +194,4 @@ public class User {
 
     @Column(name = "user_is_locked")
     private Boolean isLocked;
->>>>>>> fdd4512724a08025a57dfb2c598409f949fdff40
 }
