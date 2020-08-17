@@ -39,9 +39,9 @@ public class User {
     @Column(name = "user_gender")
     private String gender;
 
-    @ManyToOne
-    @JoinColumn(name = "user_rate_id")
-    private Rate rate;
+//    @ManyToOne
+//    @JoinColumn(name = "user_rate_id")
+//    private Rate rate;
 
     @Column(name = "user_point")
     private Long point;
