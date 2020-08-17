@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ApprovementStatusRepository extends JpaRepository<ApprovementStatus,Long> {
+    ApprovementStatus findByName(String name);
 }
