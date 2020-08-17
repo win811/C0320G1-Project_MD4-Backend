@@ -4,6 +4,9 @@ import md4.bid_project.models.dto.UserUpdateDto;
 import md4.bid_project.models.User;
 import md4.bid_project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,5 +36,27 @@ public class UserController {
         }
         userService.updateUser(userDto);
         return new ResponseEntity<UserUpdateDto>(userDto,HttpStatus.OK);
+    }
+
+    //B-Hoàng Long method
+    @GetMapping("/users")
+    public Page<User> getAllUserNotLock(@RequestParam(name = "fullName",defaultValue = "") String fullName,
+                                        @PageableDefault(value = 3) Pageable pageable){
+        return this.userService.getAllUserNotLock(fullName,pageable);
+    }
+
+    //B-Hoàng Long method
+    @PostMapping("/user")
+    public void addNewUser(@RequestBody User user){
+        this.userService.addUser(user);
+    }
+
+    //B-Hoàng Long method
+    @PutMapping("user/lock/{id}")
+    public void lockUser(@PathVariable Long id,@RequestBody User userNeedToLock){
+        User user = this.userService.findUserById(id);
+        user.setIsLocked(userNeedToLock.getIsLocked());
+        user.setReasonBan(userNeedToLock.getReasonBan());
+        this.userService.addUser(user);
     }
 }

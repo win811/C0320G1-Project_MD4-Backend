@@ -6,9 +6,14 @@ import md4.bid_project.repositories.DeliveryAddressRepository;
 import md4.bid_project.repositories.UserRepository;
 import md4.bid_project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,4 +83,17 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
         }
     }
+
+    //B-Hoàng Long method
+    @Override
+    public Page<User> getAllUserNotLock(String fullName, Pageable pageable) {
+        return this.userRepository.findAllByAndIsLockedIsFalseAndFullnameContaining(fullName,pageable);
+    }
+
+    //B-Hoàng Long method
+    @Override
+    public void addUser(User user) {
+        this.userRepository.save(user);
+    }
+
 }
