@@ -1,5 +1,6 @@
 package md4.bid_project.controllers;
 
+
 import md4.bid_project.models.dto.UserUpdateDto;
 import md4.bid_project.models.User;
 import md4.bid_project.services.UserService;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
 @RestController
@@ -34,4 +37,13 @@ public class UserController {
         userService.updateUser(userDto);
         return new ResponseEntity<UserUpdateDto>(userDto,HttpStatus.OK);
     }
+    //Creator: Lâm Quốc Tùng
+
+    @GetMapping("/user")
+    public List<User> getAllUser() {
+        return userService.findAll();
+    }
+
+
+
 }
