@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "categories")
 @Data
+//Coder: Nguyen Thanh Tu
 public class Category {
 
     @Id

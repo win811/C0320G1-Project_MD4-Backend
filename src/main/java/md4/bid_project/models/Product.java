@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "products")
 @Data
+//Coder: Nguyen Thanh Tu
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
