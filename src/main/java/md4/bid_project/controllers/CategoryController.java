@@ -21,15 +21,15 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1")
 public class CategoryController {
-
+    //Thành
     @Autowired
     private CategoryService categoryService;
-
+    //Thành
     @GetMapping("/categories")
     public List<Category> getAllProducts() {
         return categoryService.findAll();
     }
-
+    //Thành
     @GetMapping("/categories/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable(value = "id") Long categoryId)
             throws ResourceNotFoundException {
@@ -37,7 +37,7 @@ public class CategoryController {
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found for this id :: " + categoryId));
         return ResponseEntity.ok().body(category);
     }
-
+    //Thành
     @PostMapping("/categories")
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
          categoryService.save(category);

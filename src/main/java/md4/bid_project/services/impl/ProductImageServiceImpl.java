@@ -13,22 +13,22 @@ import java.util.Optional;
 public class ProductImageServiceImpl implements ProductImageService {
     @Autowired
     private ProductImageRepository productImageRepository;
-
+    //Thành
     @Override
     public List<ProductImage> findAll() {
         return productImageRepository.findAll();
     }
-
+    //Thành
     @Override
     public void save(ProductImage productImage) {
         productImageRepository.save(productImage);
     }
-
+    //Thành
     @Override
     public Optional<ProductImage> findById(Long productImageId) {
         return productImageRepository.findAllById(productImageId);
     }
-
+    //Thành
     @Override
     public void saveAll(List<ProductImage> productImages) {
         productImageRepository.saveAll(productImages);

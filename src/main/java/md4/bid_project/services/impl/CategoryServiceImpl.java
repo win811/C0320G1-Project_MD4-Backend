@@ -13,17 +13,17 @@ import java.util.Optional;
 public class CategoryServiceImpl implements CategoryService {
 @Autowired
 private CategoryRepository categoryRepository;
-
+    //Thành
     @Override
     public List<Category> findAll() {
         return categoryRepository.findAll();
     }
-
+    //Thành
     @Override
     public void save(Category category) {
         categoryRepository.save(category);
     }
-
+    //Thành
     @Override
     public Optional<Category> findById(Long categoryId) {
         return categoryRepository.findById(categoryId);

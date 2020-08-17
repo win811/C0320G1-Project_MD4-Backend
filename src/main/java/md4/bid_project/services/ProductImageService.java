@@ -7,10 +7,10 @@ import java.util.Optional;
 
 public interface ProductImageService {
     List<ProductImage> findAll();
-
+    //Thành
     void save(ProductImage productImage);
-
+    //Thành
      Optional<ProductImage> findById(Long productImageId);
-
+    //Thành
     void saveAll(List<ProductImage> productImages);
 }

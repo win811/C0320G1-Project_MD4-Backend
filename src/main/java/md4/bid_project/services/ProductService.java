@@ -13,8 +13,8 @@ public interface ProductService {
     Product findById (Long id);
     List<Product> findProductByOwnerId(Long ownerId);
     List<Product> findAllProduct();
-
+    //Thành
     void save(Product product);
-
+    //Thành
     Optional<Product> findProductById(Long productId);
 }

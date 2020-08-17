@@ -28,9 +28,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1")
 public class ProductController {
+    //Thành
     @Autowired
     private ProductImageService productImageService;
-
+    //Thành
     @Autowired
     private ProductService productService;
 
@@ -45,7 +46,7 @@ public class ProductController {
                                                              @PageableDefault(value = 4) Pageable pageable) {
         Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId,productName,approvementStatusName,pageable);
         return ResponseEntity.ok(productPage);}
-
+    //Thành
     @GetMapping("/products")
     public List<Product> getAllProducts() {
         return productService.findAllProduct();
@@ -75,7 +76,7 @@ public class ProductController {
         return ResponseEntity.ok(pageProduct);
     }
 
-
+    //Thành
     @GetMapping("/products/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable(value = "id") Long productId)
             throws ResourceNotFoundException {
@@ -83,7 +84,7 @@ public class ProductController {
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + productId));
         return ResponseEntity.ok().body(product);
     }
-
+    //Thành
     @PostMapping("/products")
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         System.out.println(product);

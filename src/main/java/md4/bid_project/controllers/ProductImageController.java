@@ -17,15 +17,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 public class ProductImageController {
+    //Thành
     @Autowired
     private ProductImageService productImageService;
-
+    //Thành
     @GetMapping("/productimages")
     public List<ProductImage> getAllProductImages() {
         return productImageService.findAll();
     }
 
-
+    //Thành
     @GetMapping("/productimages/{id}")
     public ResponseEntity<ProductImage> getProductImageById(@PathVariable(value = "id") Long productImageId)
             throws ResourceNotFoundException {
@@ -33,7 +34,7 @@ public class ProductImageController {
                 .orElseThrow(() -> new ResourceNotFoundException("ProductImage not found for this id :: " + productImageId));
         return ResponseEntity.ok().body(productImage);
     }
-
+    //Thành
     @PostMapping("/productimages")
     public ResponseEntity<ProductImage> createProduct(@RequestBody ProductImage productImage) {
         System.out.println(productImage);

@@ -29,21 +29,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void save(Product product) {
-        productRepository.save(product);
+    public List<Product> findProductByOwnerId(Long ownerId) {
+        return null;
     }
-
+    //Thành
     @Override
     public List<Product> findAllProduct() {
         return productRepository.findAll();
     }
-
+    //Thành
     @Override
     public void save(Product product) {
         product.getApprovementStatus().setId(1L);
         productRepository.save(product);
     }
-
+    //Thành
     @Override
     public Optional<Product> findProductById(Long productId) {
         return productRepository.findAllById(productId);
