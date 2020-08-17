@@ -4,6 +4,7 @@ package md4.bid_project.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -17,4 +18,6 @@ public class Role {
     @Column(name = "role_name")
     private String name;
 
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
 }
