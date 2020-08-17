@@ -25,17 +25,20 @@ public class ProductController {
     @Autowired
     private ApprovementStatusService approvementStatusService;
 
-    //    Cường
+    //    Creator : Cường
     @GetMapping("/myProduct/{ownerId}")
     public ResponseEntity<Page<Product>> getProductByOwnerId(@PathVariable(value = "ownerId") Long ownerId,
                                                              @RequestParam(name = "productName",defaultValue = "") String productName,
                                                              @RequestParam(name = "approvementStatusName",defaultValue = "") String approvementStatusName,
                                                              @PageableDefault(value = 4) Pageable pageable) {
         Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId,productName,approvementStatusName,pageable);
+        if (productPage.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(productPage);
     }
 
-    //    Cường
+    //    Creator : Cường
     @PutMapping("/myProduct/cancel/{ownerId}")
     public ResponseEntity<Page<Product>> cancelProductApprovementStatus (@PathVariable(value = "ownerId") Long ownerId,
                                                                          @RequestParam(name = "productName",defaultValue = "") String productName,
@@ -48,8 +51,11 @@ public class ProductController {
             product.setApprovementStatus(approvementStatus);
             productService.save(product);
         }
-        Page<Product> pageProduct = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId,productName,approvementStatusName,pageable);
-        return ResponseEntity.ok(pageProduct);
+        Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId,productName,approvementStatusName,pageable);
+        if (productPage.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(productPage);
     }
 
 

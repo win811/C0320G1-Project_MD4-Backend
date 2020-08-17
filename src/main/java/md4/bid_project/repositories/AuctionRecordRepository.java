@@ -12,17 +12,17 @@ import java.util.List;
 @Repository
 public interface AuctionRecordRepository extends JpaRepository<AuctionRecord, Long> {
 
-    //    Cường (search tất cả)
+    //    Creator : Cường (search tất cả)
     Page<AuctionRecord> findByBidder_IdAndAuction_Product_NameContaining(Long bidderId,String productName, Pageable pageable);
-    //    Cường (search đang đấu giá)
+    //    Creator : Cường (search đang đấu giá)
     Page<AuctionRecord> findByBidder_IdAndAuction_Product_NameContainingAndAuction_AuctionStatus_Name(Long bidderId, String productName,
                                                                                             String auctionStatusName,
                                                                                             Pageable pageable);
-    //    Cường ( search đấu giá thành công )
+    //    Creator : Cường ( search đấu giá thành công )
     Page<AuctionRecord> findByBidder_IdAndAuction_Product_NameContainingAndIsWinner(Long bidderId,String productName,
                                                                           Boolean isWinner,
                                                                           Pageable pageable);
-    //    Cường ( search đấu giá thất bại )
+    //    Creator : Cường ( search đấu giá thất bại )
     Page<AuctionRecord> findByBidder_IdAndAuction_Product_NameContainingAndAuction_AuctionStatus_NameAndIsWinner (Long bidderId,
                                                                                                         String productName,
                                                                                                         String auctionStatusName,
