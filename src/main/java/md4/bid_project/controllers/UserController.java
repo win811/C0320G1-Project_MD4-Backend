@@ -1,20 +1,26 @@
 package md4.bid_project.controllers;
 
-
-import md4.bid_project.models.dto.UserUpdateDto;
 import md4.bid_project.models.User;
 import md4.bid_project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+import md4.bid_project.models.dto.UserUpdateDto;
+
+import org.springframework.http.HttpStatus;
+
+
+
+
 @CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
+
     @Autowired
     UserService userService;
     //Creator: Nguyễn Xuân Hùng
@@ -43,7 +49,6 @@ public class UserController {
     public List<User> getAllUser() {
         return userService.findAll();
     }
-
 
 
 }
