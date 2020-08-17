@@ -9,14 +9,13 @@ import java.time.LocalDateTime;
 @Table(name = "products")
 @Data
 public class Product {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private Long id;
 
     @Column(name = "product_name")
-    private String name;
+    private String productName;
 
     @Column(name = "product_initial_price")
     private Double initialPrice;
