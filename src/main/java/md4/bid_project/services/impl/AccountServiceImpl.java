@@ -1,8 +1,6 @@
-package md4.bid_project.services.Impl;
+package md4.bid_project.services.impl;
 
 import md4.bid_project.services.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 public class AccountServiceImpl implements AccountService {
 

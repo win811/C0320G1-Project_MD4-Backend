@@ -45,4 +45,9 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> findWaitingProductsByUserId(Long userId, Pageable pageable) {
         return productRepository.findByOwner_IdAndApprovementStatus_Id(userId, APPROVEMENT_STATUS_WAITING, pageable);
     }
+
+    @Override
+    public List<Product> findProductByOwnerId(Long ownerId) {
+        return null;
+    }
 }
