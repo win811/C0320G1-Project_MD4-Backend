@@ -1,8 +1,17 @@
 package md4.bid_project.services.impl;
 
+import md4.bid_project.models.User;
+import md4.bid_project.models.dto.UserUpdateDto;
+import md4.bid_project.repositories.DeliveryAddressRepository;
 import md4.bid_project.repositories.UserRepository;
 import md4.bid_project.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
