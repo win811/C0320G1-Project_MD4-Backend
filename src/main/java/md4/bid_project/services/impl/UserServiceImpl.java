@@ -1,6 +1,6 @@
 package md4.bid_project.services.Impl;
 
-import md4.bid_project.models.dto.UserUpdateDto;
+import md4.bid_project.models.dto.UserUpdateDTO;
 import md4.bid_project.models.User;
 import md4.bid_project.repositories.DeliveryAddressRepository;
 import md4.bid_project.repositories.UserRepository;
@@ -21,18 +21,18 @@ public class UserServiceImpl implements UserService {
     DeliveryAddressRepository deliveryAddressRepository;
     //Creator: Nguyễn Xuân Hùng
     @Override
-    public UserUpdateDto findUserUpdateDtoByUserId(Long id) {
-        UserUpdateDto userDto = new UserUpdateDto();
+    public UserUpdateDTO findUserUpdateDtoByUserId(Long id) {
+        UserUpdateDTO userUpdateDTO = new UserUpdateDTO();
         User user = userRepository.findById(id).orElse(null);
         if(user!=null){
-            userDto.setFullName(user.getFullname());
-            userDto.setEmail(user.getEmail());
-            userDto.setGender(user.getGender());
-            userDto.setPhoneNumber(user.getPhoneNumber());
-            userDto.setBirthday(user.getBirthday());
-            userDto.setIdCard(user.getIdCard());
-            userDto.setAddress(user.getAddress());
-            return userDto;
+            userUpdateDTO.setFullName(user.getFullname());
+            userUpdateDTO.setEmail(user.getEmail());
+            userUpdateDTO.setGender(user.getGender());
+            userUpdateDTO.setPhoneNumber(user.getPhoneNumber());
+            userUpdateDTO.setBirthday(user.getBirthday());
+            userUpdateDTO.setIdCard(user.getIdCard());
+            userUpdateDTO.setAddress(user.getAddress());
+            return userUpdateDTO;
         }
         return null;
     }
@@ -43,38 +43,44 @@ public class UserServiceImpl implements UserService {
     }
     //Creator: Nguyễn Xuân Hùng
     @Override
-    public void updateUser(UserUpdateDto userDto) {
-        User user = userRepository.findById(userDto.getId()).orElse(null);
+    public void updateUser(UserUpdateDTO userUpdateDTO) {
+        User user = userRepository.findById(userUpdateDTO.getId()).orElse(null);
         assert user != null;
-        user.setFullname(userDto.getFullName().trim());
-        user.setAddress(userDto.getAddress().trim());
-        user.setGender(userDto.getGender());
-        user.setPhoneNumber(userDto.getPhoneNumber());
-        user.setIdCard(userDto.getIdCard());
-        user.setBirthday(userDto.getBirthday());
-        List<User> users = userRepository.findAllByEmailContaining("");
+        user.setFullname(userUpdateDTO.getFullName().trim());
+        user.setAddress(userUpdateDTO.getAddress().trim());
+        user.setGender(userUpdateDTO.getGender());
+        user.setIdCard(userUpdateDTO.getIdCard());
+        user.setBirthday(userUpdateDTO.getBirthday());
+        List<User> users = userRepository.findAllByIsLockedIsFalse();
         List<String> messages = new ArrayList<>();
         for(User testUser : users){
-            if(!user.getEmail().equals(userDto.getEmail().trim())&&testUser.getEmail().equals(userDto.getEmail().trim())){
+            if(!user.getEmail().equals(userUpdateDTO.getEmail().trim())&&testUser.getEmail().equals(userUpdateDTO.getEmail().trim())){
                 messages.add("Email này đã được đăng kí. Vui lòng nhập lại email khác.");
                 break;
             }
         }
-        user.setEmail(userDto.getEmail().trim());
-        if(!userDto.getPassword().equals("")){
-            if(!userDto.getNewPassword().equals("")){
-                if(BCrypt.checkpw(userDto.getPassword(),user.getPassword())){
+        user.setEmail(userUpdateDTO.getEmail().trim());
+        if(!userUpdateDTO.getPassword().equals("")){
+            if(!userUpdateDTO.getNewPassword().equals("")){
+                if(BCrypt.checkpw(userUpdateDTO.getPassword(),user.getPassword())){
                     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-                    user.setPassword(encoder.encode(userDto.getNewPassword()));
+                    user.setPassword(encoder.encode(userUpdateDTO.getNewPassword()));
                 }else {
                     messages.add("Mật khẩu bạn nhập không đúng. Xin vui lòng nhập lại.");
                 }
             }else {
-                messages.add("Vui lòng nhập mật khẩu mới và xác nhận mật khẩu.");
+                messages.add("Vui lòng nhập mật khẩu hiện tại đi kèm với mật khẩu mới và xác nhận mật khẩu.");
             }
         }
-        userDto.setBackendMessage(messages);
-        if(userDto.getBackendMessage().size()==0){
+        for(User testUser : users){
+            if(!user.getPhoneNumber().equals(userUpdateDTO.getPhoneNumber())&&testUser.getPhoneNumber().equals(userUpdateDTO.getPhoneNumber())){
+                messages.add("Số điện thoại này đã được đăng kí. Vui lòng nhập lại số điện thoại khác.");
+                break;
+            }
+        }
+        user.setPhoneNumber(userUpdateDTO.getPhoneNumber());
+        userUpdateDTO.setBackendMessage(messages);
+        if(userUpdateDTO.getBackendMessage().size()==0){
             userRepository.save(user);
         }
     }
