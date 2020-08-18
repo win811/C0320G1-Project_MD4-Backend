@@ -16,23 +16,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class UserDetailService implements UserDetailsService {
+// Creator Thien
+public class UserDetailServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository ;
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userRepository.findUserByEmail(s);
+        User user = userRepository.findByEmail(s);
+        System.out.println(user);
         if(user==null) {
             throw new UsernameNotFoundException("User not found");
         }
         String email=user.getEmail() ;
         String password=user.getPassword();
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        Set<Role> roles = user.getRoles();
-        for(Role role: roles){
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
+        Role role = user.getRole();
+        grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+//        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         return new org.springframework.security.core.userdetails.User(email,password,grantedAuthorities);
     }
 }
