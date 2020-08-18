@@ -1,6 +1,6 @@
 package md4.bid_project.security;
 
-import md4.bid_project.services.impl.UserDetailService;
+import md4.bid_project.services.impl.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,9 +19,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+// Creator Thien
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired(required = false)
-    UserDetailService userDetailServiceImpl;
+    UserDetailServiceImpl userDetailServiceImpl;
     @Autowired
     JwtRequestFilter jwtRequestFilter;
     @Autowired
@@ -34,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(12);
+        return new BCryptPasswordEncoder();
     }
 
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
@@ -50,13 +51,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests()
-                .antMatchers("/**", "/login", "/home", "/register").permitAll().and().
-//                authorizeRequests().antMatchers("/admin").permitAll().and().
-        authorizeRequests().antMatchers("/admin").access("hasRole('ROLE_ADMIN')").and().
-//                authorizeRequests().antMatchers("/admin").access("hasAnyRole('ROLE_ADMIN','ROLE_MEMBER')").and().
-        authorizeRequests().antMatchers("/products").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')").
-                anyRequest().authenticated()
+                .authorizeRequests().antMatchers("/**", "api/login", "/home", "/register").permitAll()
+                .and()
+                .authorizeRequests().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .and()
+                .authorizeRequests().antMatchers("/products/**").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+                .anyRequest().authenticated()
                 .and().cors();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }

@@ -18,6 +18,4 @@ public class Role {
     @Column(name = "role_name")
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
 }

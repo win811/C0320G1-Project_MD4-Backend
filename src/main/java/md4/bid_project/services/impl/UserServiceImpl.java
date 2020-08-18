@@ -35,6 +35,6 @@ public class UserServiceImpl implements UserService {
         user.setAnswer(userDTO.getAnswer());
         user.setReasonBan(userDTO.getReasonBan());
         user.setIsLocked(userDTO.getIsLocked());
-       userRepository.save(user) ;
+        userRepository.save(user);
     }
 }
