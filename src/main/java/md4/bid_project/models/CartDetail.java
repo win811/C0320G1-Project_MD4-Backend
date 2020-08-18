@@ -39,4 +39,5 @@ public class CartDetail {
     @Column(name = "cart_detail_cost")
     private Double cartDetailCost;
 
+
 }

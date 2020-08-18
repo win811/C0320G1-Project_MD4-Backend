@@ -48,4 +48,7 @@ public class DeliveryAddress {
     @JoinColumn(name = "delivery_user_id")
     @JsonIgnoreProperties
     private User user;
+
+    @Column(name = "delivery_status")
+    private  Boolean status;
 }
