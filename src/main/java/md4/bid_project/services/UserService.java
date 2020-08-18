@@ -1,6 +1,7 @@
 package md4.bid_project.services;
 
 
+import md4.bid_project.models.dto.UserListDTO;
 import md4.bid_project.models.dto.UserUpdateDto;
 import md4.bid_project.models.User;
 
@@ -17,6 +18,5 @@ public interface UserService {
     void updateUser(UserUpdateDto userDto);
 
     //Creator: Quốc Tùng
-    List<User> findAll();
-
+    List<UserListDTO> findAll();
 }

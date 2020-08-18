@@ -1,5 +1,6 @@
 package md4.bid_project.services.Impl;
 
+import md4.bid_project.models.dto.UserListDTO;
 import md4.bid_project.models.dto.UserUpdateDto;
 import md4.bid_project.models.User;
 import md4.bid_project.repositories.DeliveryAddressRepository;
@@ -83,7 +84,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<UserListDTO> findAll() {
+        List<User> users = userRepository.findAll();
+        List<UserListDTO> userListDTO = new ArrayList<UserListDTO>();
+        for (User user: users){
+            UserListDTO userListDTO1 = new UserListDTO();
+            userListDTO1.setId(user.getId());
+            userListDTO1.setName(user.getFullname());
+            userListDTO1.setEmail(user.getEmail());
+            userListDTO1.setAddress(user.getAddress());
+            userListDTO1.setPhoneNumber(user.getPhoneNumber());
+            userListDTO1.setLastLogin(user.getLastLogin());
+            userListDTO1.setPoint(user.getPoint());
+            userListDTO1.setRate(user.getRate().getName());
+            userListDTO.add(userListDTO1);
+        }
+        return userListDTO;
     }
 }

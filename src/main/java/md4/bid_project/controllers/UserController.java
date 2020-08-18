@@ -1,6 +1,7 @@
 package md4.bid_project.controllers;
 
 import md4.bid_project.models.User;
+import md4.bid_project.models.dto.UserListDTO;
 import md4.bid_project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,7 @@ public class UserController {
     //Creator: Lâm Quốc Tùng
 
     @GetMapping("/user")
-    public List<User> getAllUser() {
+    public List<UserListDTO> getAllUser() {
         return userService.findAll();
     }
 
