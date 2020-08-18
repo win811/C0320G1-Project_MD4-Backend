@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AuctionRepository extends JpaRepository<Auction,Long> {
+
+    // Bach
+    Auction getAuctionByProduct_Id(Long productId);
 }

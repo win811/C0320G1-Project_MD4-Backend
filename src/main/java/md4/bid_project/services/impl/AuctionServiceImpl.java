@@ -38,4 +38,11 @@ public class AuctionServiceImpl implements AuctionService {
     public void deleteAuction(Long id) {
         auctionRepository.deleteById(id);
     }
+
+    //Bach
+
+    @Override
+    public Auction getAutionByProductId(Long productId) {
+        return auctionRepository.getAuctionByProduct_Id(productId);
+    }
 }

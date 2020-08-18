@@ -58,8 +58,7 @@ public class ProductController {
         return ResponseEntity.ok(pageProduct);
     }
 
-
-
+    //Bach
     @GetMapping("product/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         Product product = productService.getProductById(id);
