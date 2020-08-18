@@ -3,11 +3,9 @@ package md4.bid_project.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -57,27 +55,27 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonIgnoreProperties(value = "user")
     private List<DeliveryAddress> deliveryAddressList;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "user_role_id")
-//    private Role role;
 
-//    @OneToOne
-//    @JoinColumn(name = "reset_id")
-//    private PasswordResetCode passwordResetCode;
-//
-//    @Column(name = "user_password")
-//    private String password ;
-//
-//    @Column(name = "user_question")
-//    private String question ;
-//
-//    @Column(name = "user_answer")
-//    private String answer;
-//
-//    @Column(name = "user_reason_ban")
-//    private String reasonBan;
-//
-//    @Column(name = "user_lock")
-//    private Boolean isLocked;
+    @ManyToOne
+    @JoinColumn(name = "user_role_id")
+    private Role role;
+
+    @OneToOne
+    @JoinColumn(name = "reset_id")
+    private PasswordResetCode passwordResetCode;
+
+    @Column(name = "user_password")
+    private String password ;
+
+    @Column(name = "user_question")
+    private String question ;
+
+    @Column(name = "user_answer")
+    private String answer;
+
+    @Column(name = "user_reason_ban")
+    private String reasonBan;
+
+    @Column(name = "user_lock")
+    private Boolean isLocked;
 }
