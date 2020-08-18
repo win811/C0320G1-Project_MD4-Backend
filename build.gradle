@@ -20,6 +20,11 @@ repositories {
 
 dependencies {
     compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+//    compile 'io.jsonwebtoken:jjwt-api:0.11.2'
+//
+//    runtime 'io.jsonwebtoken:jjwt-impl:0.11.2',
+//
+//            'io.jsonwebtoken:jjwt-jackson:0.11.2' // or 'io.jsonwebtoken:jjwt-gson:0.11.2' for gson
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
