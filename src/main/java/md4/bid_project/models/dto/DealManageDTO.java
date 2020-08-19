@@ -1,116 +1,59 @@
 package md4.bid_project.models.dto;
 
 //all created by Thao
+import lombok.Data;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
+@Data
+@Entity
+@Table(name="deal_manage_dto_view")
 public class DealManageDTO {
+
+    @Id
+    @Column(name = "id")
     private Long id;
-    private String code;
+
+    @Column(name = "code_deal")
+    private String codeDeal;
+
+    @Column(name = "win_bidding_time")
     private LocalDateTime winBiddingTime;
+
+    @Column(name = "name_seller")
     private String nameSeller;
+
+    @Column(name = "name_buyer")
     private String nameBuyer;
+
+    @Column(name = "name_product")
     private String nameProduct;
+
+    @Column(name = "starting_bid_price")
     private Double startingBidPrice;
+
+    @Column(name = "closing_bid_price")
     private Double closingBidPrice;
+
+    @Column(name = "amount")
     private Integer amount;
+
+    @Column(name = "total_payment")
     private Double totalPayment;
+
+    @Column(name = "service_fee")
     private Double serviceFee;
+
+    @Column(name = "status_of_deal")
     private String statusOfDeal;
-//    private boolean isDelete;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public LocalDateTime getWinBiddingTime() {
-        return winBiddingTime;
-    }
-
-    public String getNameSeller() {
-        return nameSeller;
-    }
-
-    public String getNameBuyer() {
-        return nameBuyer;
-    }
-
-    public String getNameProduct() {
-        return nameProduct;
-    }
-
-    public Double getStartingBidPrice() {
-        return startingBidPrice;
-    }
-
-    public Double getClosingBidPrice() {
-        return closingBidPrice;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public Double getTotalPayment() {
-        return totalPayment;
-    }
-
-    public Double getServiceFee() {
-        return serviceFee;
-    }
-
-    public String getStatusOfDeal() {
-        return statusOfDeal;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public void setWinBiddingTime(LocalDateTime winBiddingTime) {
-        this.winBiddingTime = winBiddingTime;
-    }
-
-    public void setNameSeller(String nameSeller) {
-        this.nameSeller = nameSeller;
-    }
-
-    public void setNameBuyer(String nameBuyer) {
-        this.nameBuyer = nameBuyer;
-    }
-
-    public void setNameProduct(String nameProduct) {
-        this.nameProduct = nameProduct;
-    }
-
-    public void setStartingBidPrice(Double startingBidPrice) {
-        this.startingBidPrice = startingBidPrice;
-    }
-
-    public void setClosingBidPrice(Double closingBidPrice) {
-        this.closingBidPrice = closingBidPrice;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
-
-    public void setStatusOfDeal(String statusOfDeal) {
-        this.statusOfDeal = statusOfDeal;
-    }
 
     public void setTotalPayment() {
         this.totalPayment = this.amount * this.closingBidPrice;
     }
-
     public void setServiceFee() {
         this.serviceFee = this.totalPayment * 0.1;
     }
