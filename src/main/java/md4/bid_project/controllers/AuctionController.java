@@ -33,10 +33,7 @@ public class AuctionController {
                                                                            @RequestParam(name = "recordStatusName",defaultValue = "") String recordStatusName,
                                                                            @PageableDefault(value = 4) Pageable pageable) {
         Page<AuctionRecord> auctionRecordPage = auctionRecordService.findByBidderIdAndProductNameAndRecordStatusName(bidderId,productName,recordStatusName,pageable);
-        if (auctionRecordPage.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(auctionRecordPage);
+        return auctionRecordPage.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(auctionRecordPage);
     }
 
     @GetMapping("/auctions")

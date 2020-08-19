@@ -32,10 +32,7 @@ public class ProductController {
                                                              @RequestParam(name = "approvementStatusName",defaultValue = "") String approvementStatusName,
                                                              @PageableDefault(value = 4) Pageable pageable) {
         Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId,productName,approvementStatusName,pageable);
-        if (productPage.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(productPage);
+        return productPage.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(productPage);
     }
 
     //    Creator : Cường
@@ -52,10 +49,7 @@ public class ProductController {
             productService.save(product);
         }
         Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId,productName,approvementStatusName,pageable);
-        if (productPage.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(productPage);
+        return productPage.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(productPage);
     }
 
 
