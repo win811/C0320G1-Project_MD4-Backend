@@ -17,7 +17,7 @@ import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/productPromotion")
+@RequestMapping("/api/v1")
 public class ProductPromotionController {
     @Autowired
     private ProductPromotionService productPromotionService;
@@ -34,14 +34,6 @@ public class ProductPromotionController {
     public ResponseEntity<ProductPromotion> getProductPromotionsById(@PathVariable(value = "id") Long productPromotionId)
             throws ResourceNotFoundException {
         ProductPromotion productPromotion = productPromotionService.findById(productPromotionId);
-        return ResponseEntity.ok().body(productPromotion);
-    }
-
-    //creator: đức thông
-    @GetMapping("/productPromotio/{id}")
-    public ResponseEntity<ProductPromotionDto> getProductPromotionsByIdaaaa(@PathVariable(value = "id") Long productPromotionId)
-            throws ResourceNotFoundException {
-        ProductPromotionDto productPromotion = new ProductPromotionDto();
         return ResponseEntity.ok().body(productPromotion);
     }
 

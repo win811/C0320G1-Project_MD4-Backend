@@ -1,5 +1,6 @@
 package md4.bid_project.models.dto;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -22,9 +23,11 @@ public class ProductPromotionDto {
     private Date endDate;
 
     @NotNull(message = "Không được để trống")
+    @Min(0)
     private Double percent;
 
     @NotNull(message = "Không được để trống")
+    @Min(0)
     private Double price;
 
     public ProductPromotionDto() {
