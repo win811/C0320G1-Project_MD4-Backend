@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
         for (User user: users){
             UserListDTO userListDTO1 = new UserListDTO();
             userListDTO1.setId(user.getId());
-            userListDTO1.setName(user.getFullname());
+            userListDTO1.setFullname(user.getFullname());
             userListDTO1.setEmail(user.getEmail());
             userListDTO1.setAddress(user.getAddress());
             userListDTO1.setPhoneNumber(user.getPhoneNumber());

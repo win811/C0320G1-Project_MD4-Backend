@@ -8,9 +8,17 @@ public class UserListDTO {
 
     private Long id;
 
-    private String name;
+    private String fullname;
 
     private String address;
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
 
     private String email;
 
@@ -30,13 +38,6 @@ public class UserListDTO {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getAddress() {
         return address;
