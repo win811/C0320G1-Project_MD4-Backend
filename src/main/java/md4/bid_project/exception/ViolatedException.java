@@ -2,6 +2,7 @@ package md4.bid_project.exception;
 
 import org.springframework.validation.BindingResult;
 
+// Duy
 public class ViolatedException extends Exception {
 
     private BindingResult result;

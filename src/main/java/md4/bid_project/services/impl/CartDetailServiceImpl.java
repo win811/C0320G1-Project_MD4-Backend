@@ -12,6 +12,7 @@ import md4.bid_project.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -75,6 +76,11 @@ public class CartDetailServiceImpl implements CartDetailService {
             return cartDetailRepository.save(cartDetail);
         }
         return null;
+    }
+    //Creator: Nguyễn Xuân Hùng
+    @Override
+    public List<CartDetail> findCartDetailByCartId(Long id) {
+        return cartDetailRepository.findAllByCart_Id(id);
     }
 
 }
