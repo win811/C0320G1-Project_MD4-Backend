@@ -33,6 +33,9 @@ dependencies {
     compile group: 'com.paypal.sdk', name: 'checkout-sdk', version: '1.0.2'
     compile group: 'org.json', name: 'json', version: '20180813'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
+    implementation("com.braintreepayments.gateway:braintree-java:3.0.0")
+    testImplementation("com.braintreepayments.gateway:braintree-java:3.0.0")
+
 }
 
 test {

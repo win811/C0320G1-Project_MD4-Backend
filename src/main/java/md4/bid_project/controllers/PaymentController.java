@@ -1,10 +1,12 @@
 package md4.bid_project.controllers;
 
+import md4.bid_project.exception.SettlementException;
 import md4.bid_project.exception.ViolatedException;
 import md4.bid_project.models.Cart;
 import md4.bid_project.models.DeliveryAddress;
 import md4.bid_project.models.dto.DeliveryAddressDTO;
 import md4.bid_project.services.DeliveryAddressService;
+import md4.bid_project.services.restful.braintree.BrainTreeService;
 import md4.bid_project.services.restful.paypal.Transaction;
 import md4.bid_project.services.restful.paypal.PayPalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 // Duy
 // Cac file liên quan đến DeliveryAddress (repository, service, entity)
@@ -28,10 +31,13 @@ import java.util.List;
 public class PaymentController {
 
     @Autowired
-    DeliveryAddressService deliveryAddressService;
+    private DeliveryAddressService deliveryAddressService;
 
     @Autowired
-    PayPalService payPalService;
+    private PayPalService payPalService;
+
+    @Autowired
+    private BrainTreeService brainTreeService;
 
     // Khởi tạo 1 đơn hàng từ paypal
     @PostMapping("/payment/create-transaction")
@@ -65,5 +71,18 @@ public class PaymentController {
         }
         deliveryAddressService.updateDeliveryAddress(deliveryAddress);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // visa get client token
+    @GetMapping("/payment/visa-token")
+    public ResponseEntity<Map<String, String>> getClientToken() {
+        Map<String, String> token = brainTreeService.getClientToken();
+        return ResponseEntity.ok(token);
+    }
+
+    @GetMapping("/payment/visa-create")
+    public ResponseEntity<?> createPurchase(@RequestParam("userId") Long id, @RequestParam("nonce") String nonce) throws SettlementException {
+        com.braintreegateway.Transaction transaction = brainTreeService.requestTransaction(nonce, id);
+        return ResponseEntity.ok(transaction);
     }
 }

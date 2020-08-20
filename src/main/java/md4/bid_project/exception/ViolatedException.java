@@ -6,9 +6,13 @@ import org.springframework.validation.BindingResult;
 public class ViolatedException extends Exception {
 
     private BindingResult result;
+    private String message;
 
     public ViolatedException(BindingResult result) {
         this.result = result;
+    }
+    public ViolatedException(String message) {
+        super(message);
     }
 
     public BindingResult getResult() {
