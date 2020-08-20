@@ -1,4 +1,4 @@
-package md4.bid_project.services.impl;
+package md4.bid_project.services.Impl;
 
 import md4.bid_project.repositories.PasswordResetCodeRepository;
 import md4.bid_project.services.PasswordResetCodeService;

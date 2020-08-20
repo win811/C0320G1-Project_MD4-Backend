@@ -1,0 +1,120 @@
+package md4.bid_project.services.Impl;
+
+import md4.bid_project.models.dto.UserDto;
+import md4.bid_project.models.dto.UserUpdateDto;
+import md4.bid_project.models.User;
+import md4.bid_project.repositories.DeliveryAddressRepository;
+import md4.bid_project.repositories.UserRepository;
+import md4.bid_project.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class UserServiceImpl implements UserService {
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    DeliveryAddressRepository deliveryAddressRepository;
+    //Creator: Nguyễn Xuân Hùng
+    @Override
+    public UserUpdateDto findUserUpdateDtoByUserId(Long id) {
+        UserUpdateDto userDto = new UserUpdateDto();
+        User user = userRepository.findById(id).orElse(null);
+        if(user!=null){
+            userDto.setFullName(user.getFullName());
+            userDto.setEmail(user.getEmail());
+            userDto.setGender(user.getGender());
+            userDto.setPhoneNumber(user.getPhoneNumber());
+            userDto.setBirthday(user.getBirthday());
+            userDto.setIdCard(user.getIdCard());
+            userDto.setAddress(user.getAddress());
+            return userDto;
+        }
+        return null;
+    }
+    //Creator: Nguyễn Xuân Hùng
+    @Override
+    public User findUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+    //Creator: Nguyễn Xuân Hùng
+    @Override
+    public void updateUser(UserUpdateDto userDto) {
+        User user = userRepository.findById(userDto.getId()).orElse(null);
+        assert user != null;
+        user.setFullName(userDto.getFullName().trim());
+        user.setAddress(userDto.getAddress().trim());
+        user.setGender(userDto.getGender());
+        user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setIdCard(userDto.getIdCard());
+        user.setBirthday(userDto.getBirthday());
+        List<User> users = userRepository.findAllByEmailContaining("");
+        List<String> messages = new ArrayList<>();
+        for(User testUser : users){
+            if(!user.getEmail().equals(userDto.getEmail().trim())&&testUser.getEmail().equals(userDto.getEmail().trim())){
+                messages.add("Email này đã được đăng kí. Vui lòng nhập lại email khác.");
+                break;
+            }
+        }
+        user.setEmail(userDto.getEmail().trim());
+        if(!userDto.getPassword().equals("")){
+            if(!userDto.getNewPassword().equals("")){
+                if(BCrypt.checkpw(userDto.getPassword(),user.getPassword())){
+                    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+                    user.setPassword(encoder.encode(userDto.getNewPassword()));
+                }else {
+                    messages.add("Mật khẩu bạn nhập không đúng. Xin vui lòng nhập lại.");
+                }
+            }else {
+                messages.add("Vui lòng nhập mật khẩu mới và xác nhận mật khẩu.");
+            }
+        }
+        userDto.setBackendMessage(messages);
+        if(userDto.getBackendMessage().size()==0){
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public void createUser(UserDto userDto) {
+        User user = new User();
+        user.setFullName(userDto.getFullName().trim());
+        user.setEmail(userDto.getEmail());
+        user.setAddress(userDto.getAddress().trim());
+        user.setGender(userDto.getGender());
+        user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setIdCard(userDto.getIdCard());
+        user.setBirthday(userDto.getBirthday());
+        user.setPassword(userDto.getPassword());
+        user.setQuestion(userDto.getQuestion());
+        user.setAnswer(userDto.getAnswer());
+        List<User> userEmail = userRepository.findAllByEmailContaining("");
+        List<User> userPhone = userRepository.findAllByPhoneNumberContaining("");
+        List<String> messagesEmails = new ArrayList<>();
+        List<String> messagesPhones = new ArrayList<>();
+        for(User checkEmail : userEmail){
+            if(checkEmail.getEmail().equals(userDto.getEmail().trim())){
+                messagesEmails.add("Email này đã được đăng kí. Vui lòng nhập lại email khác.");
+                break;
+            }
+        }
+        for(User checkPhoneNumber : userPhone){
+            if(checkPhoneNumber.getPhoneNumber().equals(userDto.getPhoneNumber().trim())){
+                messagesPhones.add("SDT này đã được đăng kí. Vui lòng nhập lại SDT khác.");
+                break;
+            }
+        }
+        userDto.setNotificationEmail(messagesEmails);
+        userDto.setNotificationPhoneNumber(messagesPhones);
+        if(userDto.getNotificationEmail().size()==0 && userDto.getNotificationPhoneNumber().size()==0){
+            userRepository.save(user);
+        }
+    }
+
+
+}

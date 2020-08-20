@@ -1,5 +1,6 @@
 package md4.bid_project.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.annotation.Generated;
@@ -7,6 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -19,7 +21,7 @@ public class User {
     private long id;
 
     @Column(name = "user_fullname")
-    private String fullname;
+    private String fullName;
 
     @Column(name = "user_email")
     private String email;
@@ -52,6 +54,32 @@ public class User {
     @Column(name = "user_status")
     private Boolean status;
 
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties(value = "user")
+    private List<DeliveryAddress> deliveryAddressList;
+
+    @ManyToOne
+    @JoinColumn(name = "user_role_id")
+    private Role role;
+
+    @OneToOne(mappedBy = "user")
+    private PasswordResetCode passwordResetCode;
+
+    @Column(name = "user_password")
+    private String password ;
+
+    @Column(name = "user_question")
+    private String question ;
+
+    @Column(name = "user_answer")
+    private String answer;
+
+    @Column(name = "user_reason_ban")
+    private String reasonBan;
+
+    @Column(name = "user_is_locked")
+    private Boolean isLocked;
+
     public User() {
     }
 
@@ -63,12 +91,12 @@ public class User {
         this.id = id;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -149,5 +177,69 @@ public class User {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public List<DeliveryAddress> getDeliveryAddressList() {
+        return deliveryAddressList;
+    }
+
+    public void setDeliveryAddressList(List<DeliveryAddress> deliveryAddressList) {
+        this.deliveryAddressList = deliveryAddressList;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public PasswordResetCode getPasswordResetCode() {
+        return passwordResetCode;
+    }
+
+    public void setPasswordResetCode(PasswordResetCode passwordResetCode) {
+        this.passwordResetCode = passwordResetCode;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public String getReasonBan() {
+        return reasonBan;
+    }
+
+    public void setReasonBan(String reasonBan) {
+        this.reasonBan = reasonBan;
+    }
+
+    public Boolean getLocked() {
+        return isLocked;
+    }
+
+    public void setLocked(Boolean locked) {
+        isLocked = locked;
     }
 }

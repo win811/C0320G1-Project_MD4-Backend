@@ -1,4 +1,4 @@
-package md4.bid_project.services.impl;
+package md4.bid_project.services.Impl;
 
 import md4.bid_project.repositories.CommentLevel2Repository;
 import md4.bid_project.services.CommentLevel2Service;
