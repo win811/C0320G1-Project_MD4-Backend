@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,9 +36,10 @@ public class ProductController {
 
     // Created by: Toàn
     // Lấy danh sách sản phẩm yêu thích
-    @GetMapping(path = "/product/favorite/{userId}")
-    public ResponseEntity<Page<FavoriteProduct>> getFavoriteProductsByUserId(@PathVariable(name = "userId") Long userId,
-                                                                             Pageable pageable) throws ResourceNotFoundException {
+    @GetMapping(path = "/product/favorite")
+    public ResponseEntity<Page<FavoriteProduct>> getFavoriteProductsByUserId(@RequestParam(name = "userId") Long userId,
+                                                                             @PageableDefault(value = 8) Pageable pageable)
+            throws ResourceNotFoundException {
         Page<FavoriteProduct> favoriteProducts = favoriteProductService.findByUserID(userId, pageable);
         if (favoriteProducts.getTotalPages() > 0)
             return ResponseEntity.ok(favoriteProducts);
@@ -48,8 +50,10 @@ public class ProductController {
     // Created by: Toàn
     // Thêm 1 sản phẩm vào danh sách yêu thích
     @PostMapping(path = "/product/favorite")
-    public ResponseEntity<FavoriteProduct> createFavoriteProduct(@RequestBody FavoriteProduct favoriteProduct)
+    public ResponseEntity<FavoriteProduct> createFavoriteProduct(@RequestBody FavoriteProduct favoriteProduct,
+                                                                 Authentication authentication)
             throws ResourceNotFoundException {
+        System.out.println("createFavoriteProduct -" + authentication.getName());
         FavoriteProduct result = favoriteProductService.createFavoriteProduct(favoriteProduct);
         if (result != null)
             return ResponseEntity.status(HttpStatus.CREATED).body(result);
