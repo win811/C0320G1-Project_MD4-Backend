@@ -49,20 +49,26 @@ public class PaymentController {
 
     @Autowired
     private CartDetailService cartDetailService;
-    // Khởi tạo 1 đơn hàng từ paypal
-    @PostMapping("/payment/create-transaction")
-    public ResponseEntity<Transaction> getTransaction(@RequestBody  Long userId) throws IOException {
+
+
+
+    // Creator: Duy
+    // create order from paypal
+    @PostMapping("/payment/paypal-create")
+    public ResponseEntity<Transaction> getPayPalTransaction(@RequestBody Long userId) throws IOException {
         Transaction data = payPalService.createTransaction(userId);
         return ResponseEntity.ok(data);
     }
 
+    // Creator: Duy
     // xác nhận đơn hàng đã được trả từ người mua
-    @PostMapping("/payment/confirm-transaction")
-    public ResponseEntity<Transaction> confirmTransaction(@RequestBody String orderId) throws IOException {
+    @PostMapping("/payment/paypal-confirm")
+    public ResponseEntity<Transaction> confirmPayPalTransaction(@RequestBody String orderId) throws IOException {
          Transaction transaction = payPalService.captureTransaction(orderId);
         return ResponseEntity.ok(transaction);
     }
 
+    // Creator: Duy
     // Lấy địa chỉ giao hàng của user
     @GetMapping("/payment/address/{userId}")
     public ResponseEntity<DeliveryAddressDTO> getDeliveryAddress(@PathVariable(value = "userId") Long id) {
@@ -70,6 +76,7 @@ public class PaymentController {
         return ResponseEntity.ok(data);
     }
 
+    // Creator: Duy
     // cập nhật địa chỉ giao hàng mới
     @PutMapping("/payment/address")
     public ResponseEntity<DeliveryAddress> updateDeliveryAddress(@Valid @RequestBody DeliveryAddress deliveryAddress,
@@ -83,15 +90,17 @@ public class PaymentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // Creator: Duy
     // visa get client token
     @GetMapping("/payment/visa-token")
-    public ResponseEntity<Map<String, String>> getClientToken() {
+    public ResponseEntity<Map<String, String>> getVisaToken() {
         Map<String, String> token = brainTreeService.getClientToken();
         return ResponseEntity.ok(token);
     }
 
+    // Creator: Duy
     @GetMapping("/payment/visa-create")
-    public ResponseEntity<?> createPurchase(@RequestParam("userId") Long id, @RequestParam("nonce") String nonce) throws SettlementException {
+    public ResponseEntity<?> createVisaPurchase(@RequestParam("userId") Long id, @RequestParam("nonce") String nonce) throws SettlementException {
         com.braintreegateway.Transaction transaction = brainTreeService.requestTransaction(nonce, id);
         return ResponseEntity.ok(transaction);
     }
