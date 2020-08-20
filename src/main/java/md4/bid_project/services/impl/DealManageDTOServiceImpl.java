@@ -1,18 +1,21 @@
 package md4.bid_project.services.impl;
 
 import md4.bid_project.models.CartDetail;
+import md4.bid_project.models.dto.DealManageApi;
 import md4.bid_project.models.dto.DealManageDTO;
 import md4.bid_project.repositories.CartDetailRepository;
 import md4.bid_project.repositories.DealManageDTORepository;
 import md4.bid_project.services.DealManageDTOService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//created by Thao
+//all created by Thao
 @Service
 public class DealManageDTOServiceImpl implements DealManageDTOService {
 
@@ -54,19 +57,37 @@ public class DealManageDTOServiceImpl implements DealManageDTOService {
         return cartDetailRepository.save(cartDetail);
     }
 
+    //count total items of list
     @Override
     public int countTotalItems() {
         return cartDetailRepository.findAllByIsDeleteIsFalse().size();
     }
 
-    //SEARCH
+    //count total result of searching
     @Override
-    public List<DealManageDTO> searchBySellerAndBuyerAndProductAndTotalPayAndStatus(String nameBuyer, String nameSeller, String nameProduct, String totalPayment, String status) {
-        return dealManageDTORepository.queryByFiveFields(nameBuyer, nameSeller, nameProduct, totalPayment, status);
+    public int countSearchResult(String nameBuyer, String nameSeller, String nameProduct, Double totalPayment, String status) {
+        return dealManageDTORepository.countSearchResult(nameBuyer, nameSeller, nameProduct, totalPayment, status);
     }
 
+    //SEARCH
     @Override
-    public List<DealManageDTO> searchByOneField(String nameBuyer, String nameSeller, String nameProduct, Double totalPayment, String status) {
-        return dealManageDTORepository.findAllByNameBuyerContainingOrNameSellerContainingOrNameProductContainingOrTotalPaymentContainingOrStatusOfDeal(nameBuyer, nameSeller, nameProduct, totalPayment, status);
+    public List<DealManageDTO> searchBySellerAndBuyerAndProductAndTotalPayAndStatus(String nameBuyer, String nameSeller, String nameProduct, Double totalPayment, String status, Pageable pageable) {
+        return dealManageDTORepository.queryByFiveFields(nameBuyer, nameSeller, nameProduct, totalPayment, status, pageable);
     }
+
+    //MAKE API TO SEND CLIENT
+    @Override
+    public ResponseEntity<DealManageApi> setInfoToDealManageApi(List<DealManageDTO> list, int currentPage, int pageSize, int totalItems) {
+        if (list.isEmpty()) {
+            return new ResponseEntity<DealManageApi>(HttpStatus.NO_CONTENT);
+        } else {
+            DealManageApi dealManageApi = new DealManageApi();
+            dealManageApi.setItems(list);
+            dealManageApi.setCurrentPage(currentPage);
+            dealManageApi.setTotalPage((int) Math.ceil((double) totalItems / pageSize));
+            dealManageApi.setTotalItems(totalItems);
+            return new ResponseEntity<DealManageApi>(dealManageApi, HttpStatus.OK);
+        }
+    }
+
 }

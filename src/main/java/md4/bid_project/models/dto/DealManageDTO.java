@@ -1,6 +1,5 @@
 package md4.bid_project.models.dto;
 
-//all created by Thao
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -9,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
+//all created by Thao
 @Data
 @Entity
 @Table(name="deal_manage_dto_view")
