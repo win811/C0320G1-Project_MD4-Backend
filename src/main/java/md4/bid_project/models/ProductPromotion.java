@@ -3,8 +3,7 @@ package md4.bid_project.models;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "product_promotions")

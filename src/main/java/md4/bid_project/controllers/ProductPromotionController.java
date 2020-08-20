@@ -4,7 +4,9 @@ package md4.bid_project.controllers;
 import md4.bid_project.exception.ResourceNotFoundException;
 import md4.bid_project.models.Product;
 import md4.bid_project.models.ProductPromotion;
+import md4.bid_project.models.User;
 import md4.bid_project.models.dto.ProductPromotionDto;
+import md4.bid_project.repositories.UserRepository;
 import md4.bid_project.services.ProductPromotionService;
 import md4.bid_project.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ public class ProductPromotionController {
     private ProductPromotionService productPromotionService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/productPromotions")
     public List<ProductPromotion> getAllProductPromotion() {
@@ -57,6 +61,11 @@ public class ProductPromotionController {
     @GetMapping("/products")
     public List<Product> getAllProduct() {
         return productService.findAll();
+    }
+
+    @GetMapping("/users")
+    public List<User> getListUser(){
+        return userRepository.findAll();
     }
 
     //creator: đức thông
