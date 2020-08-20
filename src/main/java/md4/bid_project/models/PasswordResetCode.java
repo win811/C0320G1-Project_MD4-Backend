@@ -19,7 +19,7 @@ public class PasswordResetCode {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private User user ;
 
     @Column(name = "reset_status")
     private Boolean status;
