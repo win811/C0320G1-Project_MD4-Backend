@@ -2,11 +2,15 @@ package md4.bid_project.controllers;
 
 import md4.bid_project.exception.SettlementException;
 import md4.bid_project.exception.ViolatedException;
-import md4.bid_project.models.Cart;
 import md4.bid_project.models.DeliveryAddress;
+import md4.bid_project.models.Order;
 import md4.bid_project.models.dto.DeliveryAddressDTO;
+import md4.bid_project.models.dto.InvoiceDto;
+import md4.bid_project.models.dto.OrderDto;
+import md4.bid_project.services.CartDetailService;
 import md4.bid_project.services.DeliveryAddressService;
 import md4.bid_project.services.restful.braintree.BrainTreeService;
+import md4.bid_project.services.OrderService;
 import md4.bid_project.services.restful.paypal.Transaction;
 import md4.bid_project.services.restful.paypal.PayPalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +39,10 @@ import java.util.Map;
 @RequestMapping("/api/v1")
 public class PaymentController {
 
+    //creator: Đặng Hồng Quân team C
+     @Autowired
+    private OrderService orderService;
+
     @Autowired
     private DeliveryAddressService deliveryAddressService;
 
@@ -45,13 +53,27 @@ public class PaymentController {
     private BrainTreeService brainTreeService;
 
     @Autowired
-    private OrderService orderService;
-
-    @Autowired
     private CartDetailService cartDetailService;
 
+    @GetMapping("payment/order/{id}")
+    public ResponseEntity<Order> getOrderById(@PathVariable(value = "id") Long userId)  {
+        Order order = orderService.findByBuyerId(userId);
+        if(order==null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.ok().body(order);
+    }
 
+    @PostMapping("payment/order")
+    public ResponseEntity<Void> create(@RequestBody OrderDto orderDto) {
+        orderService.saveOrder(orderDto);
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
+    }
 
+    @PutMapping("payment/order")
+    public ResponseEntity<Void> update( @RequestBody Order order){
+        orderService.updateOrder(order);
+        return new ResponseEntity<Void>( HttpStatus.CREATED);
+    }
     // Creator: Duy
     // create order from paypal
     @PostMapping("/payment/paypal-create")
@@ -108,7 +130,7 @@ public class PaymentController {
     //Creator: Nguyễn Xuân Hùng
     @GetMapping("/payment/invoice/{id}")
     public ResponseEntity<InvoiceDto> getInvoiceById(@PathVariable Long id){
-        Order order = orderService.findOrderById(id);
+        Order order = orderService.findByBuyerId(id);
         List<CartDetail> cartDetail = cartDetailService.findCartDetailByCartId(order.getCart().getId());
         if(cartDetail==null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

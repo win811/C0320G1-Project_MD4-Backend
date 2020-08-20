@@ -1,9 +1,12 @@
 package md4.bid_project.services;
 
 import md4.bid_project.models.Order;
+import md4.bid_project.models.dto.OrderDto;
 
-import java.util.List;
+
 
 public interface OrderService {
-    Order findOrderById(Long id);
+   Order findByBuyerId(Long id);
+   void saveOrder(OrderDto orderDto);
+   void updateOrder(Order order);
 }
