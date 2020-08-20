@@ -66,12 +66,15 @@ public class UserServiceImpl implements UserService {
                     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
                     user.setPassword(encoder.encode(userUpdateDTO.getNewPassword()));
                 }else {
-                    messages.add("Mật khẩu bạn nhập không đúng. Xin vui lòng nhập lại.");
+                    messages.add("Mật khẩu hiện tại không đúng. Xin vui lòng nhập lại.");
                 }
             }else {
                 messages.add("Vui lòng nhập mật khẩu hiện tại đi kèm với mật khẩu mới và xác nhận mật khẩu.");
             }
+        } else if(!userUpdateDTO.getNewPassword().equals("")){
+            messages.add("Vui lòng nhập mật khẩu hiện tại khi đổi mật khẩu.");
         }
+
         for(User testUser : users){
             if(!user.getPhoneNumber().equals(userUpdateDTO.getPhoneNumber())&&testUser.getPhoneNumber().equals(userUpdateDTO.getPhoneNumber())){
                 messages.add("Số điện thoại này đã được đăng kí. Vui lòng nhập lại số điện thoại khác.");
