@@ -1,33 +1,38 @@
 package md4.bid_project.models.dto;
 
+import lombok.Data;
 import md4.bid_project.models.Rate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
+@Data
+@Entity
+@Table(name="user_list_dto")
 public class UserListDTO {
 
+    //Creater: Lâm Quốc Tùng
+    @Id
+    @Column(name = "id")
     private Long id;
-
+    @Column(name = "full_name")
     private String fullname;
-
+    @Column(name = "address")
     private String address;
 
-    public String getFullname() {
-        return fullname;
-    }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-
+    @Column(name = "email")
     private String email;
-
+    @Column(name = "phone_number")
     private String phoneNumber;
-
+    @Column(name = "last_login")
     private LocalDateTime lastLogin;
-
+    @Column(name = "point")
     private Long point;
-
+    @Column(name = "rate")
     private String rate;
 
     public Long getId() {
@@ -85,5 +90,12 @@ public class UserListDTO {
 
     public void setRate(String rate) {
         this.rate = rate;
+    }
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 }

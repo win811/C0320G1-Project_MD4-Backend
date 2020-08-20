@@ -4,9 +4,11 @@ package md4.bid_project.services;
 import md4.bid_project.models.dto.UserListDTO;
 import md4.bid_project.models.dto.UserUpdateDto;
 import md4.bid_project.models.User;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface UserService {
     //Creator: Nguyễn Xuân Hùng
     UserUpdateDto findUserUpdateDtoByUserId(Long id);
