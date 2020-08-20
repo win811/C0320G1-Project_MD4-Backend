@@ -36,9 +36,9 @@ public class Order {
     @Column(name = "order_payment_status")
     private String paymentState;
 
-    @ManyToOne
-    @JoinColumn(name = "order_delivery_address_id")
-    private DeliveryAddress deliveryAddress;
+
+    @Column(name = "order_delivery_address")
+    private String deliveryAddress;
 
     @OneToOne
     @JoinColumn(name = "order_cart_id")

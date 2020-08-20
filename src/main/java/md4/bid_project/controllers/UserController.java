@@ -59,9 +59,11 @@ public class UserController {
                 new UsernamePasswordAuthenticationToken(accountDTO.getEmail(), accountDTO.getPassword())
         );
         UserDetails userDetails = userDetailServiceImpl.loadUserByUsername(authentication.getName());
+        User user = userService.findByEmail(userDetails.getUsername());
         System.out.println(userDetails.getUsername());
         String jwtToken = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(jwtToken, userDetails.getUsername(), userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(jwtToken,user.getId(), userDetails.getUsername(), userDetails.getAuthorities()));
+
     }
 
 }

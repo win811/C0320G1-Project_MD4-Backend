@@ -1,5 +1,7 @@
 package md4.bid_project.services.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import md4.bid_project.models.User;
 import md4.bid_project.models.dto.UserUpdateDto;
 import md4.bid_project.repositories.DeliveryAddressRepository;
@@ -13,7 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Data
 public class UserServiceImpl implements UserService {
+    Long id;
+    private String username;
+
+    private String email;
+
+    @JsonIgnore
+    private String password;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -77,4 +87,10 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
         }
     }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
 }

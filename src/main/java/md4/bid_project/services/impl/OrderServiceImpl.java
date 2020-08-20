@@ -45,7 +45,6 @@ public class OrderServiceImpl implements OrderService {
         cart.setStatus(false);
         for ( CartDetail cartDetail: cart.getCartDetails()) {
             cartDetail.setStatus(CartDetailService.STATUS_PAID);
-
         }
         order.setCart(cart);
         order.setStatus(true);

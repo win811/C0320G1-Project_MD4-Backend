@@ -10,6 +10,6 @@ public class OrderDto {
     private User buyer;
     private String paymentMethod;
     private String deliveryMethod;
-    private DeliveryAddress deliveryAddress;
+    private String deliveryAddress;
     private String paymentState;
 }

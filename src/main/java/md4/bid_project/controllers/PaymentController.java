@@ -35,7 +35,7 @@ public class PaymentController {
      @Autowired
     private OrderService orderService;
 
-     @GetMapping("/order/{id}")
+     @GetMapping("payment/order/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable(value = "id") Long userId)  {
          Order order = orderService.findByBuyerId(userId);
          if(order==null)
@@ -43,13 +43,13 @@ public class PaymentController {
        return ResponseEntity.ok().body(order);
      }
 
-    @PostMapping("/order")
+    @PostMapping("payment/order")
     public ResponseEntity<Void> create(@RequestBody OrderDto orderDto) {
          orderService.saveOrder(orderDto);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/order")
+    @PutMapping("payment/order")
     public ResponseEntity<Void> update( @RequestBody Order order){
       orderService.updateOrder(order);
         return new ResponseEntity<Void>( HttpStatus.CREATED);
