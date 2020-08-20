@@ -7,6 +7,7 @@ import javax.annotation.Generated;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -79,4 +80,6 @@ public class User {
 
     @Column(name = "user_is_locked")
     private Boolean isLocked;
+
+
 }

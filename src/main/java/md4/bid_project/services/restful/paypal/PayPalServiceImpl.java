@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,8 +109,7 @@ public class PayPalServiceImpl implements PayPalService{
     }
 
     public AmountWithBreakdown setTotalPrice(Double total) {
-        double rate = rateExchangeService.getRateExchange();
-        double toUsd = Math.round(total / rate);
+        double toUsd = calcTotalPrice(total);
         return new AmountWithBreakdown().currencyCode("USD").value(String.valueOf(toUsd));
     }
 
@@ -130,5 +130,12 @@ public class PayPalServiceImpl implements PayPalService{
 
         orderRequest.purchaseUnits(purchaseUnitRequests);
         return orderRequest;
+    }
+
+    private double calcTotalPrice(Double money) {
+        double rate = rateExchangeService.getRateExchange();
+        double tempMoney = money * 1.1;
+        double toUsd = Math.round(tempMoney / rate);
+        return toUsd;
     }
 }
