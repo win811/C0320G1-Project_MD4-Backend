@@ -9,11 +9,13 @@ import org.springframework.mail.javamail.JavaMailSender;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
+
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
@@ -44,6 +46,11 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Override
+    public User save2(User user) {
+        return userRepository.save(user);
+    }
+
     //CREATE BY ANH DUC
     @Override
     public void remove(Long id) {
@@ -54,6 +61,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public Optional<User> findById2(Long id) {
+        return userRepository.findById(id);
     }
 
     //CREATE BY ANH DUC
@@ -97,7 +110,7 @@ public class UserServiceImpl implements UserService {
         java.sql.Timestamp sqlTS = new java.sql.Timestamp(timeNow.getTime());
         User user = userRepository.findByEmail(email);
         Date expiry = user.getPasswordResetCode().getExpiryDate();
-        Long noTime = (sqlTS.getTime()-expiry.getTime() ) / (60 * 1000);
+        Long noTime = (sqlTS.getTime() - expiry.getTime()) / (60 * 1000);
         if (noTime > 15) {
             return false;
         }
@@ -107,7 +120,7 @@ public class UserServiceImpl implements UserService {
     //CREATE BY ANH DUC
     @Override
     public String passwordEncryption(String password) {
-        return password+"abcxyz";
+        return password + "abcxyz";
     }
 
     @Override

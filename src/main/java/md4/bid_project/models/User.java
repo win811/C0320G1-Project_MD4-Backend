@@ -1,16 +1,17 @@
 package md4.bid_project.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -26,11 +27,13 @@ public class User implements Validator {
     @Column(name = "user_fullname")
     private String fullname;
 
-    @Pattern(regexp = "^([-\\w.])+[a-zA-Z\\d]@(\\w+\\.)+(\\w+)$", message = "Email is wrong format")
+    @Pattern(regexp = "^([-\\w.])+[a-zA-Z\\d]@(\\w+\\.)+(\\w+)$", message = "{regex.email}")
+    @NotNull(message = "{NotNull.email}")
     @Column(name = "user_email")
     private String email;
 
-//    @Pattern(regexp = "^((\\(\\+84\\))|0)9[01]\\d{7}$", message = "Phone number is wrong format")
+    @NotNull(message = "{NotNull.phoneNumber}")
+    @Pattern(regexp = "^(\\+84|0)+([0-9]{9})\\b$", message = "{regex.phoneNumber}")
     @Column(name = "user_phone_number")
     private String phoneNumber;
 
@@ -40,7 +43,8 @@ public class User implements Validator {
     @Column(name = "user_birthday")
     private LocalDate birthday;
 
-//    @Pattern(regexp = "^\\d{9}$", message = "ID Card format must be 9 number!")
+    @Pattern(regexp = "^\\d{9}$", message = "{regex.idCard}")
+    @NotNull(message = "{NotNull.idCard}")
     @Column(name = "user_id_card")
     private String idCard;
 
@@ -72,11 +76,13 @@ public class User implements Validator {
     private PasswordResetCode passwordResetCode;
 
     @Column(name = "user_password")
-    private String password ;
+    private String password;
 
     @Column(name = "user_question")
-    private String question ;
+    @NotNull(message = "{NotNull.question}")
+    private String question;
 
+    @NotNull(message = "{NotNull.answer}")
     @Column(name = "user_answer")
     private String answer;
 
@@ -93,6 +99,15 @@ public class User implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
+    }
 
+    @JsonIgnore
+    public PasswordResetCode getPasswordResetCode() {
+        return passwordResetCode;
+    }
+
+    @JsonProperty
+    public void setPasswordResetCode(PasswordResetCode passwordResetCode) {
+        this.passwordResetCode = passwordResetCode;
     }
 }

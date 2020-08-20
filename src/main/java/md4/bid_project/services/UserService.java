@@ -4,15 +4,19 @@ import md4.bid_project.models.User;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
     List<User> findAll();
+
     //CREATE BY ANH DUC
     User findById(Long id);
 
     //CREATE BY ANH DUC
     void save(User user);
+
+    User save2(User user);
 
     //CREATE BY ANH DUC
     void remove(Long id);
@@ -20,7 +24,11 @@ public interface UserService {
     //CREATE BY ANH DUC
     public User findByEmail(String email);
 
-    //    CREATE BY ANH DUC
+    //CREATE BY ANH DUC
+    public Optional<User> findById2(Long id);
+
+
+    //CREATE BY ANH DUC
     public User findByPhoneNumber(String phoneNumber);
 
     //CREATE BY ANH DUC

@@ -6,8 +6,7 @@ import md4.bid_project.repositories.PasswordResetCodeRepository;
 import md4.bid_project.services.PasswordResetCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Service
