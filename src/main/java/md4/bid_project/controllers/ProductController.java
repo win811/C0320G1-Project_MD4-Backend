@@ -41,9 +41,9 @@ public class ProductController {
                                                                              @PageableDefault(value = 8) Pageable pageable)
             throws ResourceNotFoundException {
         Page<FavoriteProduct> favoriteProducts = favoriteProductService.findByUserID(userId, pageable);
-        if (favoriteProducts.getTotalPages() > 0)
+        if (favoriteProducts.getTotalPages() > 0) {
             return ResponseEntity.ok(favoriteProducts);
-        else
+        } else
             throw new ResourceNotFoundException("No favorite product!");
     }
 
@@ -72,8 +72,8 @@ public class ProductController {
 
     // Created by: Toàn
     // Lấy danh sách sản phẩm đã được duyệt
-    @GetMapping(path = "/product/approved/{userId}")
-    public ResponseEntity<Page<Product>> getApprovedProductsByUserId(@PathVariable(name = "userId") Long userId,
+    @GetMapping(path = "/product/approved")
+    public ResponseEntity<Page<Product>> getApprovedProductsByUserId(@RequestParam(name = "userId") Long userId,
                                                                      Pageable pageable) throws ResourceNotFoundException {
         Page<Product> products = productService.findApprovedProductsByUserId(userId, pageable);
         if (products.getContent().size() > 0)
@@ -84,8 +84,8 @@ public class ProductController {
 
     // Created by: Toàn
     // Lấy danh sách sản phẩm đang chờ duyệt
-    @GetMapping(path = "/product/waiting/{userId}")
-    public ResponseEntity<Page<Product>> getWaitingProductsByUserId(@PathVariable(name = "userId") Long userId,
+    @GetMapping(path = "/product/waiting")
+    public ResponseEntity<Page<Product>> getWaitingProductsByUserId(@RequestParam(name = "userId") Long userId,
                                                                     Pageable pageable) throws ResourceNotFoundException {
         Page<Product> products = productService.findWaitingProductsByUserId(userId, pageable);
         if (products.getContent().size() > 0)

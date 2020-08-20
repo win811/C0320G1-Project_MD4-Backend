@@ -34,13 +34,13 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
     }
 
-    // Create: Toàn
+    // Created by: Toàn
     @Override
     public Page<Product> findApprovedProductsByUserId(Long userId, Pageable pageable) {
         return productRepository.findByOwner_IdAndApprovementStatus_Id(userId, APPROVEMENT_STATUS_SUCCESS, pageable);
     }
 
-    // Create: Toàn
+    // Created by: Toàn
     @Override
     public Page<Product> findWaitingProductsByUserId(Long userId, Pageable pageable) {
         return productRepository.findByOwner_IdAndApprovementStatus_Id(userId, APPROVEMENT_STATUS_WAITING, pageable);

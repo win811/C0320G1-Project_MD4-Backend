@@ -15,7 +15,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findByApprovementStatus_Id(Long approvementStatusId);
 
-    // Create: Toàn
+    // Created by: Toàn
     Page<Product> findByOwner_IdAndApprovementStatus_Id(Long userId, Long productApprovementStatusId,
             Pageable pageable);
 

@@ -54,15 +54,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-//                // Test
-//                .authorizeRequests().antMatchers("/**").permitAll()
-                // Những path không cần xác thực
                 .authorizeRequests().antMatchers("/api/v1/login", "/api/v1/register").permitAll()
                 .and()
-                // Những path cần xác thực và có quyền Admin
                 .authorizeRequests().antMatchers("/api/v1/admin/**").access("hasRole('ROLE_ADMIN')")
                 .and()
-                // Những path cần xác thực và có quyền User hoặc Admin
                 .authorizeRequests().antMatchers("/api/v1/**").access("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
                 .and().cors();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
