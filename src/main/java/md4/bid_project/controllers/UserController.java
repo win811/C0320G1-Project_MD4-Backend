@@ -53,13 +53,10 @@ public class UserController {
     // Creater Thien
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AccountDTO accountDTO) {
-        System.out.println(accountDTO.getEmail());
-        System.out.println(accountDTO.getPassword());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(accountDTO.getEmail(), accountDTO.getPassword())
         );
         UserDetails userDetails = userDetailServiceImpl.loadUserByUsername(authentication.getName());
-        System.out.println(userDetails.getUsername());
         String jwtToken = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(jwtToken, userDetails.getUsername(), userDetails.getAuthorities()));
     }
