@@ -1,6 +1,7 @@
 package md4.bid_project.controllers;
+
+import md4.bid_project.exception.SettlementException;
 import md4.bid_project.exception.ViolatedException;
-import md4.bid_project.models.CartDetail;
 import md4.bid_project.models.DeliveryAddress;
 import md4.bid_project.models.Order;
 import md4.bid_project.models.dto.DeliveryAddressDTO;
@@ -8,6 +9,7 @@ import md4.bid_project.models.dto.InvoiceDto;
 import md4.bid_project.models.dto.OrderDto;
 import md4.bid_project.services.CartDetailService;
 import md4.bid_project.services.DeliveryAddressService;
+import md4.bid_project.services.restful.braintree.BrainTreeService;
 import md4.bid_project.services.OrderService;
 import md4.bid_project.services.restful.paypal.Transaction;
 import md4.bid_project.services.restful.paypal.PayPalService;
@@ -20,6 +22,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import md4.bid_project.models.dto.InvoiceDto;
+import md4.bid_project.models.CartDetail;
+import md4.bid_project.models.Order;
+import md4.bid_project.services.CartDetailService;
+import md4.bid_project.services.OrderService;
+import java.util.Map;
 
 // Duy
 // Cac file liên quan đến DeliveryAddress (repository, service, entity)
@@ -34,6 +42,17 @@ public class PaymentController {
     //creator: Đặng Hồng Quân team C
      @Autowired
     private OrderService orderService;
+    @Autowired
+    private DeliveryAddressService deliveryAddressService;
+
+    @Autowired
+    private PayPalService payPalService;
+
+    @Autowired
+    private BrainTreeService brainTreeService;
+
+    @Autowired
+    private CartDetailService cartDetailService;
 
      @GetMapping("payment/order/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable(value = "id") Long userId)  {
@@ -55,14 +74,6 @@ public class PaymentController {
         return new ResponseEntity<Void>( HttpStatus.CREATED);
     }
 
-    @Autowired
-    DeliveryAddressService deliveryAddressService;
-
-    @Autowired
-    PayPalService payPalService;
-
-    @Autowired
-    CartDetailService cartDetailService;
     // Khởi tạo 1 đơn hàng từ paypal
     @PostMapping("/payment/create-transaction")
     public ResponseEntity<Transaction> getTransaction(@RequestBody  Long userId) throws IOException {
@@ -95,6 +106,19 @@ public class PaymentController {
         }
         deliveryAddressService.updateDeliveryAddress(deliveryAddress);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // visa get client token
+    @GetMapping("/payment/visa-token")
+    public ResponseEntity<Map<String, String>> getClientToken() {
+        Map<String, String> token = brainTreeService.getClientToken();
+        return ResponseEntity.ok(token);
+    }
+
+    @GetMapping("/payment/visa-create")
+    public ResponseEntity<?> createPurchase(@RequestParam("userId") Long id, @RequestParam("nonce") String nonce) throws SettlementException {
+        com.braintreegateway.Transaction transaction = brainTreeService.requestTransaction(nonce, id);
+        return ResponseEntity.ok(transaction);
     }
 
     //Creator: Nguyễn Xuân Hùng
