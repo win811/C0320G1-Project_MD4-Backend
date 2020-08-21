@@ -13,4 +13,6 @@ public interface CommentLevel2Service {
     void createCommentLevel2(CommentLevel2 commentLevel2);
 
     void deleteCommentLevel2(Long id);
+
+    CommentLevel2 getCommentLevel2ByCommentLevel1Id(Long id);
 }

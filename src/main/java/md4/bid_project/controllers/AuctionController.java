@@ -62,6 +62,7 @@ public class AuctionController {
         }
         return new ResponseEntity<Auction>(auction, HttpStatus.OK);
     }
+
     @PostMapping("/auctions")
     public ResponseEntity<Void> createAuction (@RequestBody Auction auction){
         auctionService.createAuction(auction);

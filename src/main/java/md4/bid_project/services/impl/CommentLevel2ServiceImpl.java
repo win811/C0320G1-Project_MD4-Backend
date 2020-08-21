@@ -33,4 +33,9 @@ public class CommentLevel2ServiceImpl implements CommentLevel2Service {
     public void deleteCommentLevel2(Long id) {
         commentLevel2Repository.deleteById(id);
     }
+
+    @Override
+    public CommentLevel2 getCommentLevel2ByCommentLevel1Id(Long id) {
+        return commentLevel2Repository.getCommentLevel2ByCommentLevel1_Id(id);
+    }
 }
