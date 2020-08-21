@@ -3,7 +3,7 @@ package md4.bid_project.models;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "product_promotions")
@@ -23,10 +23,10 @@ public class ProductPromotion {
     private String content;
 
     @Column(name = "product_promotion_start_date")
-    private Date startDate;
+    private LocalDateTime startDate;
 
     @Column(name = "product_promotion_end_date")
-    private Date endDate;
+    private LocalDateTime endDate;
 
     @Column(name = "product_promotion_percent")
     private Double percent;
