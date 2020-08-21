@@ -9,5 +9,6 @@ import java.util.Optional;
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
+    // Create: Toàn
     Optional<Cart> findByUserIdAndStatusIsTrue(Long userId);
 }

@@ -1,12 +1,16 @@
 package md4.bid_project.models;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "password_reset_code")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class PasswordResetCode {
 
     @Id

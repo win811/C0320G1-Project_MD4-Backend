@@ -16,10 +16,12 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    //    Creator : Cường
+    // Creator : Cường
     @Override
-    public Page<Product> findProductByOwnerIdAndNameAndApprovementStatus(Long ownerId, String productName, String approvementStatusName, Pageable pageable) {
-        return productRepository.findByOwner_IdAndNameContainingAndApprovementStatus_NameContaining(ownerId,productName,approvementStatusName,pageable);
+    public Page<Product> findProductByOwnerIdAndNameAndApprovementStatus(Long ownerId, String productName,
+            String approvementStatusName, Pageable pageable) {
+        return productRepository.findByOwner_IdAndNameContainingAndApprovementStatus_NameContaining(ownerId,
+                productName, approvementStatusName, pageable);
     }
 
     @Override
@@ -30,5 +32,22 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void save(Product product) {
         productRepository.save(product);
+    }
+
+    // Created by: Toàn
+    @Override
+    public Page<Product> findApprovedProductsByUserId(Long userId, Pageable pageable) {
+        return productRepository.findByOwner_IdAndApprovementStatus_Id(userId, APPROVEMENT_STATUS_SUCCESS, pageable);
+    }
+
+    // Created by: Toàn
+    @Override
+    public Page<Product> findWaitingProductsByUserId(Long userId, Pageable pageable) {
+        return productRepository.findByOwner_IdAndApprovementStatus_Id(userId, APPROVEMENT_STATUS_WAITING, pageable);
+    }
+
+    @Override
+    public List<Product> findProductByOwnerId(Long ownerId) {
+        return null;
     }
 }

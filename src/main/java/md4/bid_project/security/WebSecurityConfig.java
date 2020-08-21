@@ -21,10 +21,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 // Creator Thien
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
+
+    @Autowired(required = false)
     UserDetailServiceImpl userDetailServiceImpl;
+
     @Autowired
     JwtRequestFilter jwtRequestFilter;
+
     @Autowired
     JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
@@ -51,12 +54,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests().antMatchers( "/api/v1/login", "/home", "/api/v1/register").permitAll()
+                .authorizeRequests().antMatchers("/api/v1/login", "/api/v1/register").permitAll()
                 .and()
                 .authorizeRequests().antMatchers("/api/v1/admin/**").access("hasRole('ROLE_ADMIN')")
                 .and()
-                .authorizeRequests().antMatchers("/products/**").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-                .anyRequest().authenticated()
+                .authorizeRequests().antMatchers("/api/v1/**").access("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
                 .and().cors();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }

@@ -1,13 +1,17 @@
 package md4.bid_project.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "cart_details")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class CartDetail {
 
     @Id
@@ -38,6 +42,5 @@ public class CartDetail {
 
     @Column(name = "cart_detail_cost")
     private Double cartDetailCost;
-
 
 }
