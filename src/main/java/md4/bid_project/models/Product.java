@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,12 +20,16 @@ public class Product {
     @Column(name = "product_id")
     private Long id;
 
+    @NotBlank(message = "Vui lòng nhập tên sản phẩm")
+    @Pattern(regexp = "[A-Z]{1}[ a-zA-Z0-9_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$", message = "Tên không hợp lệ")
     @Column(name = "product_name")
     private String name;
 
+    @Min(value = 0, message = "Giá không được âm")
     @Column(name = "product_initial_price")
     private Double initialPrice;
 
+    @Min(value = 0,message = "Bước giá không được âm")
     @Column(name = "product_increase_amount")
     private Double increaseAmount;
 
@@ -39,6 +46,8 @@ public class Product {
     @JoinColumn(name = "product_approvement_status_id")
     private ApprovementStatus approvementStatus;
 
+    @NotBlank(message = "Vui lòng nhập mô tả sản phẩm")
+    @Pattern(regexp = "[A-Z]{1}[ a-zA-Z0-9_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$", message = "Mô tả sản phẩm không hợp lệ")
     @Column(name = "product_description")
     private String description;
 

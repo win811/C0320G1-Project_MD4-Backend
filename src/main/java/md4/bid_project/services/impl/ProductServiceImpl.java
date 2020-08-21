@@ -1,7 +1,9 @@
 package md4.bid_project.services.impl;
 
-import md4.bid_project.models.Product;
+import md4.bid_project.models.*;
+import md4.bid_project.repositories.AuctionRepository;
 import md4.bid_project.repositories.ProductRepository;
+import md4.bid_project.services.AuctionService;
 import md4.bid_project.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +16,8 @@ import java.util.Optional;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+    @Autowired
+    AuctionRepository auctionRepository;
     @Autowired
     ProductRepository productRepository;
 
@@ -40,8 +44,21 @@ public class ProductServiceImpl implements ProductService {
     //Thành
     @Override
     public void save(Product product) {
-        product.getApprovementStatus().setId(1L);
+        User user  = new User();
+        user.setId(1L);
+        ApprovementStatus status = new ApprovementStatus();
+        status.setId(1L);
+        product.setApprovementStatus(status);
+        product.setStatus(true);
+        product.setOwner(user);
         productRepository.save(product);
+        // add auction
+        Auction auction = new Auction();
+        auction.setProduct(product);
+        AuctionStatus auctionStatus = new AuctionStatus();
+        auctionStatus.setId(1L);
+        auction.setAuctionStatus(auctionStatus);
+        auctionRepository.save(auction);
     }
     //Thành
     @Override

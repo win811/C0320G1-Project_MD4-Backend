@@ -1,5 +1,6 @@
 package md4.bid_project.controllers;
 
+import md4.bid_project.exception.ViolatedException;
 import md4.bid_project.models.ApprovementStatus;
 import md4.bid_project.models.Product;
 import md4.bid_project.services.ApprovementStatusService;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
-//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1")
 public class ProductController {
@@ -86,8 +88,11 @@ public class ProductController {
     }
     //Thành
     @PostMapping("/products")
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        System.out.println(product);
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product,
+                                                 BindingResult bindingResult) throws ViolatedException {
+        if (bindingResult.hasErrors()){
+            throw new ViolatedException(bindingResult);
+        }
         productService.save(product);
         List<ProductImage> productImages = new ArrayList<>();
         productImages = product.getProductImageList();
@@ -95,6 +100,6 @@ public class ProductController {
             productImage.setProduct(product);
         }
         productImageService.saveAll(productImages);
-        return ResponseEntity.ok(new Product());
+        return ResponseEntity.ok().body(product);
     }
 }
