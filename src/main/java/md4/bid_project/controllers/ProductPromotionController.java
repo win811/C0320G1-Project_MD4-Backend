@@ -34,6 +34,7 @@ public class ProductPromotionController {
         ProductPromotion productPromotion = productPromotionService.findById(productPromotionId);
         return ResponseEntity.ok().body(productPromotion);
     }
+
     //creator: đức thông
     @GetMapping("/productPromotionsDto/{id}")
     public ResponseEntity<ProductPromotionDto> getProductPromotionDtoById(@PathVariable(value = "id") Long productPromotionId)
@@ -41,6 +42,7 @@ public class ProductPromotionController {
         ProductPromotionDto productPromotionDto = productPromotionService.findProductPromotionDto(productPromotionId);
         return ResponseEntity.ok().body(productPromotionDto);
     }
+
     //creator: đức thông
     @GetMapping("/products/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable(value = "id") Long productId)

@@ -3,6 +3,7 @@ package md4.bid_project.services;
 import md4.bid_project.models.ProductPromotion;
 import md4.bid_project.models.dto.ProductPromotionDto;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 public interface ProductPromotionService {
@@ -21,6 +22,6 @@ public interface ProductPromotionService {
 
     void delete(ProductPromotion productPromotion);
 
-    List<ProductPromotion> search(String content , String saleDate , String endOfEvent,String percent);
+    List<ProductPromotion> search(String content, String saleDate, String endOfEvent, String percent , Pageable pageable);
 
 }
