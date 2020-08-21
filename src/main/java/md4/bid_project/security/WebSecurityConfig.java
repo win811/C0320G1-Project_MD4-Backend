@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 // Creator Thien
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired(required = false)
+    @Autowired
     UserDetailServiceImpl userDetailServiceImpl;
     @Autowired
     JwtRequestFilter jwtRequestFilter;
@@ -51,9 +51,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests().antMatchers("/**", "api/login", "/home", "/register").permitAll()
+                .authorizeRequests().antMatchers( "/api/v1/login", "/home", "/api/v1/register").permitAll()
                 .and()
-                .authorizeRequests().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .authorizeRequests().antMatchers("/api/v1/admin/**").access("hasRole('ROLE_ADMIN')")
                 .and()
                 .authorizeRequests().antMatchers("/products/**").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
                 .anyRequest().authenticated()
