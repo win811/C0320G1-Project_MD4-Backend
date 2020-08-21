@@ -1,13 +1,18 @@
 package md4.bid_project.models;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="comment_level2")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class CommentLevel2 {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_level2_id")
