@@ -57,4 +57,7 @@ public class Product {
     @Column(name = "product_status")
     private Boolean status;
 
+    @OneToOne(mappedBy = "product")
+    @JsonIgnoreProperties(value = "product")
+    private Auction auction;
 }

@@ -1,21 +1,21 @@
 package md4.bid_project.controllers;
 
-import md4.bid_project.models.ApprovementStatus;
-import md4.bid_project.models.Auction;
+import md4.bid_project.exception.ResourceNotFoundException;
 import md4.bid_project.models.ApprovementStatus;
 import md4.bid_project.models.Product;
 import md4.bid_project.services.ApprovementStatusService;
+import md4.bid_project.services.AuctionService;
 import md4.bid_project.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -24,6 +24,9 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private AuctionService auctionService;
 
     @Autowired
     private ApprovementStatusService approvementStatusService;
@@ -65,16 +68,19 @@ public class ProductController {
 
 
     //Thành Long
+    //Hiển thị list sản phẩm
     @GetMapping("/product/list")
-    public ResponseEntity<List<Product>> listAllProduct() {
-        List<Product> products = productService.getAllProduct();
+    public ResponseEntity<Page<Product>> getAllProduct(@PageableDefault(value = 5) Pageable pageable) {
+        Page<Product> products = productService.findAllProduct(pageable);
         if (products.isEmpty()) {
-            return new ResponseEntity<List<Product>>(HttpStatus.NO_CONTENT);
+            return ResponseEntity.noContent().build();
         }
-        return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
+        return ResponseEntity.ok(products);
     }
 
+
     //Thành Long
+    //Hiển thị chi tiết sản phẩm để duyệt
     @GetMapping("/admin/approvement/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         Product product = productService.getProductById(id);
@@ -85,6 +91,7 @@ public class ProductController {
     }
 
     //Thành Long
+    //Duyệt sản phẩm
     @GetMapping("admin/approvement/approve/{id}")
     public ResponseEntity<Product> approvementProduct(@PathVariable Long id) {
         Product product = productService.getProductById(id);
@@ -98,9 +105,26 @@ public class ProductController {
     }
 
     //Thành Long
-    @GetMapping("admin/unApprovement/approve/")
-    public ResponseEntity<Product> unApprovementProduct(@PathVariable Product product) {
-        productService.unApprovementProduct(product);
+    //Không duyệt sản phẩm
+    @GetMapping("admin/unApprovement/approve/{id}")
+    public ResponseEntity<Product> unApprovementProduct(@PathVariable Long id) {
+        Product product = productService.getProductById(id);
+        if (product == null) {
+            return new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
+        }
+        ApprovementStatus approve = new ApprovementStatus();
+        approve.setId(3L);
+        productService.unApprovementProduct(product, approve);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @DeleteMapping("/product/list/delete/{id}")
+    public Map<String, Boolean> deleteEmployee(@PathVariable Long id) {
+        Product product = productService.getProductById(id);
+        productService.deleteProduct(id);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return response;
+    }
+
 }

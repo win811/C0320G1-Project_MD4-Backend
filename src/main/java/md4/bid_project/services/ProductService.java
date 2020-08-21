@@ -5,12 +5,8 @@ import md4.bid_project.models.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 
 public interface ProductService {
-
-    //Thành Long
-    List<Product> getAllProduct();
 
     //Thành Long
     Product getProductById(Long id);
@@ -19,10 +15,18 @@ public interface ProductService {
     void approvementProduct(Product product, ApprovementStatus approvementStatus);
 
     //Thành Long
-    void unApprovementProduct(Product product);
+    void unApprovementProduct(Product product, ApprovementStatus approvementStatus);
     //    Cường
     //    Creator : Cường
     Page<Product> findProductByOwnerIdAndNameAndApprovementStatus(Long ownerId, String productName, String approvementStatusName, Pageable pageable);
+
+    // Thành Long
+    Page<Product> findAllProduct(Pageable pageable);
+
     Product findById (Long id);
+
     void save(Product product);
+
+    void deleteProduct(Long id);
+
 }

@@ -15,4 +15,5 @@ public interface AuctionService {
     void editAuction (Auction auctionRecord);
 
     void deleteAuction (Long id);
+
 }

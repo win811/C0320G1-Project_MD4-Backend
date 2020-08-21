@@ -1,9 +1,6 @@
 package md4.bid_project.services.impl;
-
-import jdk.vm.ci.meta.Constant;
 import md4.bid_project.models.ApprovementStatus;
 import md4.bid_project.models.Product;
-import md4.bid_project.repositories.ApprovementStatusRepository;
 import md4.bid_project.repositories.ProductRepository;
 import md4.bid_project.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -36,10 +31,16 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
     }
 
-    //Thành Long
     @Override
-    public List<Product> getAllProduct() {
-        return productRepository.findAll();
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
+    }
+
+    //Thành Long
+
+    @Override
+    public Page<Product> findAllProduct(Pageable pageable) {
+        return productRepository.findAll(pageable);
     }
 
     //Thành Long
@@ -57,7 +58,8 @@ public class ProductServiceImpl implements ProductService {
 
     //Thành Long
     @Override
-    public void unApprovementProduct(Product product) {
+    public void unApprovementProduct(Product product, ApprovementStatus approve) {
+        product.setApprovementStatus(approve);
         productRepository.save(product);
     }
 }
