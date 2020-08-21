@@ -4,9 +4,7 @@ import md4.bid_project.exception.SettlementException;
 import md4.bid_project.exception.ViolatedException;
 import md4.bid_project.models.DeliveryAddress;
 import md4.bid_project.models.Order;
-import md4.bid_project.models.dto.DeliveryAddressDTO;
-import md4.bid_project.models.dto.InvoiceDto;
-import md4.bid_project.models.dto.OrderDto;
+import md4.bid_project.models.dto.*;
 import md4.bid_project.services.CartDetailService;
 import md4.bid_project.services.DeliveryAddressService;
 import md4.bid_project.services.restful.braintree.BrainTreeService;
@@ -24,9 +22,7 @@ import java.io.IOException;
 import java.util.List;
 import md4.bid_project.models.dto.InvoiceDto;
 import md4.bid_project.models.CartDetail;
-import md4.bid_project.models.Order;
-import md4.bid_project.services.CartDetailService;
-import md4.bid_project.services.OrderService;
+
 import java.util.Map;
 
 // Duy
@@ -77,8 +73,8 @@ public class PaymentController {
     // Creator: Duy
     // create order from paypal
     @PostMapping("/payment/paypal-create")
-    public ResponseEntity<Transaction> getPayPalTransaction(@RequestBody Long userId) throws IOException {
-        Transaction data = payPalService.createTransaction(userId);
+    public ResponseEntity<Transaction> getPayPalTransaction(@RequestBody TransferDTO transferDTO) throws IOException {
+        Transaction data = payPalService.createTransaction(transferDTO);
         return ResponseEntity.ok(data);
     }
 
@@ -121,9 +117,9 @@ public class PaymentController {
     }
 
     // Creator: Duy
-    @GetMapping("/payment/visa-create")
-    public ResponseEntity<?> createVisaPurchase(@RequestParam("userId") Long id, @RequestParam("nonce") String nonce) throws SettlementException {
-        com.braintreegateway.Transaction transaction = brainTreeService.requestTransaction(nonce, id);
+    @PostMapping("/payment/visa-create")
+    public ResponseEntity<?> createVisaPurchase(@RequestBody TransferDTO transferDTO) throws SettlementException {
+        com.braintreegateway.Transaction transaction = brainTreeService.requestTransaction(transferDTO);
         return ResponseEntity.ok(transaction);
     }
 
