@@ -50,7 +50,6 @@ public class UserAPI {
     //CREATE BY ANH DUC, hàm get User theo Id
     @GetMapping("/users/{id}")
     public ResponseEntity<? extends Object> getUserById(@PathVariable("id") Long id) {
-        System.out.println("User With Id :" + id);
         ErrorResponse response = new ErrorResponse();
         User user = userService.findById(id);
         if (user == null) {
@@ -73,34 +72,10 @@ public class UserAPI {
         if (currentUser == null) {
             System.out.println("User with email " + email + " not found");
             response.setStatus(HttpStatus.NOT_FOUND);
-            response.setMessage("User with email " + email + " not found");
+            response.setMessage("Email này chưa được đăng kí tài khoản!");
             return new ResponseEntity<ErrorResponse>(response, response.getStatus());
         }
-        passwordResetCodeService.deleteAllByUser(currentUser);
-        String title;
-        String content;
-        int code;
-        code = userService.getRandomIntegerWithinRange(999999, 100000);
-        java.util.Date timeNow = new java.util.Date();
-        PasswordResetCode passwordResetCode = new PasswordResetCode();
-        passwordResetCode.setUser(currentUser);
-        passwordResetCode.setCode(String.valueOf(code));
-        passwordResetCode.setExpiryDate(timeNow);
-        passwordResetCodeService.save(passwordResetCode);
-        System.out.println(passwordResetCode.getCode());
-        title = "Yêu Cầu Thay Đổi Mật Khẩu";
-        content = "Chào quý khách,\n" +
-                "webdaugiac03.vn đã nhận được yêu cầu thay đổi mật khẩu của quý khách.\n" +
-                "\n" +
-                "Mã xác thực của quý khách là : " + code;
-        System.out.println("Sending Email...");
-        try {
-
-            userService.sendMail(email, title, content);
-
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        passwordResetCodeService.createConfirmCode(email);
         response.setStatus(HttpStatus.OK);
         response.setMessage("Mã xác minh đã được gửi đến email của bạn, vui lòng kiểm tra lại email trước khi thử lại!");
         System.out.println("Done");
@@ -111,10 +86,6 @@ public class UserAPI {
     @GetMapping("recover/{email}/{code}")
     public ResponseEntity<ErrorResponse> checkCodeRecover(@PathVariable("email") String email, @PathVariable("code") String code) throws IOException {
         ErrorResponse response = new ErrorResponse();
-        String title;
-        String content;
-        String newPassword;
-        String passwordEncryption;
         User currentUser = userService.findByEmail(email);
         java.util.Date date = new java.util.Date();
 
@@ -137,27 +108,7 @@ public class UserAPI {
             return new ResponseEntity<ErrorResponse>(response, response.getStatus());
 
         }
-        newPassword = RandomStringUtils.randomAlphanumeric(10);
-        passwordEncryption = userService.passwordEncryption(newPassword);
-        currentUser.setPassword(passwordEncryption);
-        System.out.println(passwordEncryption);
-        userService.save(currentUser);
-        passwordResetCodeService.remove(currentUser.getPasswordResetCode().getId());
-        System.out.println("save ok");
-        title = "Yêu Cầu Thay Đổi Mật Khẩu";
-        content = "Chào quý khách,\n" +
-                "Mật Khẩu của quý khách đã được thay đổi thành công.\n" +
-                "\n" +
-                "Mật Khẩu Mới của quý khách là : " + newPassword;
-        System.out.println("Sending Email...");
-        try {
-
-            userService.sendMail(email, title, content);
-
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-
+        passwordResetCodeService.resetPassword(email);
         System.out.println("Done");
         response.setStatus(HttpStatus.OK);
         response.setMessage("Thay đổi mật khẩu thành công, mật khẩu mới đã được gửi về email của bạn!");
@@ -167,10 +118,6 @@ public class UserAPI {
     //CREATE BY ANH DUC, hàm nhận và xử lí resetPassword bằng câu hỏi bảo mật +info
     @PostMapping("/recover")
     public ResponseEntity<ErrorResponse> checkInfoRecover(@RequestBody User user) {
-        String title;
-        String content;
-        String newPassword;
-        String passwordEncryption;
         User currentUser = userService.findByEmail(user.getEmail());
         ErrorResponse response = new ErrorResponse();
 
@@ -186,27 +133,7 @@ public class UserAPI {
             response.setMessage("Thông tin xác thực không chính xác, vui lòng kiểm tra lại!");
             return new ResponseEntity<ErrorResponse>(response, response.getStatus());
         }
-        System.out.println("return thành công");
-        newPassword = RandomStringUtils.randomAlphanumeric(10);
-        passwordEncryption = userService.passwordEncryption(newPassword);
-        System.out.println("check ok");
-        currentUser.setPassword(passwordEncryption);
-        System.out.println("setPass oK");
-        userService.save(currentUser);
-        System.out.println("savepass ok");
-        title = "Yêu Cầu Thay Đổi Mật Khẩu";
-        content = "Chào quý khách,\n" +
-                "Mật Khẩu của quý khách đã được thay đổi thành công.\n" +
-                "\n" +
-                "Mật Khẩu Mới của quý khách là : " + newPassword;
-        System.out.println("Sending Email...");
-        try {
-
-            userService.sendMail(user.getEmail(), title, content);
-
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        passwordResetCodeService.resetPassword(user.getEmail());
         System.out.println("Done");
         response.setStatus(HttpStatus.OK);
         response.setMessage("Thay đổi mật khẩu thành công, mật khẩu mới đã được gửi về email của bạn!");

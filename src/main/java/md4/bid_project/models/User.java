@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Data
-public class User implements Validator {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -92,14 +92,6 @@ public class User implements Validator {
     @Column(name = "user_is_locked")
     private Boolean isLocked;
 
-    @Override
-    public boolean supports(Class<?> clazz) {
-        return false;
-    }
-
-    @Override
-    public void validate(Object target, Errors errors) {
-    }
 
     @JsonIgnore
     public PasswordResetCode getPasswordResetCode() {

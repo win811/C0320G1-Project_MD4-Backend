@@ -13,7 +13,7 @@ import java.util.Date;
 @Entity
 @Table(name = "password_reset_code")
 @Data
-public class PasswordResetCode implements Validator {
+public class PasswordResetCode {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,13 +36,4 @@ public class PasswordResetCode implements Validator {
     @Column(name = "reset_expiry_date")
     private Date expiryDate;
 
-    @Override
-    public boolean supports(Class<?> clazz) {
-        return PasswordResetCode.class.isAssignableFrom(clazz);
-    }
-
-    @Override
-    public void validate(Object target, Errors errors) {
-
-    }
 }

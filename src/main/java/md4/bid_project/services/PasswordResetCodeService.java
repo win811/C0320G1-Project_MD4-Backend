@@ -19,5 +19,9 @@ public interface PasswordResetCodeService {
     //CREATE BY ANH DUC
     void deleteAll();
 
+    void createConfirmCode(String email);
+
+    void resetPassword(String email);
+
 
 }
