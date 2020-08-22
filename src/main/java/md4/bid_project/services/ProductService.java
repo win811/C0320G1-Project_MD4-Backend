@@ -2,8 +2,10 @@ package md4.bid_project.services;
 
 import md4.bid_project.models.ApprovementStatus;
 import md4.bid_project.models.Product;
+import md4.bid_project.models.dto.ProductSearchField;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 
 public interface ProductService {
@@ -27,6 +29,9 @@ public interface ProductService {
 
     void save(Product product);
 
-    void deleteProduct(Long id);
+    void deleteProduct(Product product);
+
+    Page<Product> findCustomerByCriteria(Specification<Product> spec, int page);
+    Specification<Product> getFilter(ProductSearchField productSearchField);
 
 }
