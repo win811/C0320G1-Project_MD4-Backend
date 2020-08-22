@@ -63,15 +63,8 @@ public class AuctionController {
 
     @PutMapping ("/auctions/{id}")
     public ResponseEntity<Auction> editAuction (@PathVariable Long id, @RequestBody Auction newAuction){
-        Auction auction = auctionService.getAuctionById(id);
-        if(auction == null){
-            return new ResponseEntity<Auction>(HttpStatus.NOT_FOUND);
-        }
-        auction.setProduct(newAuction.getProduct());
-        auction.setAuctionStatus(newAuction.getAuctionStatus());
-        auction.setCloseTime(newAuction.getCloseTime());
-        auctionService.editAuction(auction);
-        return new ResponseEntity<Auction>(auction, HttpStatus.OK);
+        auctionService.editAuction(newAuction);
+        return new ResponseEntity<Auction>(newAuction, HttpStatus.OK);
     }
 
     @DeleteMapping ("/auctions/{id}")
@@ -158,17 +151,14 @@ public class AuctionController {
 
     @PutMapping("/highestPrice/{id}")
     public ResponseEntity<AuctionRecord> editAuctionRecord (@PathVariable Long id, @RequestBody AuctionRecord newAuctionRecord){
-        AuctionRecord auctionRecord = auctionRecordService.getAuctionRecordById(id);
-        if(auctionRecord == null){
-            return new ResponseEntity<AuctionRecord>(HttpStatus.NOT_FOUND);
-        }
-        auctionRecord.setAuction(newAuctionRecord.getAuction());
-        auctionRecord.setBidder(newAuctionRecord.getBidder());
-        auctionRecord.setBidPrice(newAuctionRecord.getBidPrice());
-        auctionRecord.setBidTime(newAuctionRecord.getBidTime());
-        auctionRecord.setIsWinner(newAuctionRecord.getIsWinner());
-        auctionRecordService.editAuctionRecord(auctionRecord);
-        return new ResponseEntity<AuctionRecord>(auctionRecord, HttpStatus.OK);
+
+        auctionRecordService.editAuctionRecord(newAuctionRecord);
+        return new ResponseEntity<AuctionRecord>(newAuctionRecord, HttpStatus.OK);
+    }
+
+    @GetMapping("/auctionRecordByUser/{auctionId}/{userId}")
+    public ResponseEntity<AuctionRecord> findAuctionRecordByAuctionAndUser (@PathVariable Long auctionId, @PathVariable Long userId){
+        return ResponseEntity.ok(this.auctionRecordService.findByAuctionIdAndBidderId(auctionId, userId));
     }
 
 

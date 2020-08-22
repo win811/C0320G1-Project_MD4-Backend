@@ -19,8 +19,10 @@ repositories {
 }
 
 dependencies {
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'

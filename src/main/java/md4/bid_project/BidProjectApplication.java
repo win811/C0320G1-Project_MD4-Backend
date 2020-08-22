@@ -7,7 +7,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
-@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+@SpringBootApplication
 public class BidProjectApplication {
 
     public static void main(String[] args) {

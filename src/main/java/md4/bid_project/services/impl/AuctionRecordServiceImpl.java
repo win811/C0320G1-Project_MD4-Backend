@@ -73,4 +73,9 @@ public class AuctionRecordServiceImpl implements AuctionRecordService {
     public AuctionRecord getRecordHavingBestPrice(Long auctionId) {
         return auctionRecordRepository.getRecordHavingBestPrice(auctionId);
     }
+
+    @Override
+    public AuctionRecord findByAuctionIdAndBidderId(Long auctionId, Long bidderId) {
+        return auctionRecordRepository.findByAuction_IdAndBidder_Id(auctionId, bidderId);
+    }
 }
