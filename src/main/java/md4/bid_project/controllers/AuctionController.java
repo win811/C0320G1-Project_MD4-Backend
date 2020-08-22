@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -137,4 +138,36 @@ public class AuctionController {
         return new ResponseEntity<AuctionRecord>(HttpStatus.NO_CONTENT);
     }
 
+    //Creator: BHung -find auctions by status
+    @GetMapping("/auctionStatus/{id}")
+    public ResponseEntity<List<Auction>> getAuctionsByStatusId(@PathVariable Long id){
+        List<Auction> auctions = auctionService.findAuctionsByStatusId(id);
+        if(auctions==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Auction>>(auctions,HttpStatus.OK);
+    }
+
+    //Creator: BHung -find auctions by status
+    @GetMapping("/topAuction")
+    public ResponseEntity<List<Auction>> getTopAuction(){
+        List<Auction> auctions = auctionService.findTopAuctions();
+        if(auctions==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Auction>>(auctions,HttpStatus.OK);
+    }
+    //Creator: BHung -find auctions by status and categories
+    @GetMapping("/{statusId}/{categoryName}")
+    public ResponseEntity<List<Auction>> getAuctionsByStatusAndCategory(@PathVariable Long statusId, @PathVariable Optional<String> categoryName){
+        String newName = "";
+        if(categoryName.isPresent()){
+            newName= categoryName.get();
+        }
+        List<Auction> auctions = auctionService.findAllAuctionByStatusAndCategoryName(statusId,newName);
+        if(auctions==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Auction>>(auctions,HttpStatus.OK);
+    }
 }
