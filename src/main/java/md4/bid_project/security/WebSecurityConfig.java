@@ -21,12 +21,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 // Creator Thien
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired(required = false)
-    UserDetailServiceImpl userDetailServiceImpl;
+    private UserDetailServiceImpl userDetailServiceImpl;
+
     @Autowired
-    JwtRequestFilter jwtRequestFilter;
+    private JwtRequestFilter jwtRequestFilter;
+
     @Autowired
-    JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -53,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers("/api/v1/login","/api/v1/register").permitAll()
                 .and()
-                .authorizeRequests().antMatchers("/api/v1/user/**","/api/v1/myProduct/**","/api/v1/myAuctionRecords/**").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+                .authorizeRequests().antMatchers("/api/v1/user/**","/api/v1/myProduct/**","/api/v1/myAuctionRecords/**", "/api/v1/payment/**").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
                 .and()
                 .authorizeRequests().antMatchers("/api/v1/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
