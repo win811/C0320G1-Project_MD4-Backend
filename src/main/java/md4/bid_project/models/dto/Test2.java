@@ -1,9 +1,15 @@
 package md4.bid_project.models.dto;
 
-public class Test2 {
+import lombok.Data;
 
-    private int a;
+
+@Data
+public class Test2   {
+    public Test2(String test) {
+        this.test = test;
+    }
 
     private String test;
-    private String test2;
+
+
 }

@@ -6,13 +6,11 @@ import md4.bid_project.services.ApprovementStatusService;
 import md4.bid_project.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -32,9 +30,6 @@ public class ProductController {
                                                              @RequestParam(name = "approvementStatusName",defaultValue = "") String approvementStatusName,
                                                              @PageableDefault(value = 4) Pageable pageable) {
         Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId,productName,approvementStatusName,pageable);
-        if (productPage.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
         return ResponseEntity.ok(productPage);
     }
 
@@ -52,9 +47,6 @@ public class ProductController {
             productService.save(product);
         }
         Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId,productName,approvementStatusName,pageable);
-        if (productPage.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
         return ResponseEntity.ok(productPage);
     }
 
