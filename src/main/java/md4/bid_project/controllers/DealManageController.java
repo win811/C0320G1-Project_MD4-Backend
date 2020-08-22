@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 //all created by Thao
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1")
 public class DealManageController {
@@ -36,17 +36,16 @@ public class DealManageController {
 
     //SET DELETION STATUS FUNCTION
     @PutMapping(value = "/deal-management/delete")
-    public Map<String, Boolean> setDealsIsDeleted(@RequestBody Map<String, Long[]> requestBody) {
-        Long[] ids = requestBody.get("ids").clone();
-        Map<String, Boolean> response = new HashMap<>();
+    public Map<String, Long> setDealsIsDeleted(@RequestBody Long[] ids) {
+        Map<String, Long> response = new HashMap<>();
         for(Long id : ids) {
             CartDetail deal = dealManageDTOService.findById(id);
             if(deal.getStatus().equals("Thành công") || deal.getStatus().equals("Thất bại") ){
                 deal.setIsDelete(true);
                 dealManageDTOService.save(deal);
-                response.put("deleted " + id, Boolean.TRUE);
+                response.put("deleted", id);
             } else {
-                response.put("deleted " + id, Boolean.FALSE);
+                response.put("not allow", id);
             }
         }
         return response;
@@ -64,7 +63,7 @@ public class DealManageController {
         Double totalPayment = Double.parseDouble(infoSearch.get("totalPayment").toString());
         Pageable pageable = PageRequest.of(currentPage-1, pageSize, Sort.by("id"));
 
-        List<DealManageDTO> results = dealManageDTOService.searchBySellerAndBuyerAndProductAndTotalPayAndStatus(nameBuyer, nameSeller, nameProduct, totalPayment, statusOfDeal, pageable);
+        List<DealManageDTO> results = dealManageDTOService.searchByFiveFields(nameBuyer, nameSeller, nameProduct, totalPayment, statusOfDeal, pageable);
         int totalOfResult = dealManageDTOService.countSearchResult(nameBuyer, nameSeller, nameProduct, totalPayment, statusOfDeal);
         return dealManageDTOService.setInfoToDealManageApi(results, currentPage, pageSize, totalOfResult);
     }

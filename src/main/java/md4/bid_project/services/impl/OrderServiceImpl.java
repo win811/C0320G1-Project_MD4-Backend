@@ -10,26 +10,4 @@ import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    @Autowired
-    private OrderRepository orderRepository;
-
-    @Override
-    public List<Order> findAll() {
-        return orderRepository.findAll();
-    }
-
-    @Override
-    public List<Order> getAllNotDeletedDeal() {
-        return null;
-    }
-
-    @Override
-    public List<Order> deleteDeals(List<Order> deals) {
-        //code chưa xét điều kiện xóa
-        for (Order deal : deals){
-//            deal.setDelete(true);
-//            dealManagementRepository.save(deal);
-        }
-        return deals;
-    }
 }

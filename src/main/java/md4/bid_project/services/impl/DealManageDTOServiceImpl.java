@@ -71,7 +71,7 @@ public class DealManageDTOServiceImpl implements DealManageDTOService {
 
     //SEARCH
     @Override
-    public List<DealManageDTO> searchBySellerAndBuyerAndProductAndTotalPayAndStatus(String nameBuyer, String nameSeller, String nameProduct, Double totalPayment, String status, Pageable pageable) {
+    public List<DealManageDTO> searchByFiveFields(String nameBuyer, String nameSeller, String nameProduct, Double totalPayment, String status, Pageable pageable) {
         return dealManageDTORepository.queryByFiveFields(nameBuyer, nameSeller, nameProduct, totalPayment, status, pageable);
     }
 
