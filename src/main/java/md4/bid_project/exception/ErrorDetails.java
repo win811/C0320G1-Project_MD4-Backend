@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ErrorDetails {
+
+
 	private Date timestamp;
 	private String message;
 	private String details;
