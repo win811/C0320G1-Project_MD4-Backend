@@ -60,4 +60,7 @@ public class Product {
     @OneToOne(mappedBy = "product")
     @JsonIgnoreProperties(value = "product")
     private Auction auction;
+
+    @Column(name = "product_banned")
+    private String banned;
 }

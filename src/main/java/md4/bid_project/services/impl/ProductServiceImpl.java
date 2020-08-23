@@ -1,7 +1,6 @@
 package md4.bid_project.services.impl;
 import md4.bid_project.models.ApprovementStatus;
 import md4.bid_project.models.Product;
-import md4.bid_project.models.dto.ProductSearchField;
 import md4.bid_project.repositories.ProductRepository;
 import md4.bid_project.services.ProductService;
 import md4.bid_project.services.searchProduct.ProductSpecification;
@@ -46,9 +45,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     //Thành Long
-
     @Override
-    public Page<Product> findAllProduct(Pageable pageable) {
+    public Page<Product> findAllProduct(int page) {
+        Pageable pageable = PageRequest.of(page - 1, 5);
         return productRepository.findAllByStatusIsFalse(pageable);
     }
 
@@ -72,43 +71,45 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
     }
 
+    //Thành Long
     @Override
     public Page<Product> findCustomerByCriteria(Specification<Product> spec, int page) {
-        Pageable pageable = PageRequest.of(page, 5);
+        Pageable pageable = PageRequest.of(page - 1, 5);
         return productRepository.findAll(spec, pageable);
     }
 
+    //Thành Long
     @Override
-    public Specification<Product> getFilter(ProductSearchField search) {
+    public Specification<Product> getFilter(String name, String category, String minPrice, String maxPrice, String owner, String status) {
         List<ProductSpecification> specs = new ArrayList<>();
         Specification<Product> spec;
         // search theo
         // product name
-        if(search.getName() != null && !"".equals(search.getName())) {
-            specs.add(new ProductSpecification(new SearchCriteria("name", "like", search.getName())));
+        if(!"".equals(name) && !"undefined".equals(name)) {
+            specs.add(new ProductSpecification(new SearchCriteria("name", "like", name)));
         }
         //category
-        if(search.getCategory() != null && !"".equals(search.getCategory()) ) {
-            specs.add(new ProductSpecification(new SearchCriteria("name", "category-join", search.getCategory())));
+        if(!"".equals(category) && !"undefined".equals(category) ) {
+            specs.add(new ProductSpecification(new SearchCriteria("name", "category-join", category)));
         }
 
         // auction status
-        if(search.getStatus() != null && !"".equals(search.getStatus())) {
-            specs.add(new ProductSpecification(new SearchCriteria("name", "auction-join", search.getStatus())));
+        if(!"".equals(status) && !"undefined".equals(status)) {
+            specs.add(new ProductSpecification(new SearchCriteria("name", "auction-join", status)));
         }
 
         // price between
-        if(search.getMinPrice() != null && search.getMaxPrice() != null) {
+        if(!"undefined".equals(minPrice) && !"undefined".equals(maxPrice) && !"".equals(minPrice) && !"".equals(maxPrice)) {
             // trường hợp lớn hơn > x.xxx.xxx vnd
-            if(search.getMaxPrice().equals("max")) {
-                specs.add(new ProductSpecification(new SearchCriteria("initialPrice", "gt", search.getMinPrice())));
+            if(maxPrice.equals("max")) {
+                specs.add(new ProductSpecification(new SearchCriteria("initialPrice", "gt", minPrice)));
             } else {
-                specs.add(new ProductSpecification(new SearchCriteria("initialPrice", "between", search.getMinPrice(), search.getMaxPrice())));
+                specs.add(new ProductSpecification(new SearchCriteria("initialPrice", "between", minPrice, maxPrice)));
             }
         }
         // owner
-        if(search.getOwner() != null && !"".equals(search.getOwner())) {
-            specs.add(new ProductSpecification(new SearchCriteria("fullname", "user-join", search.getOwner())));
+        if(!"".equals(owner) && !"undefined".equals(owner)) {
+            specs.add(new ProductSpecification(new SearchCriteria("fullname", "user-join", owner)));
         }
         if (specs.size() != 0) {
             spec = Specification.where(specs.get(0));
