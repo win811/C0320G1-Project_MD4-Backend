@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "product_images")
 @Data
 public class ProductImage {
-
+    //Thành
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_image_id")
@@ -20,6 +20,7 @@ public class ProductImage {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    @JsonIgnoreProperties(value = "productImages")
+    @JsonIgnoreProperties("productImageList")
     private Product product;
+
 }

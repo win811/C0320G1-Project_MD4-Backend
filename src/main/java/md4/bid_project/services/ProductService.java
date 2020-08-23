@@ -5,11 +5,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductService {
 
     //    Creator : Cường
     Page<Product> findProductByOwnerIdAndNameAndApprovementStatus(Long ownerId, String productName, String approvementStatusName, Pageable pageable);
     Product findById (Long id);
+    List<Product> findProductByOwnerId(Long ownerId);
+    List<Product> findAllProduct();
+    //Thành
     void save(Product product);
+    //Thành
+    Optional<Product> findProductById(Long productId);
 }
