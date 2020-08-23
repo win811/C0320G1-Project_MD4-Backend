@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-public class UserDto {
+public class UserRegistrationDto {
     private Long id;
     private String fullName;
     private String gender;
@@ -18,6 +18,5 @@ public class UserDto {
     private String question;
     private String answer;
     private String password;
-    private List<String> notificationEmail;
-    private List<String> notificationPhoneNumber;
+
 }

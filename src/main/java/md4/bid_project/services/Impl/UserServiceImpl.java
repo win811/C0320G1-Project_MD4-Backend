@@ -1,6 +1,8 @@
 package md4.bid_project.services.Impl;
 
-import md4.bid_project.models.dto.UserDto;
+import md4.bid_project.models.Rate;
+import md4.bid_project.models.Role;
+import md4.bid_project.models.dto.UserRegistrationDto;
 import md4.bid_project.models.dto.UserUpdateDto;
 import md4.bid_project.models.User;
 import md4.bid_project.repositories.DeliveryAddressRepository;
@@ -11,8 +13,10 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -79,10 +83,19 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
         }
     }
-
+//Creator: Trương Khánh Mậu
     @Override
-    public void createUser(UserDto userDto) {
+    public void createUser(UserRegistrationDto userDto) {
         User user = new User();
+        Role role = new Role();
+        Rate rate=new Rate();
+        rate.setId(5L);
+        role.setId(1L);
+        user.setRole(role);
+        user.setStatus(true);
+        user.setPoint(0L);
+        user.setRate(rate);
+        user.setIsLocked(false);
         user.setFullName(userDto.getFullName().trim());
         user.setEmail(userDto.getEmail());
         user.setAddress(userDto.getAddress().trim());
@@ -93,28 +106,18 @@ public class UserServiceImpl implements UserService {
         user.setPassword(userDto.getPassword());
         user.setQuestion(userDto.getQuestion());
         user.setAnswer(userDto.getAnswer());
-        List<User> userEmail = userRepository.findAllByEmailContaining("");
-        List<User> userPhone = userRepository.findAllByPhoneNumberContaining("");
-        List<String> messagesEmails = new ArrayList<>();
-        List<String> messagesPhones = new ArrayList<>();
-        for(User checkEmail : userEmail){
-            if(checkEmail.getEmail().equals(userDto.getEmail().trim())){
-                messagesEmails.add("Email này đã được đăng kí. Vui lòng nhập lại email khác.");
-                break;
-            }
-        }
-        for(User checkPhoneNumber : userPhone){
-            if(checkPhoneNumber.getPhoneNumber().equals(userDto.getPhoneNumber().trim())){
-                messagesPhones.add("SDT này đã được đăng kí. Vui lòng nhập lại SDT khác.");
-                break;
-            }
-        }
-        userDto.setNotificationEmail(messagesEmails);
-        userDto.setNotificationPhoneNumber(messagesPhones);
-        if(userDto.getNotificationEmail().size()==0 && userDto.getNotificationPhoneNumber().size()==0){
-            userRepository.save(user);
-        }
+        userRepository.save(user);
+
     }
 
+    @Override
+    public Optional<User> checkUniqueEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public Optional<User> checkUniquePhone(String phoneNumber) {
+        return userRepository.findByPhoneNumber(phoneNumber);
+    }
 
 }

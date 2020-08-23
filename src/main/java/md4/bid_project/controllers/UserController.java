@@ -1,6 +1,6 @@
 package md4.bid_project.controllers;
 
-import md4.bid_project.models.dto.UserDto;
+import md4.bid_project.models.dto.UserRegistrationDto;
 import md4.bid_project.repositories.UserRepository;
 import md4.bid_project.models.dto.UserUpdateDto;
 import md4.bid_project.models.User;
@@ -12,7 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
@@ -30,10 +33,43 @@ public class UserController {
         return userRepository.findAll();
     }
 
+    //Creator: Trương Khánh Mậu
     @PostMapping("/user")
-    public ResponseEntity<UserDto> registration(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserRegistrationDto> registration(@RequestBody UserRegistrationDto userDto) {
         userService.createUser(userDto);
-        return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
+    }
+
+    //Creator: Trương Khánh Mậu
+    @PostMapping("/user/checkEmail")
+    public ResponseEntity<Map<String, Object>> checkEmail(@RequestBody String email) {
+        Map<String, Object> result = new LinkedHashMap<>();
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            result.put("userId", user.get().getId());
+            result.put("message", "Email này đã được đăng kí.");
+            return ResponseEntity.ok(result);
+        }else {
+            result.put("userId", -1);
+            result.put("message", "Email này chưa được đăng kí.");
+            return ResponseEntity.ok(result);
+        }
+    }
+
+    //Creator: Trương Khánh Mậu
+    @PostMapping("/user/checkPhone")
+    public ResponseEntity<Map<String, Object>> checkPhone(@RequestBody String phoneNumber) {
+        Map<String, Object> result = new LinkedHashMap<>();
+        Optional<User> user = userRepository.findByPhoneNumber(phoneNumber);
+        if (user.isPresent()) {
+            result.put("userId", user.get().getId());
+            result.put("message", "SDT này đã được đăng kí.");
+            return ResponseEntity.ok(result);
+        }else {
+            result.put("userId", -1);
+            result.put("message", "SDT này chưa được đăng kí.");
+            return ResponseEntity.ok(result);
+        }
     }
 
     //Creator: Nguyễn Xuân Hùng
