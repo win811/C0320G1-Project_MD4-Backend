@@ -1,4 +1,4 @@
-package md4.bid_project.services.Impl;
+package md4.bid_project.services.impl;
 
 import md4.bid_project.services.CommentLevel1Service;
 import org.springframework.stereotype.Service;
