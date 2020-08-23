@@ -61,4 +61,7 @@ public class Product {
     @Column(name = "product_status")
     private Boolean status;
 
+    @Column(name = "product_banned")
+    private String banned;
+
 }

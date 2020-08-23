@@ -4,9 +4,7 @@ import md4.bid_project.exception.SettlementException;
 import md4.bid_project.exception.ViolatedException;
 import md4.bid_project.models.DeliveryAddress;
 import md4.bid_project.models.Order;
-import md4.bid_project.models.dto.DeliveryAddressDTO;
-import md4.bid_project.models.dto.InvoiceDto;
-import md4.bid_project.models.dto.OrderDto;
+import md4.bid_project.models.dto.*;
 import md4.bid_project.services.CartDetailService;
 import md4.bid_project.services.DeliveryAddressService;
 import md4.bid_project.services.restful.braintree.BrainTreeService;
@@ -24,9 +22,7 @@ import java.io.IOException;
 import java.util.List;
 import md4.bid_project.models.dto.InvoiceDto;
 import md4.bid_project.models.CartDetail;
-import md4.bid_project.models.Order;
-import md4.bid_project.services.CartDetailService;
-import md4.bid_project.services.OrderService;
+
 import java.util.Map;
 
 // Duy
@@ -42,6 +38,7 @@ public class PaymentController {
     //creator: Đặng Hồng Quân team C
      @Autowired
     private OrderService orderService;
+
     @Autowired
     private DeliveryAddressService deliveryAddressService;
 
@@ -54,40 +51,42 @@ public class PaymentController {
     @Autowired
     private CartDetailService cartDetailService;
 
-     @GetMapping("payment/order/{id}")
+    @GetMapping("payment/order/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable(value = "id") Long userId)  {
-         Order order = orderService.findByBuyerId(userId);
-         if(order==null)
-             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-       return ResponseEntity.ok().body(order);
-     }
+        Order order = orderService.findByBuyerId(userId);
+        if(order==null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.ok().body(order);
+    }
 
     @PostMapping("payment/order")
     public ResponseEntity<Void> create(@RequestBody OrderDto orderDto) {
-         orderService.saveOrder(orderDto);
+        orderService.saveOrder(orderDto);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
     @PutMapping("payment/order")
     public ResponseEntity<Void> update( @RequestBody Order order){
-      orderService.updateOrder(order);
+        orderService.updateOrder(order);
         return new ResponseEntity<Void>( HttpStatus.CREATED);
     }
-
-    // Khởi tạo 1 đơn hàng từ paypal
-    @PostMapping("/payment/create-transaction")
-    public ResponseEntity<Transaction> getTransaction(@RequestBody  Long userId) throws IOException {
-        Transaction data = payPalService.createTransaction(userId);
+    // Creator: Duy
+    // create order from paypal
+    @PostMapping("/payment/paypal-create")
+    public ResponseEntity<Transaction> getPayPalTransaction(@RequestBody TransferDTO transferDTO) throws IOException {
+        Transaction data = payPalService.createTransaction(transferDTO);
         return ResponseEntity.ok(data);
     }
 
+    // Creator: Duy
     // xác nhận đơn hàng đã được trả từ người mua
-    @PostMapping("/payment/confirm-transaction")
-    public ResponseEntity<Transaction> confirmTransaction(@RequestBody String orderId) throws IOException {
+    @PostMapping("/payment/paypal-confirm")
+    public ResponseEntity<Transaction> confirmPayPalTransaction(@RequestBody String orderId) throws IOException {
          Transaction transaction = payPalService.captureTransaction(orderId);
         return ResponseEntity.ok(transaction);
     }
 
+    // Creator: Duy
     // Lấy địa chỉ giao hàng của user
     @GetMapping("/payment/address/{userId}")
     public ResponseEntity<DeliveryAddressDTO> getDeliveryAddress(@PathVariable(value = "userId") Long id) {
@@ -95,6 +94,7 @@ public class PaymentController {
         return ResponseEntity.ok(data);
     }
 
+    // Creator: Duy
     // cập nhật địa chỉ giao hàng mới
     @PutMapping("/payment/address")
     public ResponseEntity<DeliveryAddress> updateDeliveryAddress(@Valid @RequestBody DeliveryAddress deliveryAddress,
@@ -108,16 +108,18 @@ public class PaymentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // Creator: Duy
     // visa get client token
     @GetMapping("/payment/visa-token")
-    public ResponseEntity<Map<String, String>> getClientToken() {
+    public ResponseEntity<Map<String, String>> getVisaToken() {
         Map<String, String> token = brainTreeService.getClientToken();
         return ResponseEntity.ok(token);
     }
 
-    @GetMapping("/payment/visa-create")
-    public ResponseEntity<?> createPurchase(@RequestParam("userId") Long id, @RequestParam("nonce") String nonce) throws SettlementException {
-        com.braintreegateway.Transaction transaction = brainTreeService.requestTransaction(nonce, id);
+    // Creator: Duy
+    @PostMapping("/payment/visa-create")
+    public ResponseEntity<?> createVisaPurchase(@RequestBody TransferDTO transferDTO) throws SettlementException {
+        com.braintreegateway.Transaction transaction = brainTreeService.requestTransaction(transferDTO);
         return ResponseEntity.ok(transaction);
     }
 

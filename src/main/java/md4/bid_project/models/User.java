@@ -57,7 +57,7 @@ public class User {
     private Boolean status;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnoreProperties(value = "user")
+//    @JsonIgnoreProperties(value = "user")
     private List<DeliveryAddress> deliveryAddressList;
 
     @ManyToOne
