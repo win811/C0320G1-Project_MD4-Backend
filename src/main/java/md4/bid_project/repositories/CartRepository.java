@@ -10,5 +10,6 @@ import java.util.Optional;
 public interface CartRepository extends JpaRepository<Cart,Long> {
     //creator: Đặng Hồng Quân team C
     Cart findAllByUser_IdAndStatusTrue(Long userId);
+    // Create: Toàn
     Optional<Cart> findByUserIdAndStatusIsTrue(Long userId);
 }

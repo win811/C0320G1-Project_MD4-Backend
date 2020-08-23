@@ -10,5 +10,6 @@ public interface UserService {
     User findUserById(Long id);
     //Creator: Nguyễn Xuân Hùng
     void updateUser(UserUpdateDto userDto);
+
     User findByEmail(String email);
 }

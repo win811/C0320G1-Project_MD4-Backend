@@ -29,25 +29,27 @@ public class UserController {
     UserDetailServiceImpl userDetailServiceImpl;
     @Autowired
     UserService userService;
+
     //Creator: Nguyễn Xuân Hùng
     @GetMapping("/user/{id}")
-    public ResponseEntity<UserUpdateDto> findUserById(@PathVariable Long id){
+    public ResponseEntity<UserUpdateDto> findUserById(@PathVariable Long id) {
         UserUpdateDto userDto = userService.findUserUpdateDtoByUserId(id);
-        if(userDto==null){
-            System.out.println("user "+id+" not found in the database");
+        if (userDto == null) {
+            System.out.println("user " + id + " not found in the database");
             return new ResponseEntity<UserUpdateDto>(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(userDto);
     }
+
     //Creator: Nguyễn Xuân Hùng
     @PutMapping("user/update/{id}")
-    public ResponseEntity<UserUpdateDto> updateUser(@PathVariable Long id, @RequestBody UserUpdateDto userDto){
+    public ResponseEntity<UserUpdateDto> updateUser(@PathVariable Long id, @RequestBody UserUpdateDto userDto) {
         User user = userService.findUserById(id);
-        if(user==null){
+        if (user == null) {
             return new ResponseEntity<UserUpdateDto>(HttpStatus.NOT_FOUND);
         }
         userService.updateUser(userDto);
-        return new ResponseEntity<UserUpdateDto>(userDto,HttpStatus.OK);
+        return new ResponseEntity<UserUpdateDto>(userDto, HttpStatus.OK);
     }
 
     // Creater Thien
@@ -59,8 +61,7 @@ public class UserController {
         UserDetails userDetails = userDetailServiceImpl.loadUserByUsername(authentication.getName());
         User user = userService.findByEmail(userDetails.getUsername());
         String jwtToken = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(jwtToken,user.getId(), userDetails.getUsername(), userDetails.getAuthorities()));
-
+        return ResponseEntity.ok(new JwtResponse(jwtToken,user.getId(),userDetails.getUsername(), userDetails.getAuthorities()));
     }
 
 }
