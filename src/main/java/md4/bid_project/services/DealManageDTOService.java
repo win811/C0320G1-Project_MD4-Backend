@@ -20,7 +20,7 @@ public interface DealManageDTOService {
 
     public int countSearchResult(String nameBuyer, String nameSeller, String nameProduct, Double totalPayment, String status);
 
-    List<DealManageDTO> searchBySellerAndBuyerAndProductAndTotalPayAndStatus(String nameBuyer, String nameSeller, String nameProduct, Double totalPayment, String status, Pageable pageable);
+    List<DealManageDTO> searchByFiveFields(String nameBuyer, String nameSeller, String nameProduct, Double totalPayment, String status, Pageable pageable);
 
     public ResponseEntity<DealManageApi> setInfoToDealManageApi(List<DealManageDTO> list, int currentPage, int pageSize, int totalItems);
 

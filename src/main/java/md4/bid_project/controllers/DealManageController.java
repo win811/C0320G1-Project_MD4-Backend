@@ -54,8 +54,8 @@ public class DealManageController {
     //SEARCH FUNCTION
     @PostMapping(value = "/deal-management/search")
     public ResponseEntity<DealManageApi> search(@RequestBody Map<String, Object> infoSearch,
-                                                    @RequestParam("page") int currentPage,
-                                                    @RequestParam("limit") int pageSize) {
+                                                @RequestParam("page") int currentPage,
+                                                @RequestParam("limit") int pageSize) {
         String nameBuyer = infoSearch.get("nameBuyer").toString();
         String nameSeller = infoSearch.get("nameSeller").toString();
         String nameProduct = infoSearch.get("nameProduct").toString();
