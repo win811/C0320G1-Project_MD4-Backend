@@ -1,7 +1,10 @@
 package md4.bid_project.services.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import md4.bid_project.models.Rate;
+import md4.bid_project.models.Role;
+import md4.bid_project.models.dto.UserRegistrationDto;
+import md4.bid_project.models.dto.UserUpdateDto;
 import md4.bid_project.models.User;
 import md4.bid_project.models.dto.UserUpdateDto;
 import md4.bid_project.repositories.DeliveryAddressRepository;
@@ -11,11 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-@Data
 public class UserServiceImpl implements UserService {
     Long id;
     private String username;
@@ -34,7 +38,7 @@ public class UserServiceImpl implements UserService {
         UserUpdateDto userDto = new UserUpdateDto();
         User user = userRepository.findById(id).orElse(null);
         if(user!=null){
-            userDto.setFullName(user.getFullname());
+            userDto.setFullName(user.getFullName());
             userDto.setEmail(user.getEmail());
             userDto.setGender(user.getGender());
             userDto.setPhoneNumber(user.getPhoneNumber());
@@ -55,7 +59,7 @@ public class UserServiceImpl implements UserService {
     public void updateUser(UserUpdateDto userDto) {
         User user = userRepository.findById(userDto.getId()).orElse(null);
         assert user != null;
-        user.setFullname(userDto.getFullName().trim());
+        user.setFullName(userDto.getFullName().trim());
         user.setAddress(userDto.getAddress().trim());
         user.setGender(userDto.getGender());
         user.setPhoneNumber(userDto.getPhoneNumber());
@@ -87,10 +91,48 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
         }
     }
+//Creator: Trương Khánh Mậu
+    @Override
+    public void createUser(UserRegistrationDto userDto) {
+        User user = new User();
+        Role role = new Role();
+        Rate rate=new Rate();
+        rate.setId(5L);
+        role.setId(1L);
+        user.setRole(role);
+        user.setStatus(true);
+        user.setPoint(0L);
+        user.setRate(rate);
+        user.setIsLocked(false);
+        user.setFullName(userDto.getFullName().trim());
+        user.setEmail(userDto.getEmail());
+        user.setAddress(userDto.getAddress().trim());
+        user.setGender(userDto.getGender());
+        user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setIdCard(userDto.getIdCard());
+        user.setBirthday(userDto.getBirthday());
+        user.setPassword(userDto.getPassword());
+        user.setQuestion(userDto.getQuestion());
+        user.setAnswer(userDto.getAnswer());
+        userRepository.save(user);
+
+    }
+
+    @Override
+    public Optional<User> checkUniqueEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public Optional<User> checkUniquePhone(String phoneNumber) {
+        return userRepository.findByPhoneNumber(phoneNumber);
+    }
+
 
     @Override
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
+//        return userRepository.findByEmail(email);
+        return null;
     }
 
 }

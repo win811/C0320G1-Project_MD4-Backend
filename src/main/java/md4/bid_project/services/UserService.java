@@ -2,6 +2,10 @@ package md4.bid_project.services;
 
 import md4.bid_project.models.dto.UserUpdateDto;
 import md4.bid_project.models.User;
+import md4.bid_project.models.dto.UserRegistrationDto;
+
+import javax.swing.text.html.Option;
+import java.util.Optional;
 
 public interface UserService {
     //Creator: Nguyễn Xuân Hùng
@@ -11,4 +15,13 @@ public interface UserService {
     //Creator: Nguyễn Xuân Hùng
     void updateUser(UserUpdateDto userDto);
     User findByEmail(String email);
+
+    //Creator: Trương Khánh Mậu
+    void createUser(UserRegistrationDto userDto);
+
+    //Creator: Trương Khánh Mậu
+    Optional<User> checkUniqueEmail(String email);
+
+    //Create: Trương Khánh Mạu
+    Optional<User> checkUniquePhone(String phoneNumber);
 }
