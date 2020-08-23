@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -196,12 +197,19 @@ public class AuctionController {
         return new ResponseEntity<List<Auction>>(auctions,HttpStatus.OK);
     }
 
-    //Creator: BHung -search HomePage đang code
-//    @GetMapping("/home/search")
-//    public ResponseEntity<List<Auction>> searchAuctionHomePage(@RequestParam(name = "productName",defaultValue = "") String productName,
-//                                                               @RequestParam(name = "categoryName",defaultValue = "") String categoryName,
-//                                                               @RequestParam(name = "price",defaultValue = "") String price){
-//
-//        return new ResponseEntity<List<Auction>>(auctions,HttpStatus.OK);
-//    }
+//    Creator: BHung -search HomePage đang code
+    @GetMapping("/home/search")
+    public ResponseEntity<List<Auction>> searchAuctionHomePage(@RequestParam(name = "productName",defaultValue = "") String productName,
+                                                               @RequestParam(name = "categoryName",defaultValue = "") String categoryName,
+                                                               @RequestParam(name = "price",defaultValue = "") String price){
+        List<Auction> auctions = new ArrayList<>();
+        if(price.equals("")){
+            auctions = auctionService.findAllAuctionsByProductNameAndCategoryName(productName,categoryName);
+        } else if(price.equals("5000000")){
+            auctions = auctionService.findALlAuctionsByProductNameAndCategoryNameAndPriceMoreThan(productName,categoryName,price);
+        }else {
+            auctions = auctionService.findAllAuctionByProductNameAndCategoryNameAndPriceRange(productName,categoryName,price);
+        }
+        return new ResponseEntity<List<Auction>>(auctions,HttpStatus.OK);
+    }
 }
