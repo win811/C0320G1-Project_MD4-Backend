@@ -8,14 +8,18 @@ import md4.bid_project.repositories.ProductRepository;
 import md4.bid_project.repositories.UserRepository;
 import md4.bid_project.services.ProductPromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/")
 public class ProductPromotionController {
     @Autowired
     private ProductPromotionService productPromotionService;
@@ -23,9 +27,23 @@ public class ProductPromotionController {
     private ProductRepository productRepository;
     @Autowired
     private UserRepository userRepository;
+
+    //Create : Tien
     @GetMapping("/productPromotions")
-    public List<ProductPromotion> getAllProductPromotion() {
-        return productPromotionService.findAll();
+    public Page<ProductPromotion> getAllProductPromotion(Pageable pageable) {
+        return productPromotionService.findAll(pageable);
+    }
+
+    //create : Tien
+    @GetMapping("/productPromotions/search")
+    public Page<ProductPromotion> searchProduct(@RequestParam(name = "content",defaultValue = "") String content,
+//                                                @RequestParam(name = "saleDate",defaultValue = "1900-1-1") String saleDate,
+                                                @RequestParam(name = "endOfEvent",defaultValue = "2030-12-12") String endOfEvent,
+                                                @RequestParam(name = "percent",defaultValue = "100") String percent,
+                                                @PageableDefault( value = 4) Pageable pageable
+    )
+    {
+        return productPromotionService.search(content, endOfEvent, percent ,pageable);
     }
     //creator: đức thông
     @GetMapping("/productPromotions/{id}")

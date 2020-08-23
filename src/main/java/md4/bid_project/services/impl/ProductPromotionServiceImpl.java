@@ -6,10 +6,12 @@ import md4.bid_project.repositories.ProductPromotionRepository;
 import md4.bid_project.services.ProductPromotionService;
 import md4.bid_project.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
+
 
 @Service
 public class ProductPromotionServiceImpl implements ProductPromotionService {
@@ -23,14 +25,17 @@ public class ProductPromotionServiceImpl implements ProductPromotionService {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Creator : thong  + tien
+
     @Override
-    public List<ProductPromotion> findAll() {
-        return productPromotionRepository.findAll();
+    public Page<ProductPromotion> findAll(Pageable pageable) {
+        return productPromotionRepository.findAll(pageable);
     }
+
+
     //Creator : tien
     @Override
-    public List<ProductPromotion> search(String content, String saleDate, String endOfEvent, String percent , Pageable pageable) {
-        return productPromotionRepository.getAllProductBySearch(content, saleDate, endOfEvent, percent ,pageable);
+    public Page<ProductPromotion> search(String content, String endOfEvent, String percent ,Pageable pageable) {
+        return productPromotionRepository.getAllProductBySearch(content, endOfEvent, percent, pageable );
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override

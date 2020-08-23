@@ -2,13 +2,17 @@ package md4.bid_project.services;
 
 import md4.bid_project.models.ProductPromotion;
 import md4.bid_project.models.dto.ProductPromotionDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.awt.print.Pageable;
 import java.util.List;
+
 
 public interface ProductPromotionService {
 
-    List<ProductPromotion> findAll();
+    Page<ProductPromotion> findAll(Pageable pageable);
+
+    Page<ProductPromotion> search(String content, String endOfEvent, String percent ,Pageable pageable );
 
     ProductPromotion findById(Long id);
 
@@ -21,7 +25,5 @@ public interface ProductPromotionService {
     void deleteById(Long id);
 
     void delete(ProductPromotion productPromotion);
-
-    List<ProductPromotion> search(String content, String saleDate, String endOfEvent, String percent , Pageable pageable);
 
 }
