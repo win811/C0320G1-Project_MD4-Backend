@@ -17,7 +17,7 @@ public interface AuctionRecordRepository extends JpaRepository<AuctionRecord, Lo
     @Query(value = "SELECT * FROM auction_records WHERE record_auction_id = ?1 ORDER BY record_bid_price DESC LIMIT 3", nativeQuery = true)
     List<AuctionRecord> getLatestAuctionRecord(@Param("auctionId") Long auctionId);
 
-    @Query(value = "SELECT * FROM bid_project.auction_records HAVING record_auction_id = ?1 ORDER BY record_bid_price DESC LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM auction_records HAVING record_auction_id = ?1 ORDER BY record_bid_price DESC LIMIT 1", nativeQuery = true)
     AuctionRecord getRecordHavingBestPrice(@Param("auctionId") Long auctionId);
 
     AuctionRecord findByAuction_IdAndBidder_Id(Long auctionId, Long bidderId);
