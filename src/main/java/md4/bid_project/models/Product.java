@@ -1,7 +1,10 @@
 package md4.bid_project.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,7 +12,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "products")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class Product {
 
     @Id
@@ -56,5 +61,8 @@ public class Product {
 
     @Column(name = "product_status")
     private Boolean status;
+
+    @Column(name = "product_banned")
+    private String banned;
 
 }

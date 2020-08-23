@@ -52,22 +52,12 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
     }
 
     private DeliveryAddressDTO transferToDTO(User user) {
-        DeliveryAddressDTO userAddressDTO = new DeliveryAddressDTO(user.getId(), user.getFullname(), user.getEmail(), user.getPhoneNumber());
-        for (DeliveryAddress deliveryAddress: user.getDeliveryAddressList()) {
-            userAddressDTO.addAddress(deliveryAddress);
-        }
+        DeliveryAddressDTO userAddressDTO = new DeliveryAddressDTO();
+        userAddressDTO.setId(user.getId())
+                .setFullname(user.getFullname())
+                .setEmail(user.getEmail())
+                .setPhoneNumber(user.getPhoneNumber())
+                .setAddresses(user.getDeliveryAddressList());
         return userAddressDTO;
     }
-
-//    private UserAddressDTO transferToDTO(User user) {
-//        userAddressDTO.setId(deliveryAddress.getId());
-//        userAddressDTO.setNation(deliveryAddress.getNation());
-//        userAddressDTO.setCity(deliveryAddress.getCity());
-//        userAddressDTO.setDistrict(deliveryAddress.getDistrict());
-//        userAddressDTO.setWard(deliveryAddress.getWard());
-//        userAddressDTO.setStreet(deliveryAddress.getStreet());
-//        userAddressDTO.setIsDefault(deliveryAddress.getIsDefault());
-//        userAddressDTO.setPhoneNumber(deliveryAddress.getPhoneNumber());
-//    }
-
 }

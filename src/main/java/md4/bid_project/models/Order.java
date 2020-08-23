@@ -1,14 +1,18 @@
 package md4.bid_project.models;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
 //creator: Đặng Hồng Quân team C
 @Entity
-@Data
 @Table(name = "orders")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Order {
 
     @Id
@@ -23,6 +27,8 @@ public class Order {
     @JoinColumn(name = "order_buyer_id")
     private User buyer;
 
+    @Column(name = "order_status")
+    private Boolean status;
 
     @Column(name = "order_payment_method")
     private String paymentMethod;
@@ -36,14 +42,10 @@ public class Order {
     @Column(name = "order_payment_status")
     private String paymentState;
 
-
     @Column(name = "order_delivery_address")
     private String deliveryAddress;
 
     @OneToOne
     @JoinColumn(name = "order_cart_id")
     private Cart cart;
-
-    @Column(name = "order_status")
-    private Boolean status;
 }

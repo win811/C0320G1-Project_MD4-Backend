@@ -22,12 +22,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
     JwtTokenUtil jwtTokenUtil;
+
     @Autowired(required = false)
     UserDetailServiceImpl userDetailServiceImpl ;
 
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         final String requestTokenHeader = request.getHeader("authorization");
         String username = null;
         String jwtToken = null;

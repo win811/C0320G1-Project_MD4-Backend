@@ -6,7 +6,7 @@ import md4.bid_project.models.User;
 
 //creator: Đặng Hồng Quân team C
 @Data
-public class OrderDto {
+public class OrderDTO {
     private User buyer;
     private String paymentMethod;
     private String deliveryMethod;

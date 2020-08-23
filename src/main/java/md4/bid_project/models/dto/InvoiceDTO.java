@@ -8,7 +8,7 @@ import java.util.List;
 
 //Creator: Nguyễn Xuân Hùng
 @Data
-public class InvoiceDto {
+public class InvoiceDTO {
     private Order order;
     private List<CartDetail> cartDetail;
 }

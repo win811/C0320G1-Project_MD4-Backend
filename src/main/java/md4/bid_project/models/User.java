@@ -1,19 +1,21 @@
 package md4.bid_project.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -56,7 +58,7 @@ public class User {
     private Boolean status;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnoreProperties(value = "user")
+//    @JsonIgnoreProperties(value = "user")
     private List<DeliveryAddress> deliveryAddressList;
 
     @ManyToOne
@@ -80,6 +82,4 @@ public class User {
 
     @Column(name = "user_is_locked")
     private Boolean isLocked;
-
-
 }
