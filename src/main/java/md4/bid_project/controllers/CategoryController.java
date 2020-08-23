@@ -41,6 +41,6 @@ public class CategoryController {
     @PostMapping("/categories")
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
          categoryService.save(category);
-        return ResponseEntity.ok(new Category());
+        return ResponseEntity.ok().body(category);
     }
 }
