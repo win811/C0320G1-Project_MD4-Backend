@@ -19,7 +19,18 @@ public interface AuctionService {
     //Creator:BHùng
     List<Auction> findAuctionsByStatusId(Long id);
 
+    //Creator:BHùng
     List<Auction> findTopAuctions();
 
+    //Creator:BHùng
     List<Auction> findAllAuctionByStatusAndCategoryName(Long id,String name);
+
+    //Creator:BHùng
+    List<Auction> findAllAuctionByProductNameAndCategoryNameAndPriceRange(String productName,String categoryName,String price);
+
+    //Creator:BHùng
+    List<Auction> findAllAuctionsByProductNameAndCategoryName(String productName, String categoryName);
+
+    //Creator: BHung
+    List<Auction> findALlAuctionsByProductNameAndCategoryNameAndPriceMoreThan(String productName,String categoryName,String price);
 }
