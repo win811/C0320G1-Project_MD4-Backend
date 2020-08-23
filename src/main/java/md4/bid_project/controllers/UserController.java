@@ -47,7 +47,7 @@ public class UserController {
     }
 
     //Creator: Trương Khánh Mậu
-    @PostMapping("/user")
+    @PostMapping("/user/register")
     public ResponseEntity<UserRegistrationDto> registration(@RequestBody UserRegistrationDto userDto) {
         userService.createUser(userDto);
         return new ResponseEntity<>(userDto, HttpStatus.OK);
@@ -57,9 +57,9 @@ public class UserController {
     @PostMapping("/user/checkEmail")
     public ResponseEntity<Map<String, Object>> checkEmail(@RequestBody String email) {
         Map<String, Object> result = new LinkedHashMap<>();
-        Optional<User> user = userRepository.findByEmail(email);
-        if (user.isPresent()) {
-            result.put("userId", user.get().getId());
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            result.put("userId", user.getId());
             result.put("message", "Email này đã được đăng kí.");
             return ResponseEntity.ok(result);
         }else {

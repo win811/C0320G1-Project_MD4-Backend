@@ -20,7 +20,7 @@ public interface UserService {
     void createUser(UserRegistrationDto userDto);
 
     //Creator: Trương Khánh Mậu
-    Optional<User> checkUniqueEmail(String email);
+    User checkUniqueEmail(String email);
 
     //Create: Trương Khánh Mạu
     Optional<User> checkUniquePhone(String phoneNumber);

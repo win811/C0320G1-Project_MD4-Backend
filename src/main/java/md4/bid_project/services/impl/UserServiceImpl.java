@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
         UserUpdateDto userDto = new UserUpdateDto();
         User user = userRepository.findById(id).orElse(null);
         if(user!=null){
-            userDto.setFullName(user.getFullName());
+            userDto.setFullName(user.getFullname());
             userDto.setEmail(user.getEmail());
             userDto.setGender(user.getGender());
             userDto.setPhoneNumber(user.getPhoneNumber());
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     public void updateUser(UserUpdateDto userDto) {
         User user = userRepository.findById(userDto.getId()).orElse(null);
         assert user != null;
-        user.setFullName(userDto.getFullName().trim());
+        user.setFullname(userDto.getFullName().trim());
         user.setAddress(userDto.getAddress().trim());
         user.setGender(userDto.getGender());
         user.setPhoneNumber(userDto.getPhoneNumber());
@@ -94,6 +94,7 @@ public class UserServiceImpl implements UserService {
 //Creator: Trương Khánh Mậu
     @Override
     public void createUser(UserRegistrationDto userDto) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         User user = new User();
         Role role = new Role();
         Rate rate=new Rate();
@@ -104,14 +105,15 @@ public class UserServiceImpl implements UserService {
         user.setPoint(0L);
         user.setRate(rate);
         user.setIsLocked(false);
-        user.setFullName(userDto.getFullName().trim());
+        user.setFullname(userDto.getFullName().trim());
         user.setEmail(userDto.getEmail());
         user.setAddress(userDto.getAddress().trim());
         user.setGender(userDto.getGender());
         user.setPhoneNumber(userDto.getPhoneNumber());
         user.setIdCard(userDto.getIdCard());
         user.setBirthday(userDto.getBirthday());
-        user.setPassword(userDto.getPassword());
+//        user.setPassword(userDto.getPassword());
+        user.setPassword(encoder.encode(userDto.getPassword()));
         user.setQuestion(userDto.getQuestion());
         user.setAnswer(userDto.getAnswer());
         userRepository.save(user);
@@ -119,7 +121,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> checkUniqueEmail(String email) {
+    public User checkUniqueEmail(String email) {
+//        return userRepository.findByEmail(email);
         return userRepository.findByEmail(email);
     }
 
@@ -131,8 +134,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmail(String email) {
-//        return userRepository.findByEmail(email);
-        return null;
+        return userRepository.findByEmail(email);
     }
-
 }
