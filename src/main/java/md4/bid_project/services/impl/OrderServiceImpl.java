@@ -62,4 +62,10 @@ public class OrderServiceImpl implements OrderService {
     public void updateOrder(Order order) {
         orderRepository.save(order);
     }
+
+    //BHung
+    @Override
+    public Order findOrderById(Long id) {
+        return orderRepository.findById(id).orElse(null);
+    }
 }

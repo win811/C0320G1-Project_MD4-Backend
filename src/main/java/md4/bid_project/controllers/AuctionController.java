@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.Optional;
 
 // creator: Hoai Ngan team C
 @CrossOrigin(origins = "http://localhost:4200")
@@ -27,7 +28,7 @@ public class AuctionController {
     @Autowired
     AuctionRecordService auctionRecordService;
 
-    //    Creator : Cường
+    //    Cường
     @GetMapping("/myAuctionRecords/{bidderId}")
     public ResponseEntity<Page<AuctionRecord>> findAuctionRecordByBidderId(@PathVariable(value = "bidderId") Long bidderId,
                                                                            @RequestParam(name = "productName",defaultValue = "") String productName,
@@ -162,4 +163,45 @@ public class AuctionController {
     }
 
 
+    //Creator: BHung -find auctions by status
+    @GetMapping("/home/auctionStatus/{id}")
+    public ResponseEntity<List<Auction>> getAuctionsByStatusId(@PathVariable Long id){
+        List<Auction> auctions = auctionService.findAuctionsByStatusId(id);
+        if(auctions==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Auction>>(auctions,HttpStatus.OK);
+    }
+
+    //Creator: BHung -find auctions by status
+    @GetMapping("/home/topAuction")
+    public ResponseEntity<List<Auction>> getTopAuction(){
+        List<Auction> auctions = auctionService.findTopAuctions();
+        if(auctions==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Auction>>(auctions,HttpStatus.OK);
+    }
+    //Creator: BHung -find auctions by status and categories
+    @GetMapping("/home/{statusId}/{categoryName}")
+    public ResponseEntity<List<Auction>> getAuctionsByStatusAndCategory(@PathVariable Long statusId, @PathVariable Optional<String> categoryName){
+        String newName = "";
+        if(categoryName.isPresent()){
+            newName= categoryName.get();
+        }
+        List<Auction> auctions = auctionService.findAllAuctionByStatusAndCategoryName(statusId,newName);
+        if(auctions==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Auction>>(auctions,HttpStatus.OK);
+    }
+
+    //Creator: BHung -search HomePage đang code
+//    @GetMapping("/home/search")
+//    public ResponseEntity<List<Auction>> searchAuctionHomePage(@RequestParam(name = "productName",defaultValue = "") String productName,
+//                                                               @RequestParam(name = "categoryName",defaultValue = "") String categoryName,
+//                                                               @RequestParam(name = "price",defaultValue = "") String price){
+//
+//        return new ResponseEntity<List<Auction>>(auctions,HttpStatus.OK);
+//    }
 }

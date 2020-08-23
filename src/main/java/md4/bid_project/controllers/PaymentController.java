@@ -20,16 +20,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
-import md4.bid_project.models.dto.InvoiceDto;
 import md4.bid_project.models.CartDetail;
-
 import java.util.Map;
 
-// Duy
-// Cac file liên quan đến DeliveryAddress (repository, service, entity)
-// /services/restful/paypal
-// /services/restful/rateExchange
-// Exception
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1")
@@ -125,15 +118,15 @@ public class PaymentController {
 
     //Creator: Nguyễn Xuân Hùng
     @GetMapping("/payment/invoice/{id}")
-    public ResponseEntity<InvoiceDto> getInvoiceById(@PathVariable Long id){
-        Order order = orderService.findByBuyerId(id);
+    public ResponseEntity<InvoiceDTO> getInvoiceById(@PathVariable Long id){
+        Order order = orderService.findOrderById(id);
         List<CartDetail> cartDetail = cartDetailService.findCartDetailByCartId(order.getCart().getId());
         if(cartDetail==null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        InvoiceDto invoiceDto = new InvoiceDto();
-        invoiceDto.setOrder(order);
-        invoiceDto.setCartDetail(cartDetail);
-        return new ResponseEntity<>(invoiceDto,HttpStatus.OK);
+        InvoiceDTO invoiceDTO = new InvoiceDTO();
+        invoiceDTO.setOrder(order);
+        invoiceDTO.setCartDetail(cartDetail);
+        return new ResponseEntity<>(invoiceDTO,HttpStatus.OK);
     }
 }

@@ -15,4 +15,11 @@ public interface AuctionService {
     void editAuction (Auction auctionRecord);
 
     void deleteAuction (Long id);
+
+    //Creator:BHùng
+    List<Auction> findAuctionsByStatusId(Long id);
+
+    List<Auction> findTopAuctions();
+
+    List<Auction> findAllAuctionByStatusAndCategoryName(Long id,String name);
 }
