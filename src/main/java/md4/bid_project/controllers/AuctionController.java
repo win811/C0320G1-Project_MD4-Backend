@@ -136,7 +136,7 @@ public class AuctionController {
     }
 
     //Creator: BHung -find auctions by status
-    @GetMapping("/auctionStatus/{id}")
+    @GetMapping("/home/auctionStatus/{id}")
     public ResponseEntity<List<Auction>> getAuctionsByStatusId(@PathVariable Long id){
         List<Auction> auctions = auctionService.findAuctionsByStatusId(id);
         if(auctions==null){
@@ -146,7 +146,7 @@ public class AuctionController {
     }
 
     //Creator: BHung -find auctions by status
-    @GetMapping("/topAuction")
+    @GetMapping("/home/topAuction")
     public ResponseEntity<List<Auction>> getTopAuction(){
         List<Auction> auctions = auctionService.findTopAuctions();
         if(auctions==null){
@@ -155,7 +155,7 @@ public class AuctionController {
         return new ResponseEntity<List<Auction>>(auctions,HttpStatus.OK);
     }
     //Creator: BHung -find auctions by status and categories
-    @GetMapping("/{statusId}/{categoryName}")
+    @GetMapping("/home/{statusId}/{categoryName}")
     public ResponseEntity<List<Auction>> getAuctionsByStatusAndCategory(@PathVariable Long statusId, @PathVariable Optional<String> categoryName){
         String newName = "";
         if(categoryName.isPresent()){
