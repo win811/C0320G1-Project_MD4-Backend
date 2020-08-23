@@ -47,7 +47,6 @@ public class Product {
     private ApprovementStatus approvementStatus;
 
     @NotBlank(message = "Vui lòng nhập mô tả sản phẩm")
-    @Pattern(regexp = "[A-Z]{1}[ a-zA-Z0-9_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$", message = "Mô tả sản phẩm không hợp lệ")
     @Column(name = "product_description")
     private String description;
 
