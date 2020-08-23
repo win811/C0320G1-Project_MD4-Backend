@@ -53,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers("/api/v1/login","/api/v1/register","/api/v1/home/**").permitAll()
                 .and()
-                .authorizeRequests().antMatchers("/api/v1/user/**","/api/v1/myProduct/**","/api/v1/myAuctionRecords/**","/api/v1/payment/invoice/**").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+                .authorizeRequests().antMatchers("/api/v1/user/**","/api/v1/myProduct/**","/api/v1/myAuctionRecords/**","/api/v1/payment/invoice/**","api/v1/auctions/**", "api/v1/auctionRecordByUser/**","api/v1//auctionRecords/**", "api/v1//highestPrice/**", "api/v1//topAuctionRecords/**").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
                 .and()
                 .authorizeRequests().antMatchers("/api/v1/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()

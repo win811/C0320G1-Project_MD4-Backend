@@ -9,7 +9,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
+// creator: Hoai Ngan team C
 @Entity
 @Table(name = "auction_records")
 @Data
@@ -40,6 +40,7 @@ public class AuctionRecord {
 
     @Column (name = "record_bid_price")
     private Double bidPrice;
+
 
     @Column (name = "record_bid_is_winner")
     private Boolean isWinner;
