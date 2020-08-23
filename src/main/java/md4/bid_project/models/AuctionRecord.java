@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+// creator: Hoai Ngan team C
 @Entity
 @Table(name = "auction_records")
 @Getter

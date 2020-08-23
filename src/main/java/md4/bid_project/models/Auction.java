@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+// creator: Hoai Ngan team C
 @Entity
 @Table(name="auctions")
 @Getter

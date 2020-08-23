@@ -16,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
+// creator: Hoai Ngan team C
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1")
@@ -62,15 +63,8 @@ public class AuctionController {
 
     @PutMapping ("/auctions/{id}")
     public ResponseEntity<Auction> editAuction (@PathVariable Long id, @RequestBody Auction newAuction){
-        Auction auction = auctionService.getAuctionById(id);
-        if(auction == null){
-            return new ResponseEntity<Auction>(HttpStatus.NOT_FOUND);
-        }
-        auction.setProduct(newAuction.getProduct());
-        auction.setAuctionStatus(newAuction.getAuctionStatus());
-        auction.setCloseTime(newAuction.getCloseTime());
-        auctionService.editAuction(auction);
-        return new ResponseEntity<Auction>(auction, HttpStatus.OK);
+        auctionService.editAuction(newAuction);
+        return new ResponseEntity<Auction>(newAuction, HttpStatus.OK);
     }
 
     @DeleteMapping ("/auctions/{id}")
@@ -109,20 +103,20 @@ public class AuctionController {
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 
-    @PutMapping (value = "/auctionRecords/{id}")
-    public ResponseEntity<AuctionRecord> editAuctionRecord (@PathVariable Long id, @RequestBody AuctionRecord newAuctionRecord){
-        AuctionRecord auctionRecord = auctionRecordService.getAuctionRecordById(id);
-        if(auctionRecord == null){
-            return new ResponseEntity<AuctionRecord>(HttpStatus.NOT_FOUND);
-        }
-        auctionRecord.setAuction(newAuctionRecord.getAuction());
-        auctionRecord.setBidder(newAuctionRecord.getBidder());
-        auctionRecord.setBidPrice(newAuctionRecord.getBidPrice());
-        auctionRecord.setBidTime(newAuctionRecord.getBidTime());
-        auctionRecord.setIsWinner(newAuctionRecord.getIsWinner());
-        auctionRecordService.editAuctionRecord(auctionRecord);
-        return new ResponseEntity<AuctionRecord>(auctionRecord, HttpStatus.OK);
-    }
+//    @PutMapping (value = "/auctionRecords/{id}")
+//    public ResponseEntity<AuctionRecord> editAuctionRecord (@PathVariable Long id, @RequestBody AuctionRecord newAuctionRecord){
+//        AuctionRecord auctionRecord = auctionRecordService.getAuctionRecordById(id);
+//        if(auctionRecord == null){
+//            return new ResponseEntity<AuctionRecord>(HttpStatus.NOT_FOUND);
+//        }
+//        auctionRecord.setAuction(newAuctionRecord.getAuction());
+//        auctionRecord.setBidder(newAuctionRecord.getBidder());
+//        auctionRecord.setBidPrice(newAuctionRecord.getBidPrice());
+//        auctionRecord.setBidTime(newAuctionRecord.getBidTime());
+//        auctionRecord.setIsWinner(newAuctionRecord.getIsWinner());
+//        auctionRecordService.editAuctionRecord(auctionRecord);
+//        return new ResponseEntity<AuctionRecord>(auctionRecord, HttpStatus.OK);
+//    }
 
     @DeleteMapping ("/auctionRecords/{id}")
     public ResponseEntity<AuctionRecord> deleteAuctionRecord(@PathVariable Long id){
@@ -133,5 +127,39 @@ public class AuctionController {
         auctionRecordService.deleteAuctionRecord(id);
         return new ResponseEntity<AuctionRecord>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping ("/topAuctionRecords/{id}")
+    public ResponseEntity<List<AuctionRecord>> getTopAuctionRecords(@PathVariable Long id){
+
+        List<AuctionRecord> topAuctionRecord = auctionRecordService.getTopAuctionRecords(id);
+
+        if (topAuctionRecord.isEmpty()){
+            return new ResponseEntity<List<AuctionRecord>>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<AuctionRecord>>(topAuctionRecord, HttpStatus.OK);
+    }
+
+    @GetMapping("/highestPrice/{id}")
+    public ResponseEntity<AuctionRecord> getHighestPrice(@PathVariable Long id){
+        AuctionRecord record = auctionRecordService.getRecordHavingBestPrice(id);
+
+        if (record == null){
+            return new ResponseEntity<AuctionRecord>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<AuctionRecord>(record, HttpStatus.OK);
+    }
+
+    @PutMapping("/highestPrice/{id}")
+    public ResponseEntity<AuctionRecord> editAuctionRecord (@PathVariable Long id, @RequestBody AuctionRecord newAuctionRecord){
+
+        auctionRecordService.editAuctionRecord(newAuctionRecord);
+        return new ResponseEntity<AuctionRecord>(newAuctionRecord, HttpStatus.OK);
+    }
+
+    @GetMapping("/auctionRecordByUser/{auctionId}/{userId}")
+    public ResponseEntity<AuctionRecord> findAuctionRecordByAuctionAndUser (@PathVariable Long auctionId, @PathVariable Long userId){
+        return ResponseEntity.ok(this.auctionRecordService.findByAuctionIdAndBidderId(auctionId, userId));
+    }
+
 
 }
