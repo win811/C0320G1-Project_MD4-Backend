@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 //all created by Thao
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1")
 public class DealManageController {
@@ -25,7 +26,7 @@ public class DealManageController {
     private DealManageDTOService dealManageDTOService;
 
     //DISPLAY LIST FUNCTION
-    @GetMapping(value = "/deal-management")
+    @GetMapping(value = "/admin/deal-management")
     public ResponseEntity<DealManageApi> showAllNotDeletedDealList(@RequestParam("page") int currentPage,
                                                                    @RequestParam("limit") int pageSize) {
         Pageable pageable = PageRequest.of(currentPage-1, pageSize, Sort.by("id"));
@@ -35,24 +36,28 @@ public class DealManageController {
     }
 
     //SET DELETION STATUS FUNCTION
-    @PutMapping(value = "/deal-management/delete")
-    public Map<String, Long> setDealsIsDeleted(@RequestBody Long[] ids) {
+    @PutMapping(value = "/admin/deal-management/delete")
+    public ResponseEntity<Map<String, Long>> setDealsIsDeleted(@RequestBody Long[] ids) {
         Map<String, Long> response = new HashMap<>();
         for(Long id : ids) {
             CartDetail deal = dealManageDTOService.findById(id);
-            if(deal.getStatus().equals("Thành công") || deal.getStatus().equals("Thất bại") ){
-                deal.setIsDelete(true);
-                dealManageDTOService.save(deal);
-                response.put("deleted", id);
+            if (deal == null) {
+                return new ResponseEntity<Map<String, Long>>(HttpStatus.NOT_FOUND);
             } else {
-                response.put("not allow", id);
+                if(deal.getStatus().equals("Thành công") || deal.getStatus().equals("Thất bại") ){
+                    deal.setIsDelete(true);
+                    dealManageDTOService.save(deal);
+                    response.put("deleted", id);
+                } else {
+                    response.put("not allow", id);
+                }
             }
         }
-        return response;
+        return new ResponseEntity<Map<String, Long>>(response, HttpStatus.OK);
     }
 
     //SEARCH FUNCTION
-    @PostMapping(value = "/deal-management/search")
+    @PostMapping(value = "/admin/deal-management/search")
     public ResponseEntity<DealManageApi> search(@RequestBody Map<String, Object> infoSearch,
                                                 @RequestParam("page") int currentPage,
                                                 @RequestParam("limit") int pageSize) {
