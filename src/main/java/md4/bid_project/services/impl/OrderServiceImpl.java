@@ -2,7 +2,7 @@ package md4.bid_project.services.impl;
 import md4.bid_project.models.Cart;
 import md4.bid_project.models.CartDetail;
 import md4.bid_project.models.Order;
-import md4.bid_project.models.dto.OrderDto;
+import md4.bid_project.models.dto.OrderDTO;
 import md4.bid_project.repositories.CartRepository;
 import md4.bid_project.repositories.DeliveryAddressRepository;
 import md4.bid_project.repositories.OrderRepository;
@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void saveOrder(OrderDto orderDto) {
+    public void saveOrder(OrderDTO orderDto) {
 
         ModelMapper modelMapper = new ModelMapper();
         Order order = modelMapper.map(orderDto, Order.class);

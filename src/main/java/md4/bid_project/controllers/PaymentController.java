@@ -53,7 +53,7 @@ public class PaymentController {
     }
 
     @PostMapping("payment/order")
-    public ResponseEntity<Void> create(@RequestBody OrderDto orderDto) {
+    public ResponseEntity<Void> create(@RequestBody OrderDTO orderDto) {
         orderService.saveOrder(orderDto);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
