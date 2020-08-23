@@ -4,6 +4,9 @@ package md4.bid_project.services;
 import md4.bid_project.models.dto.UserListDTO;
 import md4.bid_project.models.dto.UserUpdateDto;
 import md4.bid_project.models.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,5 +23,9 @@ public interface UserService {
     void updateUser(UserUpdateDto userDto);
 
     //Creator: Quốc Tùng
-    List<UserListDTO> findAll();
+    Page<UserListDTO> findAll(int page);
+    //Page<UserListDTO> searchFiveFields(Long id, String fullname, String email, String address, String rateName, int page);
+
+    Page<UserListDTO> findCustomerByCriteria(Specification<User> spec, int page);
+    Specification<User> getFilter(String id, String fullname, String email, String address, String rateName);
 }
