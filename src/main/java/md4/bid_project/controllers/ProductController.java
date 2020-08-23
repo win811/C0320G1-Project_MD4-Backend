@@ -7,6 +7,7 @@ import md4.bid_project.services.ApprovementStatusService;
 import md4.bid_project.models.ProductImage;
 import md4.bid_project.repositories.ProductImageRepository;
 import md4.bid_project.services.ProductImageService;
+import md4.bid_project.services.AuctionService;
 import md4.bid_project.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,6 +37,9 @@ public class ProductController {
     //Thành
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private AuctionService auctionService;
 
     @Autowired
     private ApprovementStatusService approvementStatusService;
@@ -75,6 +79,7 @@ public class ProductController {
             product.setApprovementStatus(approvementStatus);
             productService.save(product);
         }
+
         Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId,productName,approvementStatusName,pageable);
         return ResponseEntity.ok(productPage);
     }
