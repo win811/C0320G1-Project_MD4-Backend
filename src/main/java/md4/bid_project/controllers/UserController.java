@@ -22,13 +22,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 // Creator Thien
 public class UserController {
     @Autowired(required = false)
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
     @Autowired
-    JwtTokenUtil jwtTokenUtil;
+    private JwtTokenUtil jwtTokenUtil;
     @Autowired(required = false)
-    UserDetailServiceImpl userDetailServiceImpl;
+    private UserDetailServiceImpl userDetailServiceImpl;
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     //Creator: Nguyễn Xuân Hùng
     @GetMapping("/user/{id}")
