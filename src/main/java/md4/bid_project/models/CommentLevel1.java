@@ -1,15 +1,19 @@
 package md4.bid_project.models;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "comment_level1")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class CommentLevel1 {
 
     @Id

@@ -1,16 +1,16 @@
 package md4.bid_project.models;
 
-import com.fasterxml.jackson.annotation.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
-
 
 @Entity
 @Table(name = "auction_statuses")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class AuctionStatus {
 
     @Id
@@ -20,13 +20,5 @@ public class AuctionStatus {
 
     @Column(name = "auction_status_name")
     private String name;
-
-//    @OneToMany(mappedBy = "auctionStatus")
-//    @JsonManagedReference
-//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-//            property = "id")
-//    @JsonIdentityReference(alwaysAsId = true)
-//    @JsonIgnoreProperties("auctionStatus")
-//    private List<Auction> auctions;
 
 }

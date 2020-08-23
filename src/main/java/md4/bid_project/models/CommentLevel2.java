@@ -1,15 +1,21 @@
 package md4.bid_project.models;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
+
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="comment_level2")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class CommentLevel2 {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_level2_id")
