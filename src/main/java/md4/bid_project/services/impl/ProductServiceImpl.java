@@ -1,22 +1,24 @@
 package md4.bid_project.services.impl;
 
 import md4.bid_project.models.*;
+import md4.bid_project.models.dto.ProductListDTO;
 import md4.bid_project.repositories.AuctionRepository;
 import md4.bid_project.models.ApprovementStatus;
 import md4.bid_project.models.Product;
 import md4.bid_project.repositories.ProductRepository;
-import md4.bid_project.services.AuctionService;
 import md4.bid_project.services.ProductService;
 import md4.bid_project.services.searchProduct.ProductSpecification;
 import md4.bid_project.services.searchProduct.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,15 +79,52 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(Product product) {
-        product.setStatus(true);
+        product.setStatus(false);
         productRepository.save(product);
     }
 
     //Thành Long
+    private ProductListDTO transferToDTO(Product temp) {
+        ProductListDTO product = new ProductListDTO();
+        product.setId(temp.getId());
+        product.setName(temp.getName());
+        product.setCategory(temp.getCategory().getName());
+        product.setInitialPrice(temp.getInitialPrice());
+        product.setIncreaseAmount(temp.getIncreaseAmount());
+        product.setApprovementStatus(temp.getApprovementStatus().getName());
+        product.setAuctionStatus(temp.getAuction().getAuctionStatus().getName());
+        product.setOwner(temp.getOwner().getFullname());
+        product.setRegisterDate(temp.getRegisterDate());
+        product.setStartDate(temp.getStartDate());
+        product.setEndDate(temp.getEndDate());
+        product.setProductImages(temp.getProductImages());
+        product.setBanned(temp.getBanned());
+        product.setDescription(temp.getDescription());
+        return product;
+    }
+    private Page<ProductListDTO> transferToNewPage(Page<Product> products) {
+        Product temp;
+        List<ProductListDTO> productDTO = new ArrayList<>();
+        Iterator iterator = products.iterator();
+        while (iterator.hasNext()) {
+            temp = (Product)iterator.next();
+            productDTO.add(transferToDTO(temp));
+        }
+        Page<ProductListDTO> _product = new PageImpl<>(productDTO, products.getPageable(), products.getTotalElements());
+        return _product;
+    }
+
     @Override
-    public Page<Product> findAllProduct(int page) {
-        Pageable pageable = PageRequest.of(page - 1, 5);
-        return productRepository.findAllByStatusIsFalse(pageable);
+    public Page<ProductListDTO> findAllProduct(int page) {
+        Pageable pageable = PageRequest.of(page - 1, 3);
+        Page<Product> products = productRepository.findAllByStatusIsTrue(pageable);
+        return transferToNewPage(products);
+    }
+
+    @Override
+    public ProductListDTO checkProduct(Long id) {
+        Product product = productRepository.getOne(id);
+        return transferToDTO(product);
     }
 
     //Thành Long
@@ -110,9 +149,10 @@ public class ProductServiceImpl implements ProductService {
 
     //Thành Long
     @Override
-    public Page<Product> findCustomerByCriteria(Specification<Product> spec, int page) {
-        Pageable pageable = PageRequest.of(page - 1, 5);
-        return productRepository.findAll(spec, pageable);
+    public Page<ProductListDTO> findCustomerByCriteria(Specification<Product> spec, int page) {
+        Pageable pageable = PageRequest.of(page - 1, 3);
+        Page<Product> products = productRepository.findAll(spec, pageable);
+        return transferToNewPage(products);
     }
 
     //Thành Long

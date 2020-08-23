@@ -2,6 +2,7 @@ package md4.bid_project.controllers;
 
 import md4.bid_project.models.ApprovementStatus;
 import md4.bid_project.models.Product;
+import md4.bid_project.models.dto.ProductListDTO;
 import md4.bid_project.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,15 +29,15 @@ public class AdminController {
     //Thành Long
     //Hiển thị list sản phẩm
     @GetMapping("/admin/product-list")
-    public ResponseEntity<Page<Product>> getAllProduct(@RequestParam(name = "name", defaultValue = "") String name,
-                                                       @RequestParam(name = "category", defaultValue = "") String category,
-                                                       @RequestParam(name = "owner", defaultValue = "") String owner,
-                                                       @RequestParam(name = "minPrice", defaultValue = "") String minPrice,
-                                                       @RequestParam(name = "maxPrice", defaultValue = "") String maxPrice,
-                                                       @RequestParam(name = "status", defaultValue = "") String status,
-                                                       @RequestParam(name = "page") int page) {
+    public ResponseEntity<Page<ProductListDTO>> getAllProduct(@RequestParam(name = "name", defaultValue = "") String name,
+                                                              @RequestParam(name = "category", defaultValue = "") String category,
+                                                              @RequestParam(name = "owner", defaultValue = "") String owner,
+                                                              @RequestParam(name = "minPrice", defaultValue = "") String minPrice,
+                                                              @RequestParam(name = "maxPrice", defaultValue = "") String maxPrice,
+                                                              @RequestParam(name = "status", defaultValue = "") String status,
+                                                              @RequestParam(name = "page") int page) {
         Specification<Product> specs = productService.getFilter(name, category, minPrice, maxPrice, owner, status);
-        Page<Product> products;
+        Page<ProductListDTO> products;
         if (specs != null) {
             products =  productService.findCustomerByCriteria(specs, page);
         } else {
@@ -53,12 +54,12 @@ public class AdminController {
     //Thành Long
     //Hiển thị chi tiết sản phẩm để duyệt
     @GetMapping("/admin/approvement/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        Product product = productService.getProductById(id);
+    public ResponseEntity<ProductListDTO> getProductById(@PathVariable Long id) {
+        ProductListDTO product = productService.checkProduct(id);
         if (product == null) {
-            return new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<ProductListDTO>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Product>(product, HttpStatus.OK);
+        return new ResponseEntity<ProductListDTO>(product, HttpStatus.OK);
     }
 
     //Thành Long
@@ -102,7 +103,7 @@ public class AdminController {
         for(Long id : ids) {
             Product product = productService.findById(id);
             productService.deleteProduct(product);
-            response.put("deleted " + id, Boolean.TRUE);
+            response.put("deleted " + id, Boolean.FALSE);
         }
         return response;
     }

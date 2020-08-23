@@ -23,7 +23,8 @@ public interface ProductRepository extends JpaRepository<Product,Long>, JpaSpeci
     List<Product> findByApprovementStatus_Id(Long approvementStatusId);
 
     Optional<Product> findAllById(Long productId);
-    @Query(value ="select * from  products where product_status=false", nativeQuery = true)
-    Page<Product> findAllByStatusIsFalse(Pageable pageable);
+
+//    @Query(value ="select * from  products where product_status=false", nativeQuery = true)
+    Page<Product> findAllByStatusIsTrue(Pageable pageable);
 }
 
