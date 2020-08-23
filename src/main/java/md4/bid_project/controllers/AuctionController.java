@@ -63,8 +63,8 @@ public class AuctionController {
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
-    @PutMapping ("/auctions/{id}")
-    public ResponseEntity<Auction> editAuction (@PathVariable Long id, @RequestBody Auction newAuction){
+    @PutMapping ("/auctions")
+    public ResponseEntity<Auction> editAuction (@RequestBody Auction newAuction){
         auctionService.editAuction(newAuction);
         return new ResponseEntity<Auction>(newAuction, HttpStatus.OK);
     }
@@ -151,8 +151,8 @@ public class AuctionController {
         return new ResponseEntity<AuctionRecord>(record, HttpStatus.OK);
     }
 
-    @PutMapping("/highestPrice/{id}")
-    public ResponseEntity<AuctionRecord> editAuctionRecord (@PathVariable Long id, @RequestBody AuctionRecord newAuctionRecord){
+    @PutMapping("/highestPrice")
+    public ResponseEntity<AuctionRecord> editAuctionRecord (@RequestBody AuctionRecord newAuctionRecord){
 
         auctionRecordService.editAuctionRecord(newAuctionRecord);
         return new ResponseEntity<AuctionRecord>(newAuctionRecord, HttpStatus.OK);
