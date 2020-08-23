@@ -11,4 +11,20 @@ import java.util.List;
 public class InvoiceDto {
     private Order order;
     private List<CartDetail> cartDetail;
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public List<CartDetail> getCartDetail() {
+        return cartDetail;
+    }
+
+    public void setCartDetail(List<CartDetail> cartDetail) {
+        this.cartDetail = cartDetail;
+    }
 }

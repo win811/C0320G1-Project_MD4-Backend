@@ -6,9 +6,9 @@ import md4.bid_project.models.Product;
 import md4.bid_project.models.ProductPromotion;
 import md4.bid_project.models.User;
 import md4.bid_project.models.dto.ProductPromotionDto;
+import md4.bid_project.repositories.ProductRepository;
 import md4.bid_project.repositories.UserRepository;
 import md4.bid_project.services.ProductPromotionService;
-import md4.bid_project.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ public class ProductPromotionController {
     @Autowired
     private ProductPromotionService productPromotionService;
     @Autowired
-    private ProductService productService;
+    private ProductRepository productRepository;
     @Autowired
     private UserRepository userRepository;
 
@@ -53,14 +53,14 @@ public class ProductPromotionController {
     @GetMapping("/products/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable(value = "id") Long productId)
             throws ResourceNotFoundException {
-        Product product = productService.findById(productId);
+        Product product = productRepository.findById(productId).orElse(null);
         return ResponseEntity.ok().body(product);
     }
 
     //creator: đức thông
     @GetMapping("/products")
     public List<Product> getAllProduct() {
-        return productService.findAll();
+        return productRepository.findAll();
     }
 
     @GetMapping("/users")
@@ -84,7 +84,7 @@ public class ProductPromotionController {
         productPromotion.setEndDate(productPromotionsDetail.getEndDate());
         productPromotion.setPercent(productPromotionsDetail.getPercent());
         productPromotion.setPrice(productPromotionsDetail.getPrice());
-        productPromotion.setProduct(productService.findById(productPromotionsDetail.getIdProduct()));
+        productPromotion.setProduct(productRepository.findById(productPromotionsDetail.getIdProduct()).orElse(null));
         productPromotionService.update(productPromotion);
         return ResponseEntity.ok().body(productPromotion);
     }

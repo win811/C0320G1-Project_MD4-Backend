@@ -13,4 +13,5 @@ public interface ProductPromotionService {
     void update(ProductPromotion productPromotion);
     void deleteById(Long id);
     void delete(ProductPromotion productPromotion);
+    List<ProductPromotion> search(String content , String saleDate , String endOfEvent,String percent);
 }

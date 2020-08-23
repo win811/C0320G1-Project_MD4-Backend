@@ -76,4 +76,9 @@ public class ProductPromotionServiceImpl implements ProductPromotionService {
     public void delete(ProductPromotion productPromotion) {
         productPromotionRepository.delete(productPromotion);
     }
+
+    @Override
+    public List<ProductPromotion> search(String content, String saleDate, String endOfEvent, String percent) {
+        return productPromotionRepository.getAllProductBySearch(content, saleDate, endOfEvent, percent);
+    }
 }
