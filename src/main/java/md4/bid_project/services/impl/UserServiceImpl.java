@@ -213,4 +213,21 @@ public class UserServiceImpl implements UserService {
         }
         return new PageImpl<UserListDTO>(userListDTO, users.getPageable(), users.getTotalElements());
     }
+
+    //B-Hoàng Long method
+    @Override
+    public User findById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+    //B-Hoàng Long method
+    @Override
+    public Page<User> pageFindAllSearchFullName(Pageable pageable, String search) {
+        return this.userRepository.findAllByAndIsLockedIsFalseAndFullnameContaining(pageable, search);
+    }
+    //B-Hoàng Long method
+    @Override
+    public User saveUser(User user) {
+        this.userRepository.save(user);
+        return user;
+    }
 }

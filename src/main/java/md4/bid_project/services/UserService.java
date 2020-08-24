@@ -5,6 +5,7 @@ import md4.bid_project.models.dto.UserListDTO;
 import md4.bid_project.models.dto.UserRegistrationDto;
 import md4.bid_project.models.dto.UserUpdateDTO;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Optional;
@@ -37,4 +38,11 @@ public interface UserService {
 
     //Create: Trương Khánh Mạu
     Optional<User> checkUniquePhone(String phoneNumber);
+
+    //B-Hoàng Long method
+    User findById(Long id);
+    //B-Hoàng Long method
+    Page<User> pageFindAllSearchFullName(Pageable pageable, String search);
+    //B-Hoàng Long method
+    User saveUser(User user);
 }

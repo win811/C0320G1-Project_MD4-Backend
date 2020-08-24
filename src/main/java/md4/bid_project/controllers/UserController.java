@@ -11,6 +11,8 @@ import md4.bid_project.security.JwtTokenUtil;
 import md4.bid_project.services.UserService;
 import md4.bid_project.services.impl.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -119,4 +121,41 @@ public class UserController {
         return ResponseEntity.ok(new JwtResponse(jwtToken, user.getId(), userDetails.getUsername(), userDetails.getAuthorities()));
     }
 
+    //B-Hoàng Long method
+    @GetMapping("/user/{id}")
+    public ResponseEntity<User> getEmployeeById(@PathVariable Long id) {
+        User user = userService.findById(id);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+
+    //B-Hoàng Long method
+    @GetMapping(value = "/user/lock", params = {"page", "size", "search"})
+    public ResponseEntity<Page<User>> getAllUserNotLock(@RequestParam("page") int page,
+                                                        @RequestParam("size") int size,
+                                                        @RequestParam("search") String search) {
+        Page<User> users = this.userService.pageFindAllSearchFullName(PageRequest.of(page, size), search);
+        if (users.isEmpty()) {
+            return new ResponseEntity<>(users, HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    //B-Hoàng Long method
+    @PostMapping("/user")
+    public User addNewUser(@RequestBody User user) {
+        return this.userService.saveUser(user);
+    }
+
+    //B-Hoàng Long method
+    @PutMapping("/user/lock/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+        User userLock = userService.findById(id);
+        if (userLock == null) {
+            return new ResponseEntity<User>(userLock, HttpStatus.NO_CONTENT);
+        }
+        userLock.setIsLocked(user.getIsLocked());
+        userLock.setReasonBan(user.getReasonBan());
+        this.userService.saveUser(userLock);
+        return new ResponseEntity<User>(userLock, HttpStatus.OK);
+    }
 }
