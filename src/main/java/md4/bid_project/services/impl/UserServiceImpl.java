@@ -7,7 +7,6 @@ import md4.bid_project.models.dto.UserRegistrationDto;
 import md4.bid_project.models.dto.UserListDTO;
 import md4.bid_project.models.dto.UserUpdateDto;
 import md4.bid_project.models.User;
-import md4.bid_project.models.dto.UserUpdateDto;
 import md4.bid_project.repositories.DeliveryAddressRepository;
 import md4.bid_project.repositories.UserRepository;
 import md4.bid_project.services.UserService;
@@ -121,7 +120,6 @@ public class UserServiceImpl implements UserService {
         user.setPhoneNumber(userDto.getPhoneNumber());
         user.setIdCard(userDto.getIdCard());
         user.setBirthday(userDto.getBirthday());
-//        user.setPassword(userDto.getPassword());
         user.setPassword(encoder.encode(userDto.getPassword()));
         user.setQuestion(userDto.getQuestion());
         user.setAnswer(userDto.getAnswer());
@@ -131,7 +129,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User checkUniqueEmail(String email) {
-//        return userRepository.findByEmail(email);
         return userRepository.findByEmail(email);
     }
 
@@ -145,10 +142,10 @@ public class UserServiceImpl implements UserService {
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-}
 
 
 
+    // Creator: Tùng
     @Override
     public Page<UserListDTO> findAll(int page) {
         Pageable pageable = PageRequest.of(page-1, 5, Sort.by("id"));
@@ -217,5 +214,4 @@ public class UserServiceImpl implements UserService {
         }
         return new PageImpl<UserListDTO>(userListDTO, users.getPageable(), users.getTotalElements());
     }
-
 }

@@ -3,6 +3,7 @@ package md4.bid_project.controllers;
 import md4.bid_project.models.ApprovementStatus;
 import md4.bid_project.models.Product;
 import md4.bid_project.models.dto.ProductListDTO;
+import md4.bid_project.models.dto.UserListDTO;
 import md4.bid_project.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -112,23 +113,23 @@ public class AdminController {
         return response;
     }
 
-//    @GetMapping("admin/user-list")
-//    public ResponseEntity<Page<UserListDTO>> getAllUser(
-//            @RequestParam(name = "id") String id,
-//            @RequestParam(name = "fullname", defaultValue = "") String fullname,
-//            @RequestParam(name = "email", defaultValue = "") String email,
-//            @RequestParam(name = "address", defaultValue = "") String address,
-//            @RequestParam(name = "rate", defaultValue = "") String rate,
-//            @RequestParam("page") int currentPage) {
-//
-//        Page<UserListDTO> userListDTO;
-//        Specification<User> search = userService.getFilter(id, fullname, email, address, rate);
-//        if(search != null) {
-//            userListDTO = userService.findCustomerByCriteria(search, currentPage);
-//        }
-//        else {
-//            userListDTO = userService.findAll(currentPage);
-//        }
-//        return ResponseEntity.ok(userListDTO);
-//    }
+    @GetMapping("admin/user-list")
+    public ResponseEntity<Page<UserListDTO>> getAllUser(
+            @RequestParam(name = "id") String id,
+            @RequestParam(name = "fullname", defaultValue = "") String fullname,
+            @RequestParam(name = "email", defaultValue = "") String email,
+            @RequestParam(name = "address", defaultValue = "") String address,
+            @RequestParam(name = "rate", defaultValue = "") String rate,
+            @RequestParam("page") int currentPage) {
+
+        Page<UserListDTO> userListDTO;
+        Specification<User> search = userService.getFilter(id, fullname, email, address, rate);
+        if(search != null) {
+            userListDTO = userService.findCustomerByCriteria(search, currentPage);
+        }
+        else {
+            userListDTO = userService.findAll(currentPage);
+        }
+        return ResponseEntity.ok(userListDTO);
+    }
 }
