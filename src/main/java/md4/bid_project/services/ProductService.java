@@ -24,4 +24,6 @@ public interface ProductService {
     Product findById(Long id);
 
     void save(Product product);
+
+    List<Product> findAll();
 }

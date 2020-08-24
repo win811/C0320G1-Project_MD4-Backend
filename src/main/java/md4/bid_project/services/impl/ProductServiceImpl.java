@@ -50,4 +50,9 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findProductByOwnerId(Long ownerId) {
         return null;
     }
+
+    @Override
+    public List<Product> findAll() {
+        return productRepository.findAll();
+    }
 }
