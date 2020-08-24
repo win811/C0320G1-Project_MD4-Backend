@@ -88,7 +88,7 @@ public class UserListDTO {
     public void setRate(String rate) {
         this.rate = rate;
     }
-    public String getFullname() {
+    public String getfullname() {
         return fullname;
     }
 

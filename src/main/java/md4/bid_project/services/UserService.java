@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface UserService {
@@ -28,4 +29,10 @@ public interface UserService {
 
     Page<UserListDTO> findCustomerByCriteria(Specification<User> spec, int page);
     Specification<User> getFilter(String id, String fullname, String email, String address, String rateName);
+
+    void saveUser(User user);
+
+//    Optional<User> findById(Long id);
+
+    void updateUser(UserListDTO userDto);
 }
