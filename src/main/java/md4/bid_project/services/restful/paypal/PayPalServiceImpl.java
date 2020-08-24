@@ -7,6 +7,7 @@ import com.paypal.http.HttpResponse;
 import com.paypal.orders.*;
 import md4.bid_project.models.Cart;
 import md4.bid_project.models.CartDetail;
+import md4.bid_project.models.dto.TransferDTO;
 import md4.bid_project.services.CartService;
 import md4.bid_project.services.restful.rateExchange.RateExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +45,10 @@ public class PayPalServiceImpl implements PayPalService{
     }
 
     @Override
-    public Transaction createTransaction(Long userId) throws IOException {
+    public Transaction createTransaction(TransferDTO transferDTO) throws IOException {
         OrdersCreateRequest request = new OrdersCreateRequest();
         request.prefer("return=minimal");
-        request.requestBody(buildOrderRequest(getCart(userId)));
+        request.requestBody(buildOrderRequest(getCart(transferDTO.getUserId()), transferDTO.getDeliveryMethod()));
         // Call PayPal to set up a transaction
         HttpResponse<Order> response = client().execute(request);
         // set captured order
@@ -66,24 +67,8 @@ public class PayPalServiceImpl implements PayPalService{
     public Transaction captureTransaction(String orderId) throws IOException {
         OrdersCaptureRequest request = new OrdersCaptureRequest(orderId);
         request.requestBody(new OrderRequest());
-        //3. Call PayPal to capture an order
+        // Call PayPal to capture an order
         HttpResponse<Order> response = client().execute(request);
-        //4. Save the capture ID to your database. Implement logic to save capture to your database for future reference.
-        if (true) {
-            System.out.println("Status Code: " + response.statusCode());
-            System.out.println("Status: " + response.result().status());
-            System.out.println("Order ID: " + response.result().id());
-            System.out.println("Links: ");
-            for (LinkDescription link : response.result().links()) {
-                System.out.println("\t" + link.rel() + ": " + link.href());
-            }
-            System.out.println("Capture ids:");
-            for (PurchaseUnit purchaseUnit : response.result().purchaseUnits()) {
-                for (Capture capture : purchaseUnit.payments().captures()) {
-                    System.out.println("\t" + capture.id());
-                }
-            }
-        }
         Transaction transaction = new Transaction();
         transaction.setStatus(response.result().status())
                 .setId(response.result().id())
@@ -98,18 +83,17 @@ public class PayPalServiceImpl implements PayPalService{
         return new ApplicationContext().brandName("C03 Auction Group").landingPage("BILLING").shippingPreference("NO_SHIPPING");
     }
 
-    private PurchaseUnitRequest setPurchaseUnitRequest(Cart cart) {
+    private PurchaseUnitRequest setPurchaseUnitRequest(Cart cart, String deliveryFee) {
         PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
         // description
         purchaseUnitRequest.description("Auction goods");
         // total price
-        purchaseUnitRequest.amountWithBreakdown(setTotalPrice(cart.getTotalPrice()));
+        purchaseUnitRequest.amountWithBreakdown(setTotalPrice(cart.getTotalPrice(), deliveryFee));
         return purchaseUnitRequest;
     }
 
-    public AmountWithBreakdown setTotalPrice(Double total) {
-        double rate = rateExchangeService.getRateExchange();
-        double toUsd = Math.round(total / rate);
+    public AmountWithBreakdown setTotalPrice(Double total, String deliveryFee) {
+        double toUsd = calcTotalPrice(total, deliveryFee);
         return new AmountWithBreakdown().currencyCode("USD").value(String.valueOf(toUsd));
     }
 
@@ -118,7 +102,7 @@ public class PayPalServiceImpl implements PayPalService{
        return new Item();
     };
 
-    private OrderRequest buildOrderRequest(Cart cart) {
+    private OrderRequest buildOrderRequest(Cart cart, String deliveryFee) {
         OrderRequest orderRequest = new OrderRequest();
         // set intent
         orderRequest.checkoutPaymentIntent("CAPTURE");
@@ -126,9 +110,22 @@ public class PayPalServiceImpl implements PayPalService{
         orderRequest.applicationContext(setApplicationContext());
         // set purchase unit
         List<PurchaseUnitRequest> purchaseUnitRequests = new ArrayList<PurchaseUnitRequest>();
-        purchaseUnitRequests.add(setPurchaseUnitRequest(cart));
+        purchaseUnitRequests.add(setPurchaseUnitRequest(cart, deliveryFee));
 
         orderRequest.purchaseUnits(purchaseUnitRequests);
         return orderRequest;
+    }
+
+    private double calcTotalPrice(Double money, String deliveryFee) {
+        double transferFee;
+        double rate = rateExchangeService.getRateExchange();
+        if ("Giao hàng nhanh".equals(deliveryFee)) {
+            transferFee = 39000.0;
+        } else {
+            transferFee = 19000.0;
+        }
+        double tempMoney = (money + transferFee) * 1.1;
+        double toUsd = Math.round(tempMoney / rate);
+        return toUsd;
     }
 }

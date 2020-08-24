@@ -1,13 +1,17 @@
 package md4.bid_project.models;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "product_promotions")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class ProductPromotion {
 
     @Id
@@ -33,4 +37,5 @@ public class ProductPromotion {
 
     @Column(name = "product_promotion_price")
     private Double price;
+
 }

@@ -16,6 +16,7 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private CartRepository cartRepository;
 
+    // Create: Toàn
     @Override
     public Optional<Cart> findByUserId(Long userId) {
         Optional<Cart> optionalCart = cartRepository.findByUserIdAndStatusIsTrue(userId);
@@ -27,6 +28,7 @@ public class CartServiceImpl implements CartService {
         return optionalCart;
     }
 
+    // Create: Toàn
     @Override
     public Double updateTotalCost(Long id) {
         Optional<Cart> optionalCart = cartRepository.findById(id);
