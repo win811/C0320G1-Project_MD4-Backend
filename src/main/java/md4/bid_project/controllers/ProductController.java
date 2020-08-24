@@ -1,12 +1,12 @@
 package md4.bid_project.controllers;
 
 import md4.bid_project.exception.ResourceNotFoundException;
+import md4.bid_project.exception.ViolatedException;
 import md4.bid_project.models.ApprovementStatus;
 import md4.bid_project.models.FavoriteProduct;
 import md4.bid_project.models.Product;
-import md4.bid_project.services.ApprovementStatusService;
-import md4.bid_project.services.FavoriteProductService;
-import md4.bid_project.services.ProductService;
+import md4.bid_project.models.ProductImage;
+import md4.bid_project.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,8 +14,11 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,9 +26,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 public class ProductController {
+    //Thành
+    @Autowired
+    private ProductImageService productImageService;
 
+    //Thành
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private AuctionService auctionService;
 
     @Autowired
     private ApprovementStatusService approvementStatusService;
@@ -39,8 +49,14 @@ public class ProductController {
                                                              @RequestParam(name = "productName", defaultValue = "") String productName,
                                                              @RequestParam(name = "approvementStatusName", defaultValue = "") String approvementStatusName,
                                                              @PageableDefault(value = 4) Pageable pageable) {
-        Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId,productName,approvementStatusName,pageable);
+        Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId, productName, approvementStatusName, pageable);
         return ResponseEntity.ok(productPage);
+    }
+
+    //Thành
+    @GetMapping("/products")
+    public List<Product> getAllProducts() {
+        return productService.findAllProduct();
     }
 
     // Creator : Cường
@@ -56,7 +72,8 @@ public class ProductController {
             product.setApprovementStatus(approvementStatus);
             productService.save(product);
         }
-        Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId,productName,approvementStatusName,pageable);
+
+        Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId, productName, approvementStatusName, pageable);
         return ResponseEntity.ok(productPage);
     }
 
@@ -126,5 +143,29 @@ public class ProductController {
     }
 
 
+    //Thành
+    @GetMapping("/products/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable(value = "id") Long productId)
+            throws ResourceNotFoundException {
+        Product product = productService.findProductById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + productId));
+        return ResponseEntity.ok().body(product);
+    }
 
+    //Thành
+    @PostMapping("/products")
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product,
+                                                 BindingResult bindingResult) throws ViolatedException {
+        if (bindingResult.hasErrors()) {
+            throw new ViolatedException(bindingResult);
+        }
+        productService.save(product);
+        List<ProductImage> productImages = new ArrayList<>();
+        productImages = product.getProductImages();
+        for (ProductImage productImage : productImages) {
+            productImage.setProduct(product);
+        }
+        productImageService.saveAll(productImages);
+        return ResponseEntity.ok().body(product);
+    }
 }
