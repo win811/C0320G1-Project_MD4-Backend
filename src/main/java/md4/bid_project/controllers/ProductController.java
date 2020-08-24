@@ -86,14 +86,17 @@ public class ProductController {
     public ResponseEntity<Product> createProduct(@RequestBody ProductCreateDTO productCreateDTO) {
         System.out.println(productCreateDTO);
         Product product = productService.saveProduct(productCreateDTO);
+
         return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
 
-    @PutMapping("/products")
-    public ResponseEntity<Product> updateProduct(@RequestBody ProductCreateDTO productCreateDTO) {
+    @PutMapping("/products/{id}")
+    public ResponseEntity<Void> updateProduct(@RequestBody ProductCreateDTO productCreateDTO, @PathVariable(value = "id") Long id) {
+        System.out.println("check data");
         System.out.println(productCreateDTO);
-        Product product = productService.saveProduct(productCreateDTO);
-        return new ResponseEntity<>(product, HttpStatus.CREATED);
+        productService.updateProduct(productCreateDTO,id);
+        System.out.println("done yet ?");
+        return new ResponseEntity<>( HttpStatus.CREATED);
     }
 
     @GetMapping("/categorys")
@@ -109,6 +112,17 @@ public class ProductController {
     public ResponseEntity<User> getOwnerById(@PathVariable(value = "ownerId") Long ownerId) {
         User ownerObj = productService.findOwnerById(ownerId);
         return new ResponseEntity<User>(ownerObj, HttpStatus.OK);
+    }
+
+
+    //Thành Long
+    @GetMapping("/product/list")
+    public ResponseEntity<List<Product>> listAllProduct() {
+        List<Product> products = productService.getAllProduct();
+        if (products.isEmpty()) {
+            return new ResponseEntity<List<Product>>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
     }
 
 }

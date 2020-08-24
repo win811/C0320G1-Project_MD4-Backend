@@ -17,4 +17,5 @@ public class ProductCreateDTO {
     private LocalDateTime endDate;
     private String description;
     private Long approvementStatusId;
+    private String productImages;
 }

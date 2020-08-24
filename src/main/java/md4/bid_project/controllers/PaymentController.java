@@ -25,22 +25,22 @@ public class PaymentController {
     @Autowired
     DeliveryAddressService deliveryAddressService;
 
-    @Autowired
-    PayPalService payPalService;
+//    @Autowired
+//    PayPalService payPalService;
 
     // Khởi tạo 1 đơn hàng từ paypal
-    @PostMapping("/payment/create-transaction")
-    public ResponseEntity<Transaction> getTransaction(@RequestBody Cart cart) throws IOException {
-        Transaction data = payPalService.createTransaction(cart);
-        return ResponseEntity.ok(data);
-    }
+//    @PostMapping("/payment/create-transaction")
+//    public ResponseEntity<Transaction> getTransaction(@RequestBody Cart cart) throws IOException {
+//        Transaction data = payPalService.createTransaction(cart);
+//        return ResponseEntity.ok(data);
+//    }
 
     // xác nhận đơn hàng đã được trả từ người mua
-    @PostMapping("/payment/confirm-transaction")
-    public ResponseEntity<Transaction> confirmTransaction(@RequestBody String id) throws IOException {
-         Transaction transaction = payPalService.captureTransaction(id);
-        return ResponseEntity.ok(transaction);
-    }
+//    @PostMapping("/payment/confirm-transaction")
+//    public ResponseEntity<Transaction> confirmTransaction(@RequestBody String id) throws IOException {
+//         Transaction transaction = payPalService.captureTransaction(id);
+//        return ResponseEntity.ok(transaction);
+//    }
 
     // Lấy địa chỉ giao hàng của user
     @GetMapping("/payment/address/{userId}")

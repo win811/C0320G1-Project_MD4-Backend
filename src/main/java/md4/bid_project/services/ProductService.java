@@ -17,15 +17,22 @@ public interface ProductService {
     Product findById (Long id);
     void save(Product product);
 
+
     List<Product> findAllProduct();
 
     Product findProductById(Long id);
 
     Product saveProduct(ProductCreateDTO productCreateDTO);
 
+    void updateProduct(ProductCreateDTO productDTO,Long id);
+
     User findOwnerById(Long id);
 
     List<Product> findProductByOwnerId(Long ownerId);
+
+
+    //Thành Long
+    List<Product> getAllProduct();
 
 
 }
