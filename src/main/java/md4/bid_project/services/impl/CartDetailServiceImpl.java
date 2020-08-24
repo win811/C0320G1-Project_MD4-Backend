@@ -61,6 +61,7 @@ public class CartDetailServiceImpl implements CartDetailService {
         cartDetail.setAuction(optionalAuction.get());
         cartDetail.setStatus(STATUS_WAITING);
         cartDetail.setCartDetailCost(cartDetailDTO.getWinPrice());
+        cartDetail.setIsDelete(Boolean.FALSE);
         cartDetailRepository.save(cartDetail);
         cartService.updateTotalCost(cart.getId());
         return cartDetail;
