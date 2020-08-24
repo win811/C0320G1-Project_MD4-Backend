@@ -3,10 +3,12 @@ package md4.bid_project.services.impl;
 import md4.bid_project.models.Auction;
 import md4.bid_project.models.Cart;
 import md4.bid_project.models.CartDetail;
+import md4.bid_project.models.User;
 import md4.bid_project.models.dto.CartDetailDTO;
 import md4.bid_project.repositories.AuctionRepository;
 import md4.bid_project.repositories.CartDetailRepository;
 import md4.bid_project.repositories.CartRepository;
+import md4.bid_project.repositories.UserRepository;
 import md4.bid_project.services.CartDetailService;
 import md4.bid_project.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +32,24 @@ public class CartDetailServiceImpl implements CartDetailService {
     @Autowired
     private CartService cartService;
 
-    // Create: Toàn
+    @Autowired
+    private UserRepository userRepository;
+
+    // Created by: Toàn
     @Override
     public CartDetail create(CartDetailDTO cartDetailDTO) {
-        Optional<Cart> optionalCart = cartRepository.findByUserIdAndStatusIsTrue(cartDetailDTO.getUserId());
-        if (!optionalCart.isPresent()) {
+        Optional<User> optionalUser = userRepository.findById(cartDetailDTO.getUserId());
+        if (!optionalUser.isPresent()) {
             return null;
         }
-        Cart cart = optionalCart.get();
+        Optional<Cart> optionalCart = cartRepository.findByUserIdAndStatusIsTrue(cartDetailDTO.getUserId());
+        Cart cart;
+        if (!optionalCart.isPresent()) {
+            cart = new Cart();
+            cart.setUser(optionalUser.get());
+        } else {
+            cart = optionalCart.get();
+        }
         Optional<Auction> optionalAuction = auctionRepository.findById(cartDetailDTO.getAuctionId());
         if (!optionalAuction.isPresent()) {
             return null;

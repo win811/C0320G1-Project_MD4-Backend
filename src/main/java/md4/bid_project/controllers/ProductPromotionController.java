@@ -28,13 +28,13 @@ public class ProductPromotionController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/productPromotions")
+    @GetMapping("/admin/productPromotions")
     public List<ProductPromotion> getAllProductPromotion() {
         return productPromotionService.findAll();
     }
 
     //creator: đức thông
-    @GetMapping("/productPromotions/{id}")
+    @GetMapping("/admin/productPromotions/{id}")
     public ResponseEntity<ProductPromotion> getProductPromotionsById(@PathVariable(value = "id") Long productPromotionId)
             throws ResourceNotFoundException {
         ProductPromotion productPromotion = productPromotionService.findById(productPromotionId);
@@ -42,7 +42,7 @@ public class ProductPromotionController {
     }
 
     //creator: đức thông
-    @GetMapping("/productPromotionsDto/{id}")
+    @GetMapping("/admin/productPromotionsDto/{id}")
     public ResponseEntity<ProductPromotionDto> getProductPromotionDtoById(@PathVariable(value = "id") Long productPromotionId)
             throws ResourceNotFoundException {
         ProductPromotionDto productPromotionDto = productPromotionService.findProductPromotionDto(productPromotionId);
@@ -50,7 +50,7 @@ public class ProductPromotionController {
     }
 
     //creator: đức thông
-    @GetMapping("/products/{id}")
+    @GetMapping("/admin/products/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable(value = "id") Long productId)
             throws ResourceNotFoundException {
         Product product = productRepository.findById(productId).orElse(null);
@@ -58,24 +58,24 @@ public class ProductPromotionController {
     }
 
     //creator: đức thông
-    @GetMapping("/products")
+    @GetMapping("/admin/products")
     public List<Product> getAllProduct() {
         return productRepository.findAll();
     }
 
-    @GetMapping("/users")
+    @GetMapping("/admin/users")
     public List<User> getListUser(){
         return userRepository.findAll();
     }
 
     //creator: đức thông
-    @PostMapping("/productPromotions")
+    @PostMapping("/admin/productPromotions")
     public ProductPromotion createProductPromotions(@RequestBody ProductPromotionDto productPromotionDto) {
         return productPromotionService.save(productPromotionDto);
     }
 
     //creator: đức thông
-    @PutMapping("/productPromotions/{id}")
+    @PutMapping("/admin/productPromotions/{id}")
     public ResponseEntity<ProductPromotion> updateProductPromotions(@PathVariable(value = "id") Long productPromotionsId,
                                                                     @RequestBody ProductPromotionDto productPromotionsDetail) throws ResourceNotFoundException {
         ProductPromotion productPromotion = productPromotionService.findById(productPromotionsId);
@@ -90,7 +90,7 @@ public class ProductPromotionController {
     }
 
 
-    @DeleteMapping("/productPromotions/{id}")
+    @DeleteMapping("/admin/productPromotions/{id}")
     public Map<String, Boolean> deleteProductPromotion(@PathVariable(value = "id") Long productPromotionsId)
             throws ResourceNotFoundException{
         ProductPromotion productPromotion= productPromotionService.findById(productPromotionsId);

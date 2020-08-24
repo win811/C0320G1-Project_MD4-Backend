@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/api/v1/user/**","/api/v1/myProduct/**","/api/v1/myAuctionRecords/**", "/api/v1/payment/**",
                                                  "api/v1/auctions/**","api/v1/auctionRecordByUser/**" ,"api/v1/auctionRecords/**", "api/v1//highestPrice/**", "api/v1//topAuctionRecords/**").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
                 .and()
-                .authorizeRequests().antMatchers("/api/v1/admin/**").access("hasRole('ROLE_ADMIN')")
+                .authorizeRequests().antMatchers("/api/v1/admin/**","/api/v1/productPromotions/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
                 .and().cors();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

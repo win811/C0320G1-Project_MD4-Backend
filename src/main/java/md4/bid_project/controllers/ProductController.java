@@ -60,10 +60,10 @@ public class ProductController {
         return ResponseEntity.ok(productPage);
     }
 
-    @GetMapping("/products/owner/{ownerId}")
-    public ResponseEntity<List<Product>> getProductByOwnerId(@PathVariable(value = "ownerId") Long ownerId) {
-        return ResponseEntity.ok(productService.findProductByOwnerId(ownerId));
-    }
+//    @GetMapping("/products/owner/{ownerId}")
+//    public ResponseEntity<List<Product>> getProductByOwnerId(@PathVariable(value = "ownerId") Long ownerId) {
+//        return ResponseEntity.ok(productService.findProductByOwnerId(ownerId));
+//    }
 
     // Created by: Toàn
     // Lấy danh sách sản phẩm yêu thích
