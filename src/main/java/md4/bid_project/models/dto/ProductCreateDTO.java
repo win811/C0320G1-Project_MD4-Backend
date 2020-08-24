@@ -1,60 +1,36 @@
-package md4.bid_project.models;
+package md4.bid_project.models.dto;
 
 import lombok.Data;
+import md4.bid_project.models.ProductImage;
 
-import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
-@Table(name = "products")
 @Data
-//Coder: Nguyen Thanh Tu
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
-    private Long id;
-
-    @Column(name = "product_name")
+public class ProductCreateDTO {
     private String name;
-
-    @Column(name = "product_initial_price")
+    private Long ownerId;
+    private Long categoryId;
     private Double initialPrice;
-
-    @Column(name = "product_increase_amount")
     private Double increaseAmount;
-
-    @Column(name = "product_register_date")
     private Date registerDate;
-
-    @Column(name = "product_start_date")
     private Date startDate;
-
-    @Column(name = "product_end_date")
     private Date endDate;
-
-    @ManyToOne
-    @JoinColumn(name = "product_approvement_status_id")
-    private ApprovementStatus approvementStatus;
-
-    @Column(name = "product_description")
     private String description;
+    private Long approvementStatusId;
+    private String productImage;
 
-    @ManyToOne
-    @JoinColumn(name = "product_category_id")
-    private Category category;
-
-    @OneToOne
-    @JoinColumn(name = "product_owner_id")
-    private User owner;
-
-    public Long getId() {
-        return id;
+    public ProductCreateDTO() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(String productImages) {
+        this.productImage = productImages;
     }
 
     public String getName() {
@@ -63,6 +39,22 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public Double getInitialPrice() {
@@ -105,14 +97,6 @@ public class Product {
         this.endDate = endDate;
     }
 
-    public ApprovementStatus getApprovementStatus() {
-        return approvementStatus;
-    }
-
-    public void setApprovementStatus(ApprovementStatus approvementStatus) {
-        this.approvementStatus = approvementStatus;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -121,19 +105,12 @@ public class Product {
         this.description = description;
     }
 
-    public Category getCategory() {
-        return category;
+    public Long getApprovementStatusId() {
+        return approvementStatusId;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setApprovementStatusId(Long approvementStatusId) {
+        this.approvementStatusId = approvementStatusId;
     }
 }
+

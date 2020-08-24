@@ -5,7 +5,9 @@ import md4.bid_project.models.Product;
 import java.util.List;
 
 public interface ProductService {
-    void saveNewProduct(Product product);
+    void saveProduct(Product product);
 
     List<Product> findAll();
+
+    Product findById(long id);
 }

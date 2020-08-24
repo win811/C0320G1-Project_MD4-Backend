@@ -13,13 +13,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     ProductRepository productRepository;
-    public void saveNewProduct(Product product){
+    public void saveProduct(Product product){
         productRepository.save(product);
     }
 
     @Override
     public List<Product> findAll() {
         return productRepository.findAll();
+    }
+
+    @Override
+    public Product findById(long id) {
+        return productRepository.findById(id).orElse(null);
     }
 
 }

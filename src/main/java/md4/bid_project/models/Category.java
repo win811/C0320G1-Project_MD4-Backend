@@ -9,10 +9,9 @@ import javax.persistence.*;
 @Data
 //Coder: Nguyen Thanh Tu
 public class Category {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
+    @Column(name = "category_id")
     private Long id;
 
     @Column(name = "category_name")
