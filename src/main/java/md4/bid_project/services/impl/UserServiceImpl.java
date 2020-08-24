@@ -156,7 +156,7 @@ public class UserServiceImpl implements UserService {
             userListDTO1.setRate(user.getRate().getName());
             userListDTO.add(userListDTO1);
         }
-        return new PageImpl<UserListDTO>(userListDTO);
+        return new PageImpl<UserListDTO>(userListDTO, users.getPageable(), users.getTotalElements());
     }
 
 }
