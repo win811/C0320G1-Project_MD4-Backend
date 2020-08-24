@@ -34,5 +34,9 @@ public interface ProductService {
     //Thành Long
     List<Product> getAllProduct();
 
+    //Anh tu
+    List<Product> findAll();
+
+
 
 }

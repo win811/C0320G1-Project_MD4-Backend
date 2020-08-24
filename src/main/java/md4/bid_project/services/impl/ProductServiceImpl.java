@@ -127,4 +127,17 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getAllProduct() {
         return productRepository.findAll();
     }
+
+
+
+    //Anh tu
+    public void saveNewProduct(Product product){
+        productRepository.save(product);
+    }
+
+    @Override
+    public List<Product> findAll() {
+        return productRepository.findAll();
+    }
+
 }

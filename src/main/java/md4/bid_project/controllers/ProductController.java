@@ -10,6 +10,7 @@ import md4.bid_project.services.ApprovementStatusService;
 import md4.bid_project.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -123,6 +124,14 @@ public class ProductController {
             return new ResponseEntity<List<Product>>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
+    }
+
+    //Anh Tu
+    @PostMapping("")
+    private ResponseEntity<Void> createNewProduct(@RequestBody Product product){
+        productService.save(product);
+        HttpHeaders headers = new HttpHeaders();
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 
 }

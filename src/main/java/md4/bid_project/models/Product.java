@@ -10,15 +10,15 @@ import java.util.List;
 @Entity
 @Table(name = "products")
 @Data
+//Coder: Nguyen Thanh Tu
 public class Product {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private Long id;
 
     @Column(name = "product_name")
-    private String name;
+    private String Name;
 
     @Column(name = "product_initial_price")
     private Double initialPrice;
