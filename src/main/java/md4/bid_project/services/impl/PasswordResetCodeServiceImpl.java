@@ -90,7 +90,6 @@ public class PasswordResetCodeServiceImpl implements PasswordResetCodeService {
         currentUser.setPassword(passwordEncryption);
         System.out.println(passwordEncryption);
         userService.save(currentUser);
-        remove(currentUser.getPasswordResetCode().getId());
         System.out.println("save ok");
         title = "Yêu Cầu Thay Đổi Mật Khẩu";
         content = "Chào quý khách,\n" +
@@ -105,6 +104,7 @@ public class PasswordResetCodeServiceImpl implements PasswordResetCodeService {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
+        System.out.println("sendMail ok");
     }
 
 }

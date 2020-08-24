@@ -108,6 +108,10 @@ public class UserAPI {
             return new ResponseEntity<ErrorResponse>(response, response.getStatus());
 
         }
+        System.out.println(currentUser.getPasswordResetCode().getId());
+        if (currentUser.getPasswordResetCode().getId() != null) {
+            passwordResetCodeService.remove(currentUser.getPasswordResetCode().getId());
+        }
         passwordResetCodeService.resetPassword(email);
         System.out.println("Done");
         response.setStatus(HttpStatus.OK);
@@ -128,11 +132,12 @@ public class UserAPI {
         }
 
         if (!userService.checkInfo(currentUser, user)) {
-            System.out.println("Sai Info");
             response.setStatus(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
             response.setMessage("Thông tin xác thực không chính xác, vui lòng kiểm tra lại!");
             return new ResponseEntity<ErrorResponse>(response, response.getStatus());
         }
+        System.out.println("check ok");
+        System.out.println(user.getEmail());
         passwordResetCodeService.resetPassword(user.getEmail());
         System.out.println("Done");
         response.setStatus(HttpStatus.OK);
