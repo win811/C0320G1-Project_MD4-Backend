@@ -6,28 +6,49 @@ import md4.bid_project.repositories.ProductPromotionRepository;
 import md4.bid_project.services.ProductPromotionService;
 import md4.bid_project.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ProductPromotionServiceImpl implements ProductPromotionService {
+
     @Autowired
     private ProductPromotionRepository productPromotionRepository;
 
     @Autowired
     private ProductService productService;
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Creator : thong  + tien
     @Override
     public List<ProductPromotion> findAll() {
         return productPromotionRepository.findAll();
     }
 
+    //Creator : tien
+    @Override
+    public Page<ProductPromotion> search(String content, String endOfEvent, String percent ,Pageable pageable) {
+        return productPromotionRepository.getAllProductBySearch(content, endOfEvent, percent, pageable );
+    }
+
+    @Override
+    public Page<ProductPromotion> findAll(Pageable pageable) {
+        return productPromotionRepository.findAll(pageable);
+    }
+    //Creator : tien
+    @Override
+    public List<ProductPromotion> search(String content, String saleDate, String endOfEvent, String percent) {
+        return productPromotionRepository.getAllProductBySearch(content, saleDate, endOfEvent, percent);
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public ProductPromotion findById(Long id) {
         return productPromotionRepository.findById(id).orElse(null);
     }
-
     //creator: đức thông
     @Override
     public ProductPromotionDto findProductPromotionDto(Long id) {
@@ -45,7 +66,6 @@ public class ProductPromotionServiceImpl implements ProductPromotionService {
         }
         return null;
     }
-
     //creator: đức thông
     @Override
     public ProductPromotion save(ProductPromotionDto productPromotionDto) {
@@ -75,10 +95,5 @@ public class ProductPromotionServiceImpl implements ProductPromotionService {
     @Override
     public void delete(ProductPromotion productPromotion) {
         productPromotionRepository.delete(productPromotion);
-    }
-
-    @Override
-    public List<ProductPromotion> search(String content, String saleDate, String endOfEvent, String percent) {
-        return productPromotionRepository.getAllProductBySearch(content, saleDate, endOfEvent, percent);
     }
 }
