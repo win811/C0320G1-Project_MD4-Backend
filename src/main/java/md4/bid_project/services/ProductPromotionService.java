@@ -27,5 +27,4 @@ public interface ProductPromotionService {
 
     void delete(ProductPromotion productPromotion);
 
-    List<ProductPromotion> search(String content , String saleDate , String endOfEvent,String percent);
 }

@@ -40,10 +40,7 @@ public class ProductPromotionServiceImpl implements ProductPromotionService {
         return productPromotionRepository.findAll(pageable);
     }
     //Creator : tien
-    @Override
-    public List<ProductPromotion> search(String content, String saleDate, String endOfEvent, String percent) {
-        return productPromotionRepository.getAllProductBySearch(content, saleDate, endOfEvent, percent);
-    }
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public ProductPromotion findById(Long id) {
