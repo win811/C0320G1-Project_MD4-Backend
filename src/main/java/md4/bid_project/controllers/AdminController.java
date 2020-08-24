@@ -11,9 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import md4.bid_project.models.User;
+//import md4.bid_project.models.dto.UserDTO;
+import md4.bid_project.services.UserService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +23,10 @@ import java.util.Map;
 @RequestMapping("/api/v1")
 public class AdminController {
 
+    @Autowired
+    private UserService userService;
+
+    //Creator: Lâm Quốc Tùng
     @Autowired
     private ProductService productService;
 
@@ -100,11 +104,31 @@ public class AdminController {
     public Map<String, Boolean> deleteProducts(@RequestBody Map<String, Long[]> requestBody) {
         Long[] ids = requestBody.get("ids").clone();
         Map<String, Boolean> response = new HashMap<>();
-        for(Long id : ids) {
+        for (Long id : ids) {
             Product product = productService.findById(id);
             productService.deleteProduct(product);
             response.put("deleted " + id, Boolean.FALSE);
         }
         return response;
     }
+
+//    @GetMapping("admin/user-list")
+//    public ResponseEntity<Page<UserListDTO>> getAllUser(
+//            @RequestParam(name = "id") String id,
+//            @RequestParam(name = "fullname", defaultValue = "") String fullname,
+//            @RequestParam(name = "email", defaultValue = "") String email,
+//            @RequestParam(name = "address", defaultValue = "") String address,
+//            @RequestParam(name = "rate", defaultValue = "") String rate,
+//            @RequestParam("page") int currentPage) {
+//
+//        Page<UserListDTO> userListDTO;
+//        Specification<User> search = userService.getFilter(id, fullname, email, address, rate);
+//        if(search != null) {
+//            userListDTO = userService.findCustomerByCriteria(search, currentPage);
+//        }
+//        else {
+//            userListDTO = userService.findAll(currentPage);
+//        }
+//        return ResponseEntity.ok(userListDTO);
+//    }
 }
