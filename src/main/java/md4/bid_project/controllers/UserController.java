@@ -122,14 +122,14 @@ public class UserController {
     }
 
     //B-Hoàng Long method
-    @GetMapping("/user/{id}")
+    @GetMapping("/user/long/{id}")
     public ResponseEntity<User> getEmployeeById(@PathVariable Long id) {
         User user = userService.findById(id);
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
     //B-Hoàng Long method
-    @GetMapping(value = "/user/lock", params = {"page", "size", "search"})
+    @GetMapping(value = "/user/long/lock", params = {"page", "size", "search"})
     public ResponseEntity<Page<User>> getAllUserNotLock(@RequestParam("page") int page,
                                                         @RequestParam("size") int size,
                                                         @RequestParam("search") String search) {
@@ -141,13 +141,13 @@ public class UserController {
     }
 
     //B-Hoàng Long method
-    @PostMapping("/user")
+    @PostMapping("/user/long")
     public User addNewUser(@RequestBody User user) {
         return this.userService.saveUser(user);
     }
 
     //B-Hoàng Long method
-    @PutMapping("/user/lock/{id}")
+    @PutMapping("/user/long/lock/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
         User userLock = userService.findById(id);
         if (userLock == null) {
