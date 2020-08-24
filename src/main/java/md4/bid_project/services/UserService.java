@@ -3,6 +3,7 @@ package md4.bid_project.services;
 import md4.bid_project.models.dto.UserUpdateDto;
 import md4.bid_project.models.User;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 public interface UserService {
@@ -14,8 +15,9 @@ public interface UserService {
     void updateUser(UserUpdateDto userDto);
 
     //B-Hoàng Long method
-    Page<User> getAllUserNotLock(String fullName, Pageable pageable);
-
+    User findById(Long id);
     //B-Hoàng Long method
-    void addUser(User user);
+    Page<User> pageFindAllSearchFullName(Pageable pageable, String search);
+    //B-Hoàng Long method
+    User saveUser(User user);
 }

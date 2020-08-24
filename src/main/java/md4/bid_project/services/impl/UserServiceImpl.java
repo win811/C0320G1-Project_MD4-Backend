@@ -86,14 +86,20 @@ public class UserServiceImpl implements UserService {
 
     //B-Hoàng Long method
     @Override
-    public Page<User> getAllUserNotLock(String fullName, Pageable pageable) {
-        return this.userRepository.findAllByAndIsLockedIsFalseAndFullnameContaining(fullName,pageable);
+    public User findById(Long id) {
+        return userRepository.findById(id).orElse(null);
     }
-
     //B-Hoàng Long method
     @Override
-    public void addUser(User user) {
-        this.userRepository.save(user);
+    public Page<User> pageFindAllSearchFullName(Pageable pageable, String search) {
+        return this.userRepository.findAllByAndIsLockedIsFalseAndFullnameContaining(pageable, search);
     }
+    //B-Hoàng Long method
+    @Override
+    public User saveUser(User user) {
+        this.userRepository.save(user);
+        return user;
+    }
+
 
 }

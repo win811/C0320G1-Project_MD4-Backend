@@ -5,6 +5,7 @@ import md4.bid_project.models.User;
 import md4.bid_project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -39,24 +40,40 @@ public class UserController {
     }
 
     //B-Hoàng Long method
-    @GetMapping("/users")
-    public Page<User> getAllUserNotLock(@RequestParam(name = "fullName",defaultValue = "") String fullName,
-                                        @PageableDefault(value = 3) Pageable pageable){
-        return this.userService.getAllUserNotLock(fullName,pageable);
+    @GetMapping("/user/{id}")
+    public ResponseEntity<User> getEmployeeById(@PathVariable Long id) {
+        User user = userService.findById(id);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+
+    //B-Hoàng Long method
+    @GetMapping(value = "/user/lock",  params = {"page", "size", "search"})
+    public ResponseEntity<Page<User>> getAllUserNotLock(@RequestParam("page") int page,
+                                                        @RequestParam("size") int size,
+                                                        @RequestParam("search") String search) {
+        Page<User> users = this.userService.pageFindAllSearchFullName(PageRequest.of(page, size), search);
+        if (users.isEmpty()) {
+            return new ResponseEntity<>(users,HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(users,HttpStatus.OK);
     }
 
     //B-Hoàng Long method
     @PostMapping("/user")
-    public void addNewUser(@RequestBody User user){
-        this.userService.addUser(user);
+    public User addNewUser(@RequestBody User user){
+        return this.userService.saveUser(user);
     }
 
     //B-Hoàng Long method
-    @PutMapping("user/lock/{id}")
-    public void lockUser(@PathVariable Long id,@RequestBody User userNeedToLock){
-        User user = this.userService.findUserById(id);
-        user.setIsLocked(userNeedToLock.getIsLocked());
-        user.setReasonBan(userNeedToLock.getReasonBan());
-        this.userService.addUser(user);
+    @PutMapping("/user/lock/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id,@RequestBody User user) {
+        User userLock = userService.findById(id);
+        if (userLock == null) {
+            return new ResponseEntity<User>(userLock, HttpStatus.NO_CONTENT);
+        }
+        userLock.setIsLocked(user.getIsLocked());
+        userLock.setReasonBan(user.getReasonBan());
+        this.userService.saveUser(userLock);
+        return new ResponseEntity<User>(userLock, HttpStatus.OK);
     }
 }
