@@ -1,7 +1,9 @@
 package md4.bid_project.models;
 
-import com.fasterxml.jackson.annotation.*;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -9,7 +11,9 @@ import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "delivery_addresses")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class DeliveryAddress {
 
     @Id
