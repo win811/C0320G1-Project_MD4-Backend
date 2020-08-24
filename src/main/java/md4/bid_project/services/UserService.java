@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    //Creator: Nguyễn Xuân Hùng
-    UserUpdateDto findUserUpdateDtoByUserId(Long id);
-    //Creator: Nguyễn Xuân Hùng
-    User findUserById(Long id);
-    //Creator: Nguyễn Xuân Hùng
-    void updateUser(UserUpdateDto userDto);
+//    //Creator: Nguyễn Xuân Hùng
+//    UserUpdateDto findUserUpdateDtoByUserId(Long id);
+//    //Creator: Nguyễn Xuân Hùng
+//    User findUserById(Long id);
+//    //Creator: Nguyễn Xuân Hùng
+//    void updateUser(UserUpdateDto userDto);
 
     List<User> findAll();
 
