@@ -11,7 +11,7 @@ public interface AuctionRecordService {
 
     //    Cường
     Page<AuctionRecord> findByBidderIdAndProductNameAndRecordStatusName(Long bidderId,String productName,
-                                                                        String recordStatusName,Pageable pageable);
+                                                                        String recordStatusName,int page);
 
     List<AuctionRecord> getAllAuctionRecords();
 

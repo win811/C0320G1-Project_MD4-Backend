@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
         UserUpdateDTO userUpdateDTO = new UserUpdateDTO();
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
-            userUpdateDTO.setFullName(user.getFullname());
+            userUpdateDTO.setFullName(user.getFullName());
             userUpdateDTO.setEmail(user.getEmail());
             userUpdateDTO.setGender(user.getGender());
             userUpdateDTO.setPhoneNumber(user.getPhoneNumber());
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     public void updateUser(UserUpdateDTO userUpdateDTO) {
         User user = userRepository.findById(userUpdateDTO.getId()).orElse(null);
         assert user != null;
-        user.setFullname(userUpdateDTO.getFullName().trim());
+        user.setFullName(userUpdateDTO.getFullName().trim());
         user.setAddress(userUpdateDTO.getAddress().trim());
         user.setGender(userUpdateDTO.getGender());
         user.setIdCard(userUpdateDTO.getIdCard());
@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
         user.setPoint(0L);
         user.setRate(rate);
         user.setIsLocked(false);
-        user.setFullname(userDto.getFullName().trim());
+        user.setFullName(userDto.getFullName().trim());
         user.setEmail(userDto.getEmail());
         user.setAddress(userDto.getAddress().trim());
         user.setGender(userDto.getGender());
@@ -202,7 +202,7 @@ public class UserServiceImpl implements UserService {
             User user = (User) iterator.next();
             UserListDTO userListDTO1 = new UserListDTO();
             userListDTO1.setId(user.getId());
-            userListDTO1.setFullname(user.getFullname());
+            userListDTO1.setFullname(user.getFullName());
             userListDTO1.setEmail(user.getEmail());
             userListDTO1.setAddress(user.getAddress());
             userListDTO1.setPhoneNumber(user.getPhoneNumber());
@@ -222,7 +222,7 @@ public class UserServiceImpl implements UserService {
     //B-Hoàng Long method
     @Override
     public Page<User> pageFindAllSearchFullName(Pageable pageable, String search) {
-        return this.userRepository.findAllByAndIsLockedIsFalseAndFullnameContaining(pageable, search);
+        return this.userRepository.findAllByAndIsLockedIsFalseAndFullNameContaining(pageable, search);
     }
     //B-Hoàng Long method
     @Override

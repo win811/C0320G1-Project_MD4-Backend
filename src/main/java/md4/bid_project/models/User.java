@@ -1,6 +1,7 @@
 package md4.bid_project.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,7 @@ public class User {
     private long id;
 
     @Column(name = "user_fullname")
-    private String fullname;
+    private String fullName;
 
     @Column(name = "user_email")
     private String email;
@@ -69,6 +70,7 @@ public class User {
     private PasswordResetCode passwordResetCode;
 
     @Column(name = "user_password")
+    @JsonIgnore
     private String password ;
 
     @Column(name = "user_question")

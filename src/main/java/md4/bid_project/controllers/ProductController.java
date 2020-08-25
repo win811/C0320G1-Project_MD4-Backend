@@ -48,8 +48,9 @@ public class ProductController {
     public ResponseEntity<Page<Product>> getProductByOwnerId(@PathVariable(value = "ownerId") Long ownerId,
                                                              @RequestParam(name = "productName", defaultValue = "") String productName,
                                                              @RequestParam(name = "approvementStatusName", defaultValue = "") String approvementStatusName,
-                                                             @PageableDefault(value = 4) Pageable pageable) {
-        Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId, productName, approvementStatusName, pageable);
+                                                             @RequestParam(name = "page",defaultValue = "0") int page) {
+
+        Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId, productName, approvementStatusName, page);
         return ResponseEntity.ok(productPage);
     }
 
@@ -65,15 +66,15 @@ public class ProductController {
                                                                         @RequestParam(name = "productName", defaultValue = "") String productName,
                                                                         @RequestParam(name = "approvementStatusName", defaultValue = "") String approvementStatusName,
                                                                         @RequestParam(name = "cancelProductId", defaultValue = "0") Long cancelProductId,
-                                                                        @PageableDefault(value = 4) Pageable pageable) {
+                                                                        @RequestParam(name = "page",defaultValue = "0") int page) {
         if (cancelProductId != 0) {
             Product product = productService.findById(cancelProductId);
             ApprovementStatus approvementStatus = approvementStatusService.findByName("đã hủy");
             product.setApprovementStatus(approvementStatus);
-            productService.save(product);
+            productService.saveProduct(product);
         }
 
-        Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId, productName, approvementStatusName, pageable);
+        Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId, productName, approvementStatusName, page);
         return ResponseEntity.ok(productPage);
     }
 

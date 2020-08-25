@@ -22,5 +22,5 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     Optional<User> findByPhoneNumber(String phoneNumber);
 
     //Hoàng Long method
-    Page<User> findAllByAndIsLockedIsFalseAndFullnameContaining(Pageable pageable, String fullName);
+    Page<User> findAllByAndIsLockedIsFalseAndFullNameContaining(Pageable pageable, String fullName);
 }

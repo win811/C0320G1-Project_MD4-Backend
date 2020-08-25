@@ -54,7 +54,7 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
     private DeliveryAddressDTO transferToDTO(User user) {
         DeliveryAddressDTO userAddressDTO = new DeliveryAddressDTO();
         userAddressDTO.setId(user.getId())
-                .setFullname(user.getFullname())
+                .setFullname(user.getFullName())
                 .setEmail(user.getEmail())
                 .setPhoneNumber(user.getPhoneNumber())
                 .setAddresses(user.getDeliveryAddressList());

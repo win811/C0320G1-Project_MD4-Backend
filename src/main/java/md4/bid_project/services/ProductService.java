@@ -24,9 +24,13 @@ public interface ProductService {
 
     // Creator : Cường
     Page<Product> findProductByOwnerIdAndNameAndApprovementStatus(Long ownerId, String productName,
-            String approvementStatusName, Pageable pageable);
+            String approvementStatusName, int page);
 
+    //Creator : Cường
     Product findById(Long id);
+
+    //Creator : Cường
+    void saveProduct(Product product);
 
     List<Product> findAllProduct();
 
