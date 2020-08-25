@@ -51,9 +51,15 @@ public class UserController {
 
     //Creator: Trương Khánh Mậu
     @PostMapping("/user/register")
-    public ResponseEntity<UserRegistrationDto> registration(@RequestBody UserRegistrationDto userDto) {
+    public ResponseEntity<?> registration(@RequestBody UserRegistrationDto userDto) {
         userService.createUser(userDto);
-        return new ResponseEntity<>(userDto, HttpStatus.OK);
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword())
+        );
+        UserDetails userDetails = userDetailServiceImpl.loadUserByUsername(authentication.getName());
+        User user = userService.findByEmail(userDetails.getUsername());
+        String jwtToken = jwtTokenUtil.generateToken(userDetails);
+        return ResponseEntity.ok(new JwtResponse(jwtToken, user.getId(), userDetails.getUsername(), userDetails.getAuthorities()));
     }
 
     //Creator: Trương Khánh Mậu
@@ -63,11 +69,9 @@ public class UserController {
         User user = userRepository.findByEmail(email);
         if (user != null) {
             result.put("userId", user.getId());
-            result.put("message", "Email này đã được đăng kí.");
             return ResponseEntity.ok(result);
         } else {
             result.put("userId", -1);
-            result.put("message", "Email này chưa được đăng kí.");
             return ResponseEntity.ok(result);
         }
     }
@@ -79,11 +83,9 @@ public class UserController {
         Optional<User> user = userRepository.findByPhoneNumber(phoneNumber);
         if (user.isPresent()) {
             result.put("userId", user.get().getId());
-            result.put("message", "SDT này đã được đăng kí.");
             return ResponseEntity.ok(result);
         } else {
             result.put("userId", -1);
-            result.put("message", "SDT này chưa được đăng kí.");
             return ResponseEntity.ok(result);
         }
     }
