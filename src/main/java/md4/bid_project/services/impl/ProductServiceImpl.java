@@ -63,11 +63,13 @@ public class ProductServiceImpl implements ProductService {
 
         List<Product> productList =productService.findAllProduct();
         Long idLastProduct = productList.size() +1l ;
+        Product product1= productList.get(productList.size()-1);
         System.out.println("This is product size + 1" + idLastProduct);
+        System.out.println("this is Product find id: " +product1.getId());
         ProductImage productImageObj = new ProductImage();
-//            productImageObj.setId(idLastProduct);
         productImageObj.setLink(productCreateDTO.getProductImages());
-        Product productImgAdd = productService.findProductById(idLastProduct);
+        Product productImgAdd = productService.findProductById(product1.getId());
+
         productImageObj.setProduct(productImgAdd);
         productImageRepository.save(productImageObj);
         return productRepository.save(product);

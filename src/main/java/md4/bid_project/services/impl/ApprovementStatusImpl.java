@@ -6,6 +6,8 @@ import md4.bid_project.services.ApprovementStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ApprovementStatusImpl implements ApprovementStatusService {
     @Autowired private ApprovementStatusRepository approvementStatusRepository;
@@ -13,5 +15,10 @@ public class ApprovementStatusImpl implements ApprovementStatusService {
     @Override
     public ApprovementStatus findByName(String name) {
         return approvementStatusRepository.findByName(name);
+    }
+
+    @Override
+    public List<ApprovementStatus> findAll() {
+        return approvementStatusRepository.findAll();
     }
 }

@@ -33,6 +33,9 @@ public class ProductController {
     @Autowired
     CategoryService categoryService;
 
+    @Autowired
+    ApprovementStatusService approvementStatusService;
+
     @GetMapping("/products")
     public ResponseEntity<List<Product>> listProduct() {
         List<Product> pageProduct = productService.findAllProduct();
@@ -49,10 +52,6 @@ public class ProductController {
         Product productObj = productService.findProductById(productID);
         return new ResponseEntity<Product>(productObj, HttpStatus.OK);
     }
-
-    @Autowired
-    private ApprovementStatusService approvementStatusService;
-
     //    Cường
     @GetMapping("/myProduct/{ownerId}")
     public ResponseEntity<Page<Product>> getProductByOwnerId(@PathVariable(value = "ownerId") Long ownerId,
@@ -107,6 +106,15 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<List<Category>>(listCategory, HttpStatus.OK);
+    }
+    @GetMapping("/approvementStatus")
+    public ResponseEntity<List<ApprovementStatus>> listApprovementstatus() {
+        List<ApprovementStatus> listApprovementStatus = approvementStatusService.findAll();
+
+        if (listApprovementStatus.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<ApprovementStatus>>(listApprovementStatus, HttpStatus.OK);
     }
 
     @GetMapping("/owner/{ownerId}")
