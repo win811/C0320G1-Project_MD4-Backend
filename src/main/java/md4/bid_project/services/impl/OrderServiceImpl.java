@@ -7,6 +7,7 @@ import md4.bid_project.repositories.CartRepository;
 import md4.bid_project.repositories.DeliveryAddressRepository;
 import md4.bid_project.repositories.OrderRepository;
 import md4.bid_project.services.CartDetailService;
+import md4.bid_project.services.CartService;
 import md4.bid_project.services.OrderService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.modelmapper.ModelMapper;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 
 //creator: Đặng Hồng Quân team C
@@ -24,8 +26,10 @@ public class OrderServiceImpl implements OrderService {
     OrderRepository orderRepository;
 
     @Autowired
-    CartRepository cartRepository;
+    CartService cartService;
 
+    @Autowired
+   CartRepository cartRepository;
     @Autowired
     DeliveryAddressRepository deliveryAddressRepository;
 
@@ -41,7 +45,8 @@ public class OrderServiceImpl implements OrderService {
 
         ModelMapper modelMapper = new ModelMapper();
         Order order = modelMapper.map(orderDto, Order.class);
-        Cart cart = cartRepository.findAllByUser_IdAndStatusTrue(orderDto.getBuyer().getId()) ;
+        Cart cart = cartService.findByUserId(orderDto.getBuyer().getId()).orElse(null) ;
+        if(cart != null){
         cart.setStatus(false);
         for ( CartDetail cartDetail: cart.getCartDetails()) {
             cartDetail.setStatus(CartDetailService.STATUS_PAID);
@@ -54,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
         Cart cartNew = new Cart();
         cartNew.setStatus(true);
         cartNew.setUser(orderDto.getBuyer());
-        cartRepository.save(cartNew);
+            cartRepository.save(cartNew);}
 
     }
 
