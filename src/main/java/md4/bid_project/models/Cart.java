@@ -33,4 +33,5 @@ public class Cart {
     @OneToMany(mappedBy = "cart")
     @JsonIgnoreProperties(value = "cart")
     private List<CartDetail> cartDetails;
+
 }

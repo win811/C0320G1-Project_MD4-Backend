@@ -8,9 +8,9 @@ import java.util.List;
 public interface CartDetailService {
 
     // Created by: Toàn
-    String STATUS_WAITING = "waiting";
-    String STATUS_REMOVED = "removed";
-    String STATUS_PAID = "paid";
+    String STATUS_WAITING = "Đang chờ thanh toán";
+    String STATUS_REMOVED = "Thất bại";
+    String STATUS_PAID = "Thành công";
     int DEFAULT_QUANTITY = 1;
 
     // Created by: Toàn
