@@ -14,12 +14,15 @@ import java.util.Optional;
 //Tùng
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
-    User findByEmail(String email);
     User findByEmailAndIsLockedIsFalse(String email);
     List<User> findAllByIsLockedIsFalse();
     List<User> findAllByEmailContaining(String email);
-//    Optional<User> findByEmail(String email);
-    Optional<User> findByPhoneNumber(String phoneNumber);
+    //CREATE BY ANH DUC
+    public User findByEmail(String email);
+    //CREATE BY ANH DUC
+    public User findByPhoneNumber(String phoneNumber);
+
+//    Optional<User> findByPhoneNumber(String phoneNumber);
 
     //Hoàng Long method
     Page<User> findAllByAndIsLockedIsFalseAndFullnameContaining(Pageable pageable, String fullName);

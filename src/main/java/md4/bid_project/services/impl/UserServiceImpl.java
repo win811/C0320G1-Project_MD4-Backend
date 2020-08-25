@@ -12,26 +12,44 @@ import md4.bid_project.services.UserService;
 import md4.bid_project.services.search.SearchCriteria;
 import md4.bid_project.services.search.UserSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.bcrypt.BCrypt;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import java.util.Date;
+import java.util.Random;
+
+@Transactional
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
     @Autowired
     DeliveryAddressRepository deliveryAddressRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    JavaMailSender javaMailSender;
 
     //Creator: Nguyễn Xuân Hùng
     @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
     public UserUpdateDTO findUserUpdateDtoByUserId(Long id) {
         UserUpdateDTO userUpdateDTO = new UserUpdateDTO();
         User user = userRepository.findById(id).orElse(null);
@@ -48,58 +66,33 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    //Creator: Nguyễn Xuân Hùng
     @Override
     public User findUserById(Long id) {
+        return null;
+    }
+
+    @Override
+    public void updateUser(UserUpdateDTO userDto) {
+
+    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public User findById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
-    //Creator: Nguyễn Xuân Hùng
+    //CREATE BY ANH DUC
     @Override
-    public void updateUser(UserUpdateDTO userUpdateDTO) {
-        User user = userRepository.findById(userUpdateDTO.getId()).orElse(null);
-        assert user != null;
-        user.setFullname(userUpdateDTO.getFullName().trim());
-        user.setAddress(userUpdateDTO.getAddress().trim());
-        user.setGender(userUpdateDTO.getGender());
-        user.setIdCard(userUpdateDTO.getIdCard());
-        user.setBirthday(userUpdateDTO.getBirthday());
-        List<User> users = userRepository.findAllByIsLockedIsFalse();
-        List<String> messages = new ArrayList<>();
-        for (User testUser : users) {
-            if (!user.getEmail().equals(userUpdateDTO.getEmail().trim()) && testUser.getEmail().equals(userUpdateDTO.getEmail().trim())) {
-                messages.add("Email này đã được đăng kí. Vui lòng nhập lại email khác.");
-                break;
-            }
-        }
-        user.setEmail(userUpdateDTO.getEmail().trim());
-        if (!userUpdateDTO.getPassword().equals("")) {
-            if (!userUpdateDTO.getNewPassword().equals("")) {
-                if (BCrypt.checkpw(userUpdateDTO.getPassword(), user.getPassword())) {
-                    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-                    user.setPassword(encoder.encode(userUpdateDTO.getNewPassword()));
-                } else {
-                    messages.add("Mật khẩu hiện tại không đúng. Xin vui lòng nhập lại.");
-                }
-            } else {
-                messages.add("Vui lòng nhập mật khẩu hiện tại đi kèm với mật khẩu mới và xác nhận mật khẩu.");
-            }
-        } else if (!userUpdateDTO.getNewPassword().equals("")) {
-            messages.add("Vui lòng nhập mật khẩu hiện tại khi đổi mật khẩu.");
-        }
-
-        for (User testUser : users) {
-            if (!user.getPhoneNumber().equals(userUpdateDTO.getPhoneNumber()) && testUser.getPhoneNumber().equals(userUpdateDTO.getPhoneNumber())) {
-                messages.add("Số điện thoại này đã được đăng kí. Vui lòng nhập lại số điện thoại khác.");
-                break;
-            }
-        }
-        user.setPhoneNumber(userUpdateDTO.getPhoneNumber());
-        userUpdateDTO.setBackendMessage(messages);
-        if (userUpdateDTO.getBackendMessage().size() == 0) {
-            userRepository.save(user);
-        }
+    public void save(User user) {
+        userRepository.save(user);
     }
+
+    @Override
+    public User save2(User user) {
+        return null;
+    }
+
 
     //Creator: Trương Khánh Mậu
     @Override
@@ -134,15 +127,33 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
+    //CREATE BY ANH DUC
     @Override
-    public Optional<User> checkUniquePhone(String phoneNumber) {
+    public void remove(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public Optional<User> findById2(Long id) {
+        return userRepository.findById(id);
+    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public User findByPhoneNumberByDuc(String phoneNumber) {
         return userRepository.findByPhoneNumber(phoneNumber);
     }
 
-
     @Override
-    public User findByEmail(String email) {
-        return userRepository.findByEmailAndIsLockedIsFalse(email);
+    public User checkUniquePhone(String phoneNumber) {
+        return userRepository.findByPhoneNumber(phoneNumber);
     }
 
 
@@ -163,7 +174,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Specification<User> getFilter(String id, String fullname, String email, String address, String rateName) {
+    public Specification<User> getFilter(String id, String fullname, String email, String address, String
+            rateName) {
         List<UserSpecification> specs = new ArrayList<>();
         Specification<User> spec;
         // search theo
@@ -194,7 +206,6 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-
     private Page<UserListDTO> transferToDTO(Page<User> users) {
         Iterator iterator = users.iterator();
         List<UserListDTO> userListDTO = new ArrayList<UserListDTO>();
@@ -215,19 +226,79 @@ public class UserServiceImpl implements UserService {
     }
 
     //B-Hoàng Long method
-    @Override
-    public User findById(Long id) {
-        return userRepository.findById(id).orElse(null);
-    }
+//            @Override
+//            public User findById (Long id){
+//                return userRepository.findById(id).orElse(null);
+//            }
     //B-Hoàng Long method
     @Override
     public Page<User> pageFindAllSearchFullName(Pageable pageable, String search) {
         return this.userRepository.findAllByAndIsLockedIsFalseAndFullnameContaining(pageable, search);
     }
+
     //B-Hoàng Long method
     @Override
     public User saveUser(User user) {
         this.userRepository.save(user);
         return user;
     }
+
+    //CREATE BY ANH DUC
+    @Override
+    public void sendMail(String email, String title, String content) {
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setFrom("Web Đấu Giá c03 <webdaugiac03@gmail.com>");
+        msg.setTo(email);
+        msg.setSubject(title);
+        msg.setText(content);
+        javaMailSender.send(msg);
+    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public int getRandomIntegerWithinRange(int max, int min) {
+        int spread = max - min;
+        return new Random().nextInt(spread + 1) + min;
+    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public boolean checkCode(String email, String code) {
+        User user = userRepository.findByEmail(email);
+        String codeSecurity = user.getPasswordResetCode().getCode();
+        if (!codeSecurity.equals(code)) {
+            return false;
+        }
+        return true;
+    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public boolean checlExpiryDate(String email, Date timeNow) {
+        java.sql.Timestamp sqlTS = new java.sql.Timestamp(timeNow.getTime());
+        User user = userRepository.findByEmail(email);
+        Date expiry = user.getPasswordResetCode().getExpiryDate();
+        Long noTime = (sqlTS.getTime() - expiry.getTime()) / (60 * 1000);
+        if (noTime > 15) {
+            return false;
+        }
+        return true;
+    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public String passwordEncryption(String password) {
+        return passwordEncoder.encode(password);
+    }
+
+    @Override
+    public Boolean checkInfo(User user1, User user2) {
+        if (user1.getPhoneNumber().equals(user2.getPhoneNumber()) && user1.getQuestion().equals(user2.getQuestion()) && user1.getAnswer().equals(user2.getAnswer())) {
+            return true;
+        }
+        return false;
+    }
+
+
 }
+

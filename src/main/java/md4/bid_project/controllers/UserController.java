@@ -76,9 +76,9 @@ public class UserController {
     @PostMapping("/user/checkPhone")
     public ResponseEntity<Map<String, Object>> checkPhone(@RequestBody String phoneNumber) {
         Map<String, Object> result = new LinkedHashMap<>();
-        Optional<User> user = userRepository.findByPhoneNumber(phoneNumber);
-        if (user.isPresent()) {
-            result.put("userId", user.get().getId());
+        User user = userRepository.findByPhoneNumber(phoneNumber);
+        if (user != null) {
+            result.put("userId", user.getId());
             result.put("message", "SDT này đã được đăng kí.");
             return ResponseEntity.ok(result);
         } else {

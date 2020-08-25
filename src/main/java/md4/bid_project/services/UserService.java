@@ -10,7 +10,52 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Optional;
 
+import java.util.Date;
+import java.util.List;
+
 public interface UserService {
+    List<User> findAll();
+
+    //CREATE BY ANH DUC
+    User findById(Long id);
+
+    //CREATE BY ANH DUC
+    void save(User user);
+
+    User save2(User user);
+
+    //CREATE BY ANH DUC
+    void remove(Long id);
+
+    //CREATE BY ANH DUC
+    public User findByEmail(String email);
+
+    //CREATE BY ANH DUC
+    public Optional<User> findById2(Long id);
+
+
+    //CREATE BY ANH DUC
+    public User findByPhoneNumberByDuc(String phoneNumber);
+
+    //CREATE BY ANH DUC
+    public void sendMail(String email, String title, String content);
+
+    //CREATE BY ANH DUC
+    public int getRandomIntegerWithinRange(int max, int min);
+
+    //CREATE BY ANH DUC
+    public boolean checkCode(String email, String code);
+
+    //CREATE BY ANH DUC
+    public boolean checlExpiryDate(String email, Date date);
+
+    //CREATE BY ANH DUC
+    public String passwordEncryption(String password);
+
+    //CREATE BY ANH DUC
+    public Boolean checkInfo(User user1, User user2);
+
+
     //Creator: Nguyễn Xuân Hùng
     UserUpdateDTO findUserUpdateDtoByUserId(Long id);
 
@@ -28,8 +73,6 @@ public interface UserService {
 
     Specification<User> getFilter(String id, String fullname, String email, String address, String rateName);
 
-    User findByEmail(String email);
-
     //Creator: Trương Khánh Mậu
     void createUser(UserRegistrationDto userDto);
 
@@ -37,12 +80,13 @@ public interface UserService {
     User checkUniqueEmail(String email);
 
     //Create: Trương Khánh Mạu
-    Optional<User> checkUniquePhone(String phoneNumber);
+    User checkUniquePhone(String phoneNumber);
 
-    //B-Hoàng Long method
-    User findById(Long id);
+    //    //B-Hoàng Long method
+//    User findById(Long id);
     //B-Hoàng Long method
     Page<User> pageFindAllSearchFullName(Pageable pageable, String search);
+
     //B-Hoàng Long method
     User saveUser(User user);
 }
