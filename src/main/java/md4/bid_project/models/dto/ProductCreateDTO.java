@@ -20,17 +20,17 @@ public class ProductCreateDTO {
     private Date endDate;
     private String description;
     private Long approvementStatusId;
-    private String productImage;
+    private List<String> productImages;
 
     public ProductCreateDTO() {
     }
 
-    public String getProductImage() {
-        return productImage;
+    public List<String> getProductImages() {
+        return productImages;
     }
 
-    public void setProductImage(String productImages) {
-        this.productImage = productImages;
+    public void setProductImages(List<String> productImages) {
+        this.productImages = productImages;
     }
 
     public String getName() {

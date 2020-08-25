@@ -17,7 +17,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/approvementStatus")
+@RequestMapping("/api/v1/approvementStatus")
 public class ApprovementStatusController {
     @Autowired
     private ApprovementStatusService approvementStatusService;

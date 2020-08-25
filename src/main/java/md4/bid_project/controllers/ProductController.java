@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import md4.bid_project.models.Product;
 import md4.bid_project.models.ProductImage;
 import md4.bid_project.models.dto.ProductCreateDTO;
+import md4.bid_project.models.dto.ProductImageDto;
 import md4.bid_project.repositories.CategoryRepository;
 import md4.bid_project.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.List;
 //Creator: Nguyen Thanh Tu
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/v1/product")
+@RequestMapping("/api/v1/products")
 public class ProductController {
     @Autowired
     private ProductService productService;
@@ -52,7 +53,8 @@ public class ProductController {
     @PostMapping("")
     private ResponseEntity<Product> createNewProduct(@RequestBody ProductCreateDTO productCreateDTO ){
         Product product = new Product();
-        String productImageName;
+        ProductImage productImage = new ProductImage();
+        List<String> productImageLinks;
 
         product.setName(productCreateDTO.getName());
         product.setApprovementStatus(approvementStatusService.findById(productCreateDTO.getApprovementStatusId()));
@@ -67,7 +69,12 @@ public class ProductController {
 
         productService.saveProduct(product);
 
-        productImageName = productCreateDTO.getProductImage();
+        productImageLinks = productCreateDTO.getProductImages();
+        for (String productImageLink: productImageLinks){
+            productImage.setLink(productImageLink);
+            productImage.setProduct(product);
+            productImageService.save(productImage);
+        }
 
         HttpHeaders headers = new HttpHeaders();
         return new ResponseEntity<Product>(headers, HttpStatus.CREATED);
