@@ -24,10 +24,10 @@ public class ProductImageServiceImpl implements ProductImageService {
         productImageRepository.save(productImage);
     }
     //Thành
-//    @Override
-//    public Optional<ProductImage> findById(Long productImageId) {
-//        return productImageRepository.findAllById(productImageId);
-//    }
+    @Override
+    public Optional<ProductImage> findById(Long productImageId) {
+        return productImageRepository.findAllById(productImageId);
+    }
     //Thành
     @Override
     public void saveAll(List<ProductImage> productImages) {

@@ -1,16 +1,21 @@
 package md4.bid_project.models;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -18,17 +23,17 @@ public class User {
     @Column(name = "user_id")
     private long id;
 
-    @Column(name = "user_first_name")
-    private String firstName;
-
-    @Column(name = "user_last_name")
-    private String lastName;
+    @Column(name = "user_fullname")
+    private String fullname;
 
     @Column(name = "user_email")
     private String email;
 
     @Column(name = "user_phone_number")
     private String phoneNumber;
+
+    @Column(name = "user_address")
+    private String address;
 
     @Column(name = "user_birthday")
     private LocalDate birthday;
@@ -52,99 +57,30 @@ public class User {
     @Column(name = "user_status")
     private Boolean status;
 
-    public long getId() {
-        return id;
-    }
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties(value = "user")
+    private List<DeliveryAddress> deliveryAddressList;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+    @ManyToOne
+    @JoinColumn(name = "user_role_id")
+    private Role role;
 
-    public String getFirstName() {
-        return firstName;
-    }
+    @OneToOne(mappedBy = "user")
+    private PasswordResetCode passwordResetCode;
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+    @Column(name = "user_password")
+    private String password ;
 
-    public String getLastName() {
-        return lastName;
-    }
+    @Column(name = "user_question")
+    private String question ;
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    @Column(name = "user_answer")
+    private String answer;
 
-    public String getEmail() {
-        return email;
-    }
+    @Column(name = "user_reason_ban")
+    private String reasonBan;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    @Column(name = "user_is_locked")
+    private Boolean isLocked;
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public LocalDate getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getIdCard() {
-        return idCard;
-    }
-
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public Rate getRate() {
-        return rate;
-    }
-
-    public void setRate(Rate rate) {
-        this.rate = rate;
-    }
-
-    public Long getPoint() {
-        return point;
-    }
-
-    public void setPoint(Long point) {
-        this.point = point;
-    }
-
-    public LocalDateTime getLastLogin() {
-        return lastLogin;
-    }
-
-    public void setLastLogin(LocalDateTime lastLogin) {
-        this.lastLogin = lastLogin;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
 }

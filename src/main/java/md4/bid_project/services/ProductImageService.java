@@ -10,7 +10,7 @@ public interface ProductImageService {
     //Thành
     void save(ProductImage productImage);
     //Thành
-//    Optional<ProductImage> findById(Long productImageId);
+     Optional<ProductImage> findById(Long productImageId);
     //Thành
     void saveAll(List<ProductImage> productImages);
 }

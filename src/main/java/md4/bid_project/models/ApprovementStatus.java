@@ -1,12 +1,16 @@
 package md4.bid_project.models;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "approvement_statuses")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class ApprovementStatus {
 
     @Id
@@ -15,6 +19,5 @@ public class ApprovementStatus {
     private Long id;
 
     @Column(name = "approvement_status_name")
-    private String status;
-
+    private String name;
 }

@@ -1,43 +1,58 @@
 package md4.bid_project.models;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import md4.bid_project.models.dto.ProductListDTO;
 
 import javax.persistence.*;
-import java.sql.Date;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
-@Data
-//Coder: Nguyen Thanh Tu
+@Getter
+@Setter
+@NoArgsConstructor
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private Long id;
 
+    @NotBlank(message = "Vui lòng nhập tên sản phẩm")
+    @Pattern(regexp = "[A-Z]{1}[ a-zA-Z0-9_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$", message = "Tên không hợp lệ")
     @Column(name = "product_name")
     private String name;
 
+    @Min(value = 0, message = "Giá không được âm")
     @Column(name = "product_initial_price")
     private Double initialPrice;
 
+    @Min(value = 0,message = "Bước giá không được âm")
     @Column(name = "product_increase_amount")
     private Double increaseAmount;
 
     @Column(name = "product_register_date")
-    private Date registerDate;
+    private LocalDateTime registerDate;
 
     @Column(name = "product_start_date")
-    private Date startDate;
+    private LocalDateTime startDate;
 
     @Column(name = "product_end_date")
-    private Date endDate;
+    private LocalDateTime endDate;
 
     @ManyToOne
     @JoinColumn(name = "product_approvement_status_id")
     private ApprovementStatus approvementStatus;
 
+    @NotBlank(message = "Vui lòng nhập mô tả sản phẩm")
     @Column(name = "product_description")
     private String description;
 
@@ -49,91 +64,18 @@ public class Product {
     @JoinColumn(name = "product_owner_id")
     private User owner;
 
-    public Long getId() {
-        return id;
-    }
+    @OneToMany(mappedBy = "product")
+    @JsonIgnoreProperties(value = "product")
+    private List<ProductImage> productImages;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(name = "product_status")
+    private Boolean status;
 
-    public String getName() {
-        return name;
-    }
+    @Column(name = "product_banned")
+    private String banned;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @OneToOne(mappedBy = "product")
+    @JsonIgnoreProperties(value = "product")
+    private Auction auction;
 
-    public Double getInitialPrice() {
-        return initialPrice;
-    }
-
-    public void setInitialPrice(Double initialPrice) {
-        this.initialPrice = initialPrice;
-    }
-
-    public Double getIncreaseAmount() {
-        return increaseAmount;
-    }
-
-    public void setIncreaseAmount(Double increaseAmount) {
-        this.increaseAmount = increaseAmount;
-    }
-
-    public Date getRegisterDate() {
-        return registerDate;
-    }
-
-    public void setRegisterDate(Date registerDate) {
-        this.registerDate = registerDate;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public ApprovementStatus getApprovementStatus() {
-        return approvementStatus;
-    }
-
-    public void setApprovementStatus(ApprovementStatus approvementStatus) {
-        this.approvementStatus = approvementStatus;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
 }

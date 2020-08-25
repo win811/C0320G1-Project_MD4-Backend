@@ -1,14 +1,23 @@
 package md4.bid_project.models;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
+// creator: Hoai Ngan team C
 @Entity
 @Table(name="auctions")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class Auction {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "auction_id")
@@ -24,5 +33,9 @@ public class Auction {
 
     @Column(name = "auction_close_time")
     private LocalDateTime closeTime;
+
+    @OneToMany(mappedBy = "auction")
+    @JsonIgnoreProperties("auction")
+    private List<AuctionRecord> records;
 
 }

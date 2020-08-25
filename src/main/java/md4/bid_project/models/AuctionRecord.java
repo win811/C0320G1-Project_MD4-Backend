@@ -1,19 +1,20 @@
 package md4.bid_project.models;
 
-
-
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Set;
 
+// creator: Hoai Ngan team C
 @Entity
 @Table(name = "auction_records")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class AuctionRecord {
 
     @Id
@@ -23,6 +24,7 @@ public class AuctionRecord {
 
     @ManyToOne
     @JoinColumn(name = "record_auction_id")
+    @JsonIgnoreProperties("records")
     private Auction auction;
 
     @ManyToOne

@@ -1,12 +1,18 @@
 package md4.bid_project.models;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "carts")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class Cart {
 
     @Id
@@ -23,4 +29,8 @@ public class Cart {
     @ManyToOne
     @JoinColumn(name = "cart_user_id")
     private User user;
+
+    @OneToMany(mappedBy = "cart")
+    @JsonIgnoreProperties(value = "cart")
+    private List<CartDetail> cartDetails;
 }

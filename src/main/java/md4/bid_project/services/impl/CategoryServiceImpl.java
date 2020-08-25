@@ -8,17 +8,28 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Override
-    public Category findById(Long id) {
-        return categoryRepository.findById(id).orElse(null);
-    }
-
+@Autowired
+private CategoryRepository categoryRepository;
+    //Thành
     @Override
     public List<Category> findAll() {
         return categoryRepository.findAll();
     }
+    //Thành
+    @Override
+    public void save(Category category) {
+        categoryRepository.save(category);
+    }
+    //Thành
+    @Override
+    public Category findById(Long categoryId) {
+        return categoryRepository.findById(categoryId);
+    }
+//    @Override
+//    public Category findById(Long id) {
+//        return categoryRepository.findById(id).orElse(null);
+//    }
 }

@@ -1,12 +1,16 @@
 package md4.bid_project.models;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "favorite_products")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class FavoriteProduct {
 
     @Id
@@ -24,4 +28,5 @@ public class FavoriteProduct {
 
     @Column(name = "favorite_product_status")
     private Boolean status;
+
 }

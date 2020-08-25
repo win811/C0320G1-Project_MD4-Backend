@@ -1,12 +1,16 @@
 package md4.bid_project.services;
 
 import md4.bid_project.models.Category;
-import md4.bid_project.models.Product;
 
 import java.util.List;
 
 public interface CategoryService {
-    Category findById(Long id);
-
+    //Thành
     List<Category> findAll();
+    //Thành
+    void save(Category category);
+    //Thành
+     Category findById(Long categoryId);
+//    Category findById(Long id);
+
 }
