@@ -3,6 +3,7 @@ package md4.bid_project.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -12,13 +13,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-// Creator Thien
 @Component
+//Creator Thien
 public class JwtTokenUtil implements Serializable {
 
     private static final long serialVersionUID = -2550185165626007488L;
 
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+
+//    @Value("${jwt.secret}")
+//    private String secret;
 
     private final String secret = "javainuse";
 
@@ -46,6 +50,7 @@ public class JwtTokenUtil implements Serializable {
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("cường","cường test claim");
         return doGenerateToken(claims, userDetails.getUsername());
     }
 

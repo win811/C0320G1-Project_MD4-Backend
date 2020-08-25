@@ -55,5 +55,4 @@ public class DeliveryAddress {
 
     @Column(name = "delivery_status")
     private  Boolean status;
-
 }

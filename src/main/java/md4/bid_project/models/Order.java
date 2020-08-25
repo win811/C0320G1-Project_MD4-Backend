@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+//creator: Đặng Hồng Quân team C
 @Entity
 @Table(name = "orders")
 @Getter
@@ -39,14 +40,12 @@ public class Order {
     private String deliveryMethod;
 
     @Column(name = "order_payment_status")
-    private String paymentStatus;
+    private String paymentState;
 
-    @ManyToOne
-    @JoinColumn(name = "order_delivery_address_id")
-    private DeliveryAddress deliveryAddress;
+    @Column(name = "order_delivery_address")
+    private String deliveryAddress;
 
     @OneToOne
     @JoinColumn(name = "order_cart_id")
     private Cart cart;
-
 }

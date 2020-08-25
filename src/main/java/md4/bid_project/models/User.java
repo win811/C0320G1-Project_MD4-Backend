@@ -1,5 +1,6 @@
 package md4.bid_project.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -81,5 +82,4 @@ public class User {
 
     @Column(name = "user_is_locked")
     private Boolean isLocked;
-
 }

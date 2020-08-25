@@ -1,11 +1,15 @@
 package md4.bid_project.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,12 +25,16 @@ public class Product {
     @Column(name = "product_id")
     private Long id;
 
+    @NotBlank(message = "Vui lòng nhập tên sản phẩm")
+    @Pattern(regexp = "[A-Z]{1}[ a-zA-Z0-9_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$", message = "Tên không hợp lệ")
     @Column(name = "product_name")
     private String name;
 
+    @Min(value = 0, message = "Giá không được âm")
     @Column(name = "product_initial_price")
     private Double initialPrice;
 
+    @Min(value = 0,message = "Bước giá không được âm")
     @Column(name = "product_increase_amount")
     private Double increaseAmount;
 
@@ -43,6 +51,7 @@ public class Product {
     @JoinColumn(name = "product_approvement_status_id")
     private ApprovementStatus approvementStatus;
 
+    @NotBlank(message = "Vui lòng nhập mô tả sản phẩm")
     @Column(name = "product_description")
     private String description;
 
@@ -60,5 +69,12 @@ public class Product {
 
     @Column(name = "product_status")
     private Boolean status;
+
+    @Column(name = "product_banned")
+    private String banned;
+
+    @OneToOne(mappedBy = "product")
+    @JsonIgnoreProperties(value = "product")
+    private Auction auction;
 
 }

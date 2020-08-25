@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 //Creator: Nguyễn Xuân Hùng
 @Data
-public class UserUpdateDto {
+public class UserUpdateDTO {
     private Long id;
     private String fullName;
     private String email;
