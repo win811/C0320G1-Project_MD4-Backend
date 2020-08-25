@@ -20,9 +20,9 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     //CREATE BY ANH DUC
     public User findByEmail(String email);
     //CREATE BY ANH DUC
-//    public User findByPhoneNumber(String phoneNumber);
+    public User findByPhoneNumber(String phoneNumber);
 
-    Optional<User> findByPhoneNumber(String phoneNumber);
+//    Optional<User> findByPhoneNumber(String phoneNumber);
 
     //Hoàng Long method
     Page<User> findAllByAndIsLockedIsFalseAndFullnameContaining(Pageable pageable, String fullName);

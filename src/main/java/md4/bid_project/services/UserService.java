@@ -10,20 +10,10 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Optional;
 
-import md4.bid_project.models.User;
-
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
-//    //Creator: Nguyễn Xuân Hùng
-//    UserUpdateDto findUserUpdateDtoByUserId(Long id);
-//    //Creator: Nguyễn Xuân Hùng
-//    User findUserById(Long id);
-//    //Creator: Nguyễn Xuân Hùng
-//    void updateUser(UserUpdateDto userDto);
-
     List<User> findAll();
 
     //CREATE BY ANH DUC
@@ -45,7 +35,7 @@ public interface UserService {
 
 
     //CREATE BY ANH DUC
-    public User findByPhoneNumber(String phoneNumber);
+    public User findByPhoneNumberByDuc(String phoneNumber);
 
     //CREATE BY ANH DUC
     public void sendMail(String email, String title, String content);
@@ -90,12 +80,13 @@ public interface UserService {
     User checkUniqueEmail(String email);
 
     //Create: Trương Khánh Mạu
-    Optional<User> checkUniquePhone(String phoneNumber);
+    User checkUniquePhone(String phoneNumber);
 
-//    //B-Hoàng Long method
+    //    //B-Hoàng Long method
 //    User findById(Long id);
     //B-Hoàng Long method
     Page<User> pageFindAllSearchFullName(Pageable pageable, String search);
+
     //B-Hoàng Long method
     User saveUser(User user);
 }

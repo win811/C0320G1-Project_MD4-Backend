@@ -7,7 +7,6 @@ import md4.bid_project.models.dto.UserListDTO;
 import md4.bid_project.models.dto.UserRegistrationDto;
 import md4.bid_project.models.dto.UserUpdateDTO;
 import md4.bid_project.repositories.DeliveryAddressRepository;
-import md4.bid_project.models.User;
 import md4.bid_project.repositories.UserRepository;
 import md4.bid_project.services.UserService;
 import md4.bid_project.services.search.SearchCriteria;
@@ -15,12 +14,13 @@ import md4.bid_project.services.search.UserSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCrypt;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,8 +30,6 @@ import java.util.List;
 import java.util.Optional;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 @Transactional
@@ -41,11 +39,17 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
     @Autowired
     DeliveryAddressRepository deliveryAddressRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    JavaMailSender javaMailSender;
 
     //Creator: Nguyễn Xuân Hùng
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
     public UserUpdateDTO findUserUpdateDtoByUserId(Long id) {
         UserUpdateDTO userUpdateDTO = new UserUpdateDTO();
         User user = userRepository.findById(id).orElse(null);
@@ -62,6 +66,16 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    @Override
+    public User findUserById(Long id) {
+        return null;
+    }
+
+    @Override
+    public void updateUser(UserUpdateDTO userDto) {
+
+    }
+
     //CREATE BY ANH DUC
     @Override
     public User findById(Long id) {
@@ -76,51 +90,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save2(User user) {
-        return userRepository.save(user);
-    public void updateUser(UserUpdateDTO userUpdateDTO) {
-        User user = userRepository.findById(userUpdateDTO.getId()).orElse(null);
-        assert user != null;
-        user.setFullname(userUpdateDTO.getFullName().trim());
-        user.setAddress(userUpdateDTO.getAddress().trim());
-        user.setGender(userUpdateDTO.getGender());
-        user.setIdCard(userUpdateDTO.getIdCard());
-        user.setBirthday(userUpdateDTO.getBirthday());
-        List<User> users = userRepository.findAllByIsLockedIsFalse();
-        List<String> messages = new ArrayList<>();
-        for (User testUser : users) {
-            if (!user.getEmail().equals(userUpdateDTO.getEmail().trim()) && testUser.getEmail().equals(userUpdateDTO.getEmail().trim())) {
-                messages.add("Email này đã được đăng kí. Vui lòng nhập lại email khác.");
-                break;
-            }
-        }
-        user.setEmail(userUpdateDTO.getEmail().trim());
-        if (!userUpdateDTO.getPassword().equals("")) {
-            if (!userUpdateDTO.getNewPassword().equals("")) {
-                if (BCrypt.checkpw(userUpdateDTO.getPassword(), user.getPassword())) {
-                    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-                    user.setPassword(encoder.encode(userUpdateDTO.getNewPassword()));
-                } else {
-                    messages.add("Mật khẩu hiện tại không đúng. Xin vui lòng nhập lại.");
-                }
-            } else {
-                messages.add("Vui lòng nhập mật khẩu hiện tại đi kèm với mật khẩu mới và xác nhận mật khẩu.");
-            }
-        } else if (!userUpdateDTO.getNewPassword().equals("")) {
-            messages.add("Vui lòng nhập mật khẩu hiện tại khi đổi mật khẩu.");
-        }
-
-        for (User testUser : users) {
-            if (!user.getPhoneNumber().equals(userUpdateDTO.getPhoneNumber()) && testUser.getPhoneNumber().equals(userUpdateDTO.getPhoneNumber())) {
-                messages.add("Số điện thoại này đã được đăng kí. Vui lòng nhập lại số điện thoại khác.");
-                break;
-            }
-        }
-        user.setPhoneNumber(userUpdateDTO.getPhoneNumber());
-        userUpdateDTO.setBackendMessage(messages);
-        if (userUpdateDTO.getBackendMessage().size() == 0) {
-            userRepository.save(user);
-        }
+        return null;
     }
+
 
     //Creator: Trương Khánh Mậu
     @Override
@@ -175,19 +147,13 @@ public class UserServiceImpl implements UserService {
 
     //CREATE BY ANH DUC
     @Override
-    public User findByPhoneNumber(String phoneNumber) {
+    public User findByPhoneNumberByDuc(String phoneNumber) {
         return userRepository.findByPhoneNumber(phoneNumber);
     }
 
     @Override
-    public Optional<User> checkUniquePhone(String phoneNumber) {
+    public User checkUniquePhone(String phoneNumber) {
         return userRepository.findByPhoneNumber(phoneNumber);
-    }
-
-
-    @Override
-    public User findByEmail(String email) {
-        return userRepository.findByEmailAndIsLockedIsFalse(email);
     }
 
 
@@ -208,7 +174,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Specification<User> getFilter(String id, String fullname, String email, String address, String rateName) {
+    public Specification<User> getFilter(String id, String fullname, String email, String address, String
+            rateName) {
         List<UserSpecification> specs = new ArrayList<>();
         Specification<User> spec;
         // search theo
@@ -239,7 +206,6 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-
     private Page<UserListDTO> transferToDTO(Page<User> users) {
         Iterator iterator = users.iterator();
         List<UserListDTO> userListDTO = new ArrayList<UserListDTO>();
@@ -260,22 +226,22 @@ public class UserServiceImpl implements UserService {
     }
 
     //B-Hoàng Long method
-    @Override
-    public User findById(Long id) {
-        return userRepository.findById(id).orElse(null);
-    }
+//            @Override
+//            public User findById (Long id){
+//                return userRepository.findById(id).orElse(null);
+//            }
     //B-Hoàng Long method
     @Override
     public Page<User> pageFindAllSearchFullName(Pageable pageable, String search) {
         return this.userRepository.findAllByAndIsLockedIsFalseAndFullnameContaining(pageable, search);
     }
+
     //B-Hoàng Long method
     @Override
     public User saveUser(User user) {
         this.userRepository.save(user);
         return user;
     }
-}
 
     //CREATE BY ANH DUC
     @Override
@@ -322,8 +288,7 @@ public class UserServiceImpl implements UserService {
     //CREATE BY ANH DUC
     @Override
     public String passwordEncryption(String password) {
-//        return passwordEncoder.encode(password);
-        return "abcxyz90u239rhf" + password;
+        return passwordEncoder.encode(password);
     }
 
     @Override
