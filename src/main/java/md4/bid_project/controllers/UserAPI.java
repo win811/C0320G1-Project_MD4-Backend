@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 //CREATE BY ANH DUC
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1")
 @Validated

@@ -12,35 +12,33 @@ import md4.bid_project.services.UserService;
 import md4.bid_project.services.search.SearchCriteria;
 import md4.bid_project.services.search.UserSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.bcrypt.BCrypt;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-import java.util.Date;
-import java.util.Random;
+//import org.springframework.security.crypto.bcrypt.BCrypt;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+
     @Autowired
     DeliveryAddressRepository deliveryAddressRepository;
+
     @Autowired
     PasswordEncoder passwordEncoder;
+
     @Autowired
     JavaMailSender javaMailSender;
 
