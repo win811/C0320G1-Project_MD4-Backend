@@ -174,15 +174,4 @@ public class ProductController {
         productImageService.saveAll(productImages);
         return ResponseEntity.ok().body(product);
     }
-
-
-    //Bach
-    @GetMapping("product/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        Product product = productService.getProductById(id);
-        if (product == null) {
-            return new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<Product>(product, HttpStatus.OK);
-    }
 }

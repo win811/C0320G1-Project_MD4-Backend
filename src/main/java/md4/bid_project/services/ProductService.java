@@ -60,7 +60,4 @@ public interface ProductService {
     List<Product> findAll();
     //Thành
     Optional<Product> findProductById(Long productId);
-
-    Product getProductById(Long id);
-
 }

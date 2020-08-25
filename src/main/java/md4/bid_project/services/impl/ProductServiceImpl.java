@@ -217,11 +217,4 @@ public class ProductServiceImpl implements ProductService {
         }
         return null;
     }
-
-    //Bach
-    @Override
-    public Product getProductById(Long id) {
-        return productRepository.findById(id).orElse(null);
-    }
-
 }

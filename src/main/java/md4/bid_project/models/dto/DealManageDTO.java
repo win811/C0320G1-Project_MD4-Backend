@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 //all created by Thao
 @Data
 @Entity
-@Table(name="deal_manage_dto_view")
+@Table(name = "deal_manage_dto_view")
 public class DealManageDTO {
 
     @Id
@@ -54,6 +54,7 @@ public class DealManageDTO {
     public void setTotalPayment() {
         this.totalPayment = this.amount * this.closingBidPrice;
     }
+
     public void setServiceFee() {
         this.serviceFee = this.totalPayment * 0.1;
     }
