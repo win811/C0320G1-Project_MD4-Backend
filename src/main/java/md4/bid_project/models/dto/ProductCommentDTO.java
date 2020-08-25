@@ -1,5 +1,6 @@
 package md4.bid_project.models.dto;
 
+import md4.bid_project.models.Product;
 import md4.bid_project.models.User;
 
 import java.util.HashMap;
@@ -13,6 +14,16 @@ public class ProductCommentDTO {
     private String content;
     private Map<String, String> user;
     private List<ProductCommentDTO> commentLevel2List;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    private Product product;
 
     public ProductCommentDTO() {
     }

@@ -1,8 +1,11 @@
 package md4.bid_project.controllers;
 
+import md4.bid_project.exception.ResourceNotFoundException;
 import md4.bid_project.models.CommentLevel1;
 import md4.bid_project.models.CommentLevel2;
+import md4.bid_project.models.Product;
 import md4.bid_project.models.dto.ProductCommentDTO;
+import md4.bid_project.repositories.ProductRepository;
 import md4.bid_project.services.CommentLevel1Service;
 import md4.bid_project.services.CommentLevel2Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +41,21 @@ public class CommentController {
         return new ResponseEntity<CommentLevel1>(commentLevel1, HttpStatus.OK);
     }
 
+    @Autowired
+    ProductRepository productRepository;
+
     @GetMapping("/comment-level1/product/{productId}")
-    public ResponseEntity<List<ProductCommentDTO>> getCommentLevel1ByProductId(@PathVariable Long productId) {
+    public ResponseEntity<List<ProductCommentDTO>> getCommentLevel1ByProductId(@PathVariable Long productId)
+            throws ResourceNotFoundException {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Not found"));
         List<ProductCommentDTO> commentList = commentLevel1Service.getAllCommentLevel1ByProductId(productId);
         if (commentList == null) {
             return new ResponseEntity<List<ProductCommentDTO>>(HttpStatus.NOT_FOUND);
+        }
+        for (ProductCommentDTO comment :
+                commentList ) {
+            comment.setProduct(product);
         }
         return new ResponseEntity<List<ProductCommentDTO>>(commentList, HttpStatus.OK);
     }
@@ -76,7 +89,7 @@ public class CommentController {
         }
         return new ResponseEntity<CommentLevel2>(commentLevel2, HttpStatus.OK);
     }
-    
+
     @GetMapping("/comment-level2/comment-level1/{id}")
     public ResponseEntity<CommentLevel2> getCommentLevel2ByCommentLevel1Id(@PathVariable Long id) {
         CommentLevel2 commentLevel2 = commentLevel2Service.getCommentLevel2ByCommentLevel1Id(id);
