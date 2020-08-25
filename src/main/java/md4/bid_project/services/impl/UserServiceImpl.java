@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         Role role = new Role();
         Rate rate = new Rate();
-        rate.setId(5L);
+        rate.setId(4L);
         role.setId(1L);
         user.setRole(role);
         user.setStatus(true);
@@ -117,6 +117,7 @@ public class UserServiceImpl implements UserService {
         user.setQuestion(userDto.getQuestion());
         user.setAnswer(userDto.getAnswer());
         userRepository.save(user);
+
 
     }
 
