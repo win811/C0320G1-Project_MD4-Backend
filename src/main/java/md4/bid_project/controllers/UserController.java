@@ -35,12 +35,16 @@ public class UserController {
 
     @Autowired(required = false)
     private AuthenticationManager authenticationManager;
+
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+
     @Autowired(required = false)
     private UserDetailServiceImpl userDetailServiceImpl;
+
     @Autowired
     private UserService userService;
+
     @Autowired
     UserRepository userRepository;
 
@@ -51,9 +55,15 @@ public class UserController {
 
     //Creator: Trương Khánh Mậu
     @PostMapping("/user/register")
-    public ResponseEntity<UserRegistrationDto> registration(@RequestBody UserRegistrationDto userDto) {
+    public ResponseEntity<?> registration(@RequestBody UserRegistrationDto userDto) {
         userService.createUser(userDto);
-        return new ResponseEntity<>(userDto, HttpStatus.OK);
+////        Authentication authentication = authenticationManager.authenticate(
+////                new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword())
+////        );
+//        UserDetails userDetails = userDetailServiceImpl.loadUserByUsername(u.getName());
+//        User user = userService.findByEmail(userDetails.getUsername());
+//        String jwtToken = jwtTokenUtil.generateToken(userDetails);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     //Creator: Trương Khánh Mậu
@@ -63,11 +73,9 @@ public class UserController {
         User user = userRepository.findByEmail(email);
         if (user != null) {
             result.put("userId", user.getId());
-            result.put("message", "Email này đã được đăng kí.");
             return ResponseEntity.ok(result);
         } else {
             result.put("userId", -1);
-            result.put("message", "Email này chưa được đăng kí.");
             return ResponseEntity.ok(result);
         }
     }
@@ -76,14 +84,12 @@ public class UserController {
     @PostMapping("/user/checkPhone")
     public ResponseEntity<Map<String, Object>> checkPhone(@RequestBody String phoneNumber) {
         Map<String, Object> result = new LinkedHashMap<>();
-        Optional<User> user = userRepository.findByPhoneNumber(phoneNumber);
-        if (user.isPresent()) {
-            result.put("userId", user.get().getId());
-            result.put("message", "SDT này đã được đăng kí.");
+        User user = userRepository.findByPhoneNumber(phoneNumber);
+        if (user != null) {
+            result.put("userId", user.getId());
             return ResponseEntity.ok(result);
         } else {
             result.put("userId", -1);
-            result.put("message", "SDT này chưa được đăng kí.");
             return ResponseEntity.ok(result);
         }
     }

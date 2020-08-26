@@ -160,6 +160,7 @@ public class ProductController {
         if (bindingResult.hasErrors()) {
             throw new ViolatedException(bindingResult);
         }
+        System.out.println(product);
         productService.save(product);
         List<ProductImage> productImages = new ArrayList<>();
         productImages = product.getProductImages();

@@ -1,6 +1,5 @@
 package md4.bid_project;
 
-import md4.bid_project.models.ProductPromotion;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -22,5 +21,10 @@ public class BidProjectApplication  {
         return builder.build();
     }
 
+//    @PostConstruct
+//    public void init(){
+//        // Setting Spring Boot SetTimeZone
+//        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+//    }
 }
 

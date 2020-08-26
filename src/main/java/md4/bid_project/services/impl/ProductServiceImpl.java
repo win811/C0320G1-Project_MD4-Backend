@@ -64,13 +64,10 @@ public class ProductServiceImpl implements ProductService {
     //Thành
     @Override
     public void save(Product product) {
-        User user  = new User();
-        user.setId(1L);
         ApprovementStatus status = new ApprovementStatus();
         status.setId(1L);
         product.setApprovementStatus(status);
         product.setStatus(true);
-        product.setOwner(user);
         productRepository.save(product);
         // add auction
         Auction auction = new Auction();
