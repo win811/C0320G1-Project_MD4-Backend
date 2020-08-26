@@ -32,10 +32,10 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
     //Thành
-    @GetMapping("/categories")
-    public List<Category> getAllProducts() {
-        return categoryService.findAll();
-    }
+//    @GetMapping("/categories")
+//    public List<Category> getAllProducts() {
+//        return categoryService.findAll();
+//    }
     //Thành
 //    @GetMapping("/categories/{id}")
 //    public ResponseEntity<Category> getCategoryById(@PathVariable(value = "id") Long categoryId)
@@ -50,7 +50,7 @@ public class CategoryController {
         return ResponseEntity.ok().body(category);
     }
 
-    @GetMapping("categories")
+    @GetMapping("/categories")
     public ResponseEntity<List<Category>> listAllCategories() {
         List<Category> categories = categoryService.findAll();
         if (categories.isEmpty()) {

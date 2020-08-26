@@ -26,7 +26,7 @@ private CategoryRepository categoryRepository;
     //Thành
     @Override
     public Category findById(Long categoryId) {
-        return categoryRepository.findById(categoryId);
+        return categoryRepository.findById(categoryId).orElse(null);
     }
 //    @Override
 //    public Category findById(Long id) {
