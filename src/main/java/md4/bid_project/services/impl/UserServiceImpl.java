@@ -31,6 +31,8 @@ import java.util.*;
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
+
+
     @Autowired
     UserRepository userRepository;
 
@@ -255,10 +257,10 @@ public class UserServiceImpl implements UserService {
     }
 
     //CREATE BY ANH DUC
-    @Override
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
+//    @Override
+//    public User findByEmail(String email) {
+//        return userRepository.findByEmail(email);
+//    }
 
     //CREATE BY ANH DUC
     @Override
@@ -326,6 +328,12 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
+    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public List<User> findAll() {
+        return this.userRepository.findAll();
     }
 
 

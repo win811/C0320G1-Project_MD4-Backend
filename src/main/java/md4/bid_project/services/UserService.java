@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface UserService {
+
     List<User> findAll();
 
     //CREATE BY ANH DUC
@@ -21,8 +22,6 @@ public interface UserService {
 
     //CREATE BY ANH DUC
     void save(User user);
-
-    User save2(User user);
 
     //CREATE BY ANH DUC
     void remove(Long id);
