@@ -52,7 +52,7 @@ public class ProductCommentDTO {
     public ProductCommentDTO setUser(User user) {
         Map<String, String> temp = new HashMap<>();
         temp.put("id", String.valueOf(user.getId()));
-        temp.put("fullname", user.getFullname());
+        temp.put("fullname", user.getFullName());
         this.user = temp;
         return this;
     }
