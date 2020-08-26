@@ -46,7 +46,7 @@ public class User {
     @Column(name = "user_birthday")
     private LocalDate birthday;
 
-    @Pattern(regexp = "^\\d{9}$", message = "{regex.idCard}")
+    @Pattern(regexp = "^\\d{9}|\\d{12}$", message = "{regex.idCard}")
     @NotNull(message = "{NotNull.idCard}")
     @Column(name = "user_id_card")
     private String idCard;

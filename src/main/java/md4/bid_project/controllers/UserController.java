@@ -35,12 +35,16 @@ public class UserController {
 
     @Autowired(required = false)
     private AuthenticationManager authenticationManager;
+
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+
     @Autowired(required = false)
     private UserDetailServiceImpl userDetailServiceImpl;
+
     @Autowired
     private UserService userService;
+
     @Autowired
     UserRepository userRepository;
 
@@ -53,13 +57,13 @@ public class UserController {
     @PostMapping("/user/register")
     public ResponseEntity<?> registration(@RequestBody UserRegistrationDto userDto) {
         userService.createUser(userDto);
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword())
-        );
-        UserDetails userDetails = userDetailServiceImpl.loadUserByUsername(authentication.getName());
-        User user = userService.findByEmail(userDetails.getUsername());
-        String jwtToken = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(jwtToken, user.getId(), userDetails.getUsername(), userDetails.getAuthorities()));
+////        Authentication authentication = authenticationManager.authenticate(
+////                new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword())
+////        );
+//        UserDetails userDetails = userDetailServiceImpl.loadUserByUsername(u.getName());
+//        User user = userService.findByEmail(userDetails.getUsername());
+//        String jwtToken = jwtTokenUtil.generateToken(userDetails);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     //Creator: Trương Khánh Mậu
