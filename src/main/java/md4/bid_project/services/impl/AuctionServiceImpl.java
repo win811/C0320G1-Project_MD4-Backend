@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class AuctionServiceImpl implements AuctionService {
+
     @Autowired
     AuctionRepository auctionRepository;
 
@@ -71,5 +72,12 @@ public class AuctionServiceImpl implements AuctionService {
     public List<Auction> findALlAuctionsByProductNameAndCategoryNameAndPriceMoreThan(String productName, String categoryName, String price) {
         long newPrice = Long.parseLong(price);
         return auctionRepository.findAllAuctionsByProductNameAndCategoryNameAndPriceMoreThan(productName,categoryName,newPrice);
+    }
+
+    //Bach
+
+    @Override
+    public Auction getAutionByProductId(Long productId) {
+        return auctionRepository.getAuctionByProduct_Id(productId);
     }
 }

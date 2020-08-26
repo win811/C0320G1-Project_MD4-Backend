@@ -1,7 +1,5 @@
 package md4.bid_project.models.dto;
 
-import lombok.Data;
-
 public class UserAddressDTO {
 
     private Long id;

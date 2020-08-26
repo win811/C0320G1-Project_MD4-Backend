@@ -1,6 +1,8 @@
 package md4.bid_project.services;
 
 import md4.bid_project.models.User;
+
+import md4.bid_project.models.User;
 import md4.bid_project.models.dto.UserListDTO;
 import md4.bid_project.models.dto.UserRegistrationDto;
 import md4.bid_project.models.dto.UserUpdateDTO;
@@ -14,6 +16,10 @@ import java.util.Date;
 import java.util.List;
 
 public interface UserService {
+
+    //Bach
+    User getUserById(Long id);
+
 
     List<User> findAll();
 

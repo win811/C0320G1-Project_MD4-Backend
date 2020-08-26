@@ -1,6 +1,5 @@
 package md4.bid_project.models.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

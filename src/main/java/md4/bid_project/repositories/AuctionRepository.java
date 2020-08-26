@@ -10,6 +10,9 @@ import java.util.List;
 @Repository
 public interface AuctionRepository extends JpaRepository<Auction,Long> {
 
+    // Bach
+    Auction getAuctionByProduct_Id(Long productId);
+
     //Creator: BHung
     List<Auction> findAllByAuctionStatus_Id(Long id);
 

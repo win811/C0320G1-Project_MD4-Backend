@@ -3,7 +3,6 @@ package md4.bid_project.models.dto;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 public class UserRegistrationDto {

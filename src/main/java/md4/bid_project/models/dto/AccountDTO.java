@@ -8,9 +8,9 @@ import java.io.Serializable;
 @Data
 public class AccountDTO implements Serializable {
     private long id;
-    private String password ;
-    private String email ;
+    private String password;
+    private String email;
     private Role role;
-    private String reasonBan ;
+    private String reasonBan;
     private Boolean isLocked;
 }

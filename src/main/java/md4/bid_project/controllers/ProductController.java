@@ -2,6 +2,12 @@ package md4.bid_project.controllers;
 
 import md4.bid_project.exception.ResourceNotFoundException;
 import md4.bid_project.exception.ViolatedException;
+import md4.bid_project.models.Product;
+import md4.bid_project.services.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import md4.bid_project.models.ApprovementStatus;
 import md4.bid_project.models.FavoriteProduct;
 import md4.bid_project.models.Product;

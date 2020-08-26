@@ -164,4 +164,13 @@ public class UserController {
         this.userService.saveUser(userLock);
         return new ResponseEntity<User>(userLock, HttpStatus.OK);
     }
+    // Created by : Bách
+//    @GetMapping("user/{id}")
+//    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+//        User user = userService.getUserById(id);
+//        if (user == null) {
+//            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity<User>(user, HttpStatus.OK);
+//    }
 }

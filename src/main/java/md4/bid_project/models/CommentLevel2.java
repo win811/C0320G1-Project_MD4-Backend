@@ -3,6 +3,9 @@ package md4.bid_project.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 import javax.persistence.*;
 
@@ -23,6 +26,7 @@ public class CommentLevel2 {
 
     @ManyToOne
     @JoinColumn(name="comment_level1_id")
+    @JsonIgnore
     private CommentLevel1 commentLevel1;
 
     @ManyToOne

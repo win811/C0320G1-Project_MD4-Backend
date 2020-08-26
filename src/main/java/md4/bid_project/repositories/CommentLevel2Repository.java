@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CommentLevel2Repository extends JpaRepository<CommentLevel2,Long> {
+
+    //Bach
+    CommentLevel2 getCommentLevel2ByCommentLevel1_Id(Long commentLevel1Id);
 }

@@ -61,6 +61,15 @@ public class AuctionController {
         }
         return new ResponseEntity<Auction>(auction, HttpStatus.OK);
     }
+    //Bach
+    @GetMapping("/auctions/product/{productId}")
+    public ResponseEntity<Auction> findAuctionByProduct(@PathVariable Long productId){
+        Auction auction = auctionService.getAutionByProductId(productId);
+        if (auction == null) {
+            return new ResponseEntity<Auction>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Auction>(auction, HttpStatus.OK);
+    }
 
     @PostMapping("/auctions")
     public ResponseEntity<Void> createAuction(@RequestBody Auction auction) {

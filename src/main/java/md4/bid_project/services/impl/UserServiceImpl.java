@@ -14,9 +14,9 @@ import md4.bid_project.services.search.UserSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -232,6 +232,7 @@ public class UserServiceImpl implements UserService {
     public User findById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
+
     //B-Hoàng Long method
     @Override
     public Page<User> pageFindAllSearchFullName(Pageable pageable, String search) {
@@ -244,6 +245,7 @@ public class UserServiceImpl implements UserService {
         this.userRepository.save(user);
         return user;
     }
+
     //CREATE BY ANH DUC
     @Override
     public void save(User user) {
@@ -320,6 +322,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public String passwordEncryption(String password) {
         return passwordEncoder.encode(password);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
