@@ -1,12 +1,5 @@
 package md4.bid_project.models.dto;
 
-import lombok.Data;
-import md4.bid_project.models.Rate;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 
@@ -19,7 +12,6 @@ public class UserListDTO {
     private String fullname;
 
     private String address;
-
 
 
     private String email;
@@ -88,6 +80,7 @@ public class UserListDTO {
     public void setRate(String rate) {
         this.rate = rate;
     }
+
     public String getFullname() {
         return fullname;
     }

@@ -1,13 +1,7 @@
 package md4.bid_project.models.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
 import md4.bid_project.models.DeliveryAddress;
-import md4.bid_project.models.User;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +20,6 @@ public class DeliveryAddressDTO {
     public DeliveryAddressDTO() {
         this.addresses = new ArrayList<>();
     }
-
 
 
     public Long getId() {
@@ -70,8 +63,8 @@ public class DeliveryAddressDTO {
     }
 
     public DeliveryAddressDTO setAddresses(List<DeliveryAddress> addressList) {
-        for (DeliveryAddress deliveryAddress: addressList) {
-             this.addresses.add(addAddress(deliveryAddress));
+        for (DeliveryAddress deliveryAddress : addressList) {
+            this.addresses.add(addAddress(deliveryAddress));
         }
 //        this.addresses = addresses;
         return this;

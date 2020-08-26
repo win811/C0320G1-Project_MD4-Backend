@@ -33,4 +33,7 @@ public interface AuctionService {
 
     //Creator: BHung
     List<Auction> findALlAuctionsByProductNameAndCategoryNameAndPriceMoreThan(String productName,String categoryName,String price);
+
+    //Bach
+    Auction getAutionByProductId(Long productId);
 }

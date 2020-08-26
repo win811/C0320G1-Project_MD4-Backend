@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
+import md4.bid_project.models.Product;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -24,9 +26,13 @@ public interface ProductService {
 
     // Creator : Cường
     Page<Product> findProductByOwnerIdAndNameAndApprovementStatus(Long ownerId, String productName,
-            String approvementStatusName, Pageable pageable);
+            String approvementStatusName, int page);
 
+    //Creator : Cường
     Product findById(Long id);
+
+    //Creator : Cường
+    void saveProduct(Product product);
 
     List<Product> findAllProduct();
 

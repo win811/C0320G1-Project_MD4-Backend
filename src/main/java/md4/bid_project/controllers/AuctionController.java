@@ -39,8 +39,8 @@ public class AuctionController {
     public ResponseEntity<Page<AuctionRecord>> findAuctionRecordByBidderId(@PathVariable(value = "bidderId") Long bidderId,
                                                                            @RequestParam(name = "productName", defaultValue = "") String productName,
                                                                            @RequestParam(name = "recordStatusName", defaultValue = "") String recordStatusName,
-                                                                           @PageableDefault(value = 4) Pageable pageable) {
-        Page<AuctionRecord> auctionRecordPage = auctionRecordService.findByBidderIdAndProductNameAndRecordStatusName(bidderId, productName, recordStatusName, pageable);
+                                                                           @RequestParam(name = "page",defaultValue = "0") int page) {
+        Page<AuctionRecord> auctionRecordPage = auctionRecordService.findByBidderIdAndProductNameAndRecordStatusName(bidderId, productName, recordStatusName, page);
         return ResponseEntity.ok(auctionRecordPage);
     }
 
@@ -56,6 +56,15 @@ public class AuctionController {
     @GetMapping("/auctions/{id}")
     public ResponseEntity<Auction> findAuctionById(@PathVariable Long id) {
         Auction auction = auctionService.getAuctionById(id);
+        if (auction == null) {
+            return new ResponseEntity<Auction>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Auction>(auction, HttpStatus.OK);
+    }
+    //Bach
+    @GetMapping("/auctions/product/{productId}")
+    public ResponseEntity<Auction> findAuctionByProduct(@PathVariable Long productId){
+        Auction auction = auctionService.getAutionByProductId(productId);
         if (auction == null) {
             return new ResponseEntity<Auction>(HttpStatus.NOT_FOUND);
         }

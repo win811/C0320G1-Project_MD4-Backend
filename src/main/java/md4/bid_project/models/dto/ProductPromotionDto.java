@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 //creator : đức thoong

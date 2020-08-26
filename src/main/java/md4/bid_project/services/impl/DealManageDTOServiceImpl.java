@@ -33,8 +33,8 @@ public class DealManageDTOServiceImpl implements DealManageDTOService {
             dealDTO.setId(cartDetail.getId());
             dealDTO.setCodeDeal(cartDetail.getId().toString());
             dealDTO.setWinBiddingTime(cartDetail.getAuction().getCloseTime());
-            dealDTO.setNameSeller(cartDetail.getAuction().getProduct().getOwner().getFullname());
-            dealDTO.setNameBuyer(cartDetail.getCart().getUser().getFullname());
+            dealDTO.setNameSeller(cartDetail.getAuction().getProduct().getOwner().getFullName());
+            dealDTO.setNameBuyer(cartDetail.getCart().getUser().getFullName());
             dealDTO.setNameProduct(cartDetail.getAuction().getProduct().getName());
             dealDTO.setStartingBidPrice(cartDetail.getAuction().getProduct().getInitialPrice());
             dealDTO.setClosingBidPrice(cartDetail.getProductWinPrice());

@@ -1,9 +1,6 @@
 package md4.bid_project.models.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import md4.bid_project.models.*;
+import md4.bid_project.models.ProductImage;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -137,7 +134,7 @@ public class ProductListDTO {
 
     public void setProductImages(List<ProductImage> productImages) {
         List<String> imageLink = new ArrayList<>();
-        for (ProductImage image: productImages) {
+        for (ProductImage image : productImages) {
             imageLink.add(image.getLink());
         }
         this.productImages = imageLink;

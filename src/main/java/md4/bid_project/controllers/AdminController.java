@@ -10,12 +10,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import md4.bid_project.models.User;
 //import md4.bid_project.models.dto.UserDTO;
 import md4.bid_project.services.UserService;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -113,6 +115,7 @@ public class AdminController {
         return response;
     }
 
+// Tùng
     @GetMapping("admin/user-list")
     public ResponseEntity<Page<UserListDTO>> getAllUser(
             @RequestParam(name = "id") String id,
@@ -131,5 +134,11 @@ public class AdminController {
             userListDTO = userService.findAll(currentPage);
         }
         return ResponseEntity.ok(userListDTO);
+    }
+
+    //Creator Hậu
+    @PostMapping("admin/user-create")
+    public void createUser(@Valid @RequestBody User user, BindingResult bindingResult) {
+        userService.saveUser(user);
     }
 }

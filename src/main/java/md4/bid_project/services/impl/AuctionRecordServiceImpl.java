@@ -6,7 +6,9 @@ import md4.bid_project.repositories.AuctionRecordRepository;
 import md4.bid_project.services.AuctionRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +21,10 @@ public class AuctionRecordServiceImpl implements AuctionRecordService {
 
     //    Creator : Cường
     @Override
-    public Page<AuctionRecord> findByBidderIdAndProductNameAndRecordStatusName(Long bidderId, String productName, String recordStatusName, Pageable pageable) {
+    public Page<AuctionRecord> findByBidderIdAndProductNameAndRecordStatusName(Long bidderId, String productName, String recordStatusName, int page) {
+
+        Sort sort = Sort.by(Sort.Direction.DESC,"bidTime","id");
+        Pageable pageable = PageRequest.of(page,4,sort);
 
         switch (recordStatusName) {
             case "đang đấu giá":

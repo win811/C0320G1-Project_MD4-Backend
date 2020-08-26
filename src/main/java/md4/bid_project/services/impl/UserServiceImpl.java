@@ -14,21 +14,36 @@ import md4.bid_project.services.search.UserSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
+//import org.springframework.security.crypto.bcrypt.BCrypt;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+
+@Transactional
 @Service
 public class UserServiceImpl implements UserService {
+
+
     @Autowired
     UserRepository userRepository;
+
     @Autowired
     DeliveryAddressRepository deliveryAddressRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    JavaMailSender javaMailSender;
 
     //Creator: Nguyễn Xuân Hùng
     @Override
@@ -36,7 +51,7 @@ public class UserServiceImpl implements UserService {
         UserUpdateDTO userUpdateDTO = new UserUpdateDTO();
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
-            userUpdateDTO.setFullName(user.getFullname());
+            userUpdateDTO.setFullName(user.getFullName());
             userUpdateDTO.setEmail(user.getEmail());
             userUpdateDTO.setGender(user.getGender());
             userUpdateDTO.setPhoneNumber(user.getPhoneNumber());
@@ -59,7 +74,7 @@ public class UserServiceImpl implements UserService {
     public void updateUser(UserUpdateDTO userUpdateDTO) {
         User user = userRepository.findById(userUpdateDTO.getId()).orElse(null);
         assert user != null;
-        user.setFullname(userUpdateDTO.getFullName().trim());
+        user.setFullName(userUpdateDTO.getFullName().trim());
         user.setAddress(userUpdateDTO.getAddress().trim());
         user.setGender(userUpdateDTO.getGender());
         user.setIdCard(userUpdateDTO.getIdCard());
@@ -115,7 +130,7 @@ public class UserServiceImpl implements UserService {
         user.setPoint(0L);
         user.setRate(rate);
         user.setIsLocked(false);
-        user.setFullname(userDto.getFullName().trim());
+        user.setFullName(userDto.getFullName().trim());
         user.setEmail(userDto.getEmail());
         user.setAddress(userDto.getAddress().trim());
         user.setGender(userDto.getGender());
@@ -135,10 +150,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> checkUniquePhone(String phoneNumber) {
+    public User checkUniquePhone(String phoneNumber) {
         return userRepository.findByPhoneNumber(phoneNumber);
     }
-
 
     @Override
     public User findByEmail(String email) {
@@ -194,7 +208,6 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-
     private Page<UserListDTO> transferToDTO(Page<User> users) {
         Iterator iterator = users.iterator();
         List<UserListDTO> userListDTO = new ArrayList<UserListDTO>();
@@ -202,7 +215,7 @@ public class UserServiceImpl implements UserService {
             User user = (User) iterator.next();
             UserListDTO userListDTO1 = new UserListDTO();
             userListDTO1.setId(user.getId());
-            userListDTO1.setFullname(user.getFullname());
+            userListDTO1.setFullname(user.getFullName());
             userListDTO1.setEmail(user.getEmail());
             userListDTO1.setAddress(user.getAddress());
             userListDTO1.setPhoneNumber(user.getPhoneNumber());
@@ -219,15 +232,118 @@ public class UserServiceImpl implements UserService {
     public User findById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
+
     //B-Hoàng Long method
     @Override
     public Page<User> pageFindAllSearchFullName(Pageable pageable, String search) {
-        return this.userRepository.findAllByAndIsLockedIsFalseAndFullnameContaining(pageable, search);
+        return this.userRepository.findAllByAndIsLockedIsFalseAndFullNameContaining(pageable, search);
     }
+
     //B-Hoàng Long method
     @Override
     public User saveUser(User user) {
         this.userRepository.save(user);
         return user;
     }
+
+    //CREATE BY ANH DUC
+    @Override
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public void remove(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    //CREATE BY ANH DUC
+//    @Override
+//    public User findByEmail(String email) {
+//        return userRepository.findByEmail(email);
+//    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public Optional<User> findById2(Long id) {
+        return userRepository.findById(id);
+    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public User findByPhoneNumberByDuc(String phoneNumber) {
+        return userRepository.findByPhoneNumber(phoneNumber);
+    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public void sendMail(String email, String title, String content) {
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setFrom("Web Đấu Giá c03 <webdaugiac03@gmail.com>");
+        msg.setTo(email);
+        msg.setSubject(title);
+        msg.setText(content);
+        javaMailSender.send(msg);
+    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public int getRandomIntegerWithinRange(int max, int min) {
+        int spread = max - min;
+        return new Random().nextInt(spread + 1) + min;
+    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public boolean checkCode(String email, String code) {
+        User user = userRepository.findByEmail(email);
+        String codeSecurity = user.getPasswordResetCode().getCode();
+        if (!codeSecurity.equals(code)) {
+            return false;
+        }
+        return true;
+    }
+
+    //CREATE BY ANH DUC
+
+    @Override
+    public boolean checlExpiryDate(String email, Date timeNow) {
+        java.sql.Timestamp sqlTS = new java.sql.Timestamp(timeNow.getTime());
+        User user = userRepository.findByEmail(email);
+        Date expiry = user.getPasswordResetCode().getExpiryDate();
+        Long noTime = (sqlTS.getTime() - expiry.getTime()) / (60 * 1000);
+        if (noTime > 15) {
+            return false;
+        }
+        return true;
+    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public String passwordEncryption(String password) {
+        return passwordEncoder.encode(password);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Boolean checkInfo(User user1, User user2) {
+        if (user1.getPhoneNumber().equals(user2.getPhoneNumber()) && user1.getQuestion().equals(user2.getQuestion()) && user1.getAnswer().equals(user2.getAnswer())) {
+            return true;
+        }
+        return false;
+    }
+
+    //CREATE BY ANH DUC
+    @Override
+    public List<User> findAll() {
+        return this.userRepository.findAll();
+    }
+
+
 }
+

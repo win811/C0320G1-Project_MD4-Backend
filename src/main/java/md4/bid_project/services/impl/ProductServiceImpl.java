@@ -10,10 +10,7 @@ import md4.bid_project.services.ProductService;
 import md4.bid_project.services.searchProduct.ProductSpecification;
 import md4.bid_project.services.searchProduct.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -35,14 +32,24 @@ public class ProductServiceImpl implements ProductService {
     // Creator : Cường
     @Override
     public Page<Product> findProductByOwnerIdAndNameAndApprovementStatus(Long ownerId, String productName,
-            String approvementStatusName, Pageable pageable) {
+            String approvementStatusName, int page) {
+        Sort sort = Sort.by(Sort.Direction.DESC,"registerDate","id");
+        Pageable pageable = PageRequest.of(page,4,sort);
         return productRepository.findByOwner_IdAndNameContainingAndApprovementStatus_NameContaining(ownerId,
                 productName, approvementStatusName, pageable);
     }
 
+    // Creator : Cường
+
     @Override
     public Product findById(Long id) {
         return productRepository.findById(id).orElse(null);
+    }
+
+    // Creator : Cường
+    @Override
+    public void saveProduct(Product product) {
+        this.productRepository.save(product);
     }
 
     @Override
@@ -57,13 +64,10 @@ public class ProductServiceImpl implements ProductService {
     //Thành
     @Override
     public void save(Product product) {
-        User user  = new User();
-        user.setId(1L);
         ApprovementStatus status = new ApprovementStatus();
         status.setId(1L);
         product.setApprovementStatus(status);
         product.setStatus(true);
-        product.setOwner(user);
         productRepository.save(product);
         // add auction
         Auction auction = new Auction();
@@ -95,7 +99,7 @@ public class ProductServiceImpl implements ProductService {
         product.setIncreaseAmount(temp.getIncreaseAmount());
         product.setApprovementStatus(temp.getApprovementStatus().getName());
         product.setAuctionStatus(temp.getAuction().getAuctionStatus().getName());
-        product.setOwner(temp.getOwner().getFullname());
+        product.setOwner(temp.getOwner().getFullName());
         product.setRegisterDate(temp.getRegisterDate());
         product.setStartDate(temp.getStartDate());
         product.setEndDate(temp.getEndDate());
@@ -217,5 +221,4 @@ public class ProductServiceImpl implements ProductService {
         }
         return null;
     }
-
 }

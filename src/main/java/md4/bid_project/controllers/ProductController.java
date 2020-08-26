@@ -2,6 +2,12 @@ package md4.bid_project.controllers;
 
 import md4.bid_project.exception.ResourceNotFoundException;
 import md4.bid_project.exception.ViolatedException;
+import md4.bid_project.models.Product;
+import md4.bid_project.services.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import md4.bid_project.models.ApprovementStatus;
 import md4.bid_project.models.FavoriteProduct;
 import md4.bid_project.models.Product;
@@ -48,8 +54,9 @@ public class ProductController {
     public ResponseEntity<Page<Product>> getProductByOwnerId(@PathVariable(value = "ownerId") Long ownerId,
                                                              @RequestParam(name = "productName", defaultValue = "") String productName,
                                                              @RequestParam(name = "approvementStatusName", defaultValue = "") String approvementStatusName,
-                                                             @PageableDefault(value = 4) Pageable pageable) {
-        Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId, productName, approvementStatusName, pageable);
+                                                             @RequestParam(name = "page",defaultValue = "0") int page) {
+
+        Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId, productName, approvementStatusName, page);
         return ResponseEntity.ok(productPage);
     }
 
@@ -65,15 +72,15 @@ public class ProductController {
                                                                         @RequestParam(name = "productName", defaultValue = "") String productName,
                                                                         @RequestParam(name = "approvementStatusName", defaultValue = "") String approvementStatusName,
                                                                         @RequestParam(name = "cancelProductId", defaultValue = "0") Long cancelProductId,
-                                                                        @PageableDefault(value = 4) Pageable pageable) {
+                                                                        @RequestParam(name = "page",defaultValue = "0") int page) {
         if (cancelProductId != 0) {
             Product product = productService.findById(cancelProductId);
             ApprovementStatus approvementStatus = approvementStatusService.findByName("đã hủy");
             product.setApprovementStatus(approvementStatus);
-            productService.save(product);
+            productService.saveProduct(product);
         }
 
-        Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId, productName, approvementStatusName, pageable);
+        Page<Product> productPage = productService.findProductByOwnerIdAndNameAndApprovementStatus(ownerId, productName, approvementStatusName, page);
         return ResponseEntity.ok(productPage);
     }
 
@@ -159,6 +166,7 @@ public class ProductController {
         if (bindingResult.hasErrors()) {
             throw new ViolatedException(bindingResult);
         }
+        System.out.println(product);
         productService.save(product);
         List<ProductImage> productImages = new ArrayList<>();
         productImages = product.getProductImages();

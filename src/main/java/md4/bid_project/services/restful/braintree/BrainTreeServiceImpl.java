@@ -86,7 +86,7 @@ public class BrainTreeServiceImpl implements BrainTreeService {
 
     private Customer addBuyer(User user) {
         CustomerRequest request = new CustomerRequest()
-                .firstName(user.getFullname())
+                .firstName(user.getFullName())
                 .email(user.getEmail())
                 .phone(user.getPhoneNumber())
                 .customerId(String.valueOf(user.getId()));
